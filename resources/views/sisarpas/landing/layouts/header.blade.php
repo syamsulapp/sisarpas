@@ -25,7 +25,7 @@
                 </li>
                 <!-- <li></li> -->
                 <div class="button">
-                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="{{ route('user.login') }}" class="btn-login">Login</a>
                 </div>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>

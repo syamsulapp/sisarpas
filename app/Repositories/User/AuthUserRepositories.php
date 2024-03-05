@@ -10,7 +10,13 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 {
     public function rules(): array
     {
-        return [];
+        if (request()->isMethod('post')) {
+            return [];
+        } else if (request()->isMethod('patch')) {
+            return [];
+        } else {
+            return [];
+        }
     }
 
     public function messages(): array

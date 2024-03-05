@@ -21,8 +21,16 @@ Route::get('/', [LandingControllers::class, 'index'])->name('sisarpas.landing');
 
 Route::prefix('user')->group(function () {
     Route::prefix('auth')->group(function () {
+        /**
+         * begin::register and login
+         */
         Route::get('login', [AuthUserController::class, 'login'])->name('user.login');
         Route::post('login', [AuthUserController::class, 'doLogin'])->name('user.login');
+        Route::get('register', [AuthUserController::class, 'register'])->name('user.register');
+        Route::patch('register', [AuthUserController::class, 'doRegister'])->name('user.register');
+        /**
+         * end::register and login
+         */
     });
     Route::middleware('user-middleware:user')->group(function () { //use session for next to dashboard user
         Route::get('dashboard', []);
