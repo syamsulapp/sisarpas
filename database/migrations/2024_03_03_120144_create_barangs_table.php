@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->string('id_barang')->unique()->primary();
-            $table->string('name_barang');
-            $table->string('condition_barang');
-            $table->enum('status_barang', ['ready', 'not-ready']);
-            $table->string('specification_barang');
-            $table->string('stock_barang');
-            $table->string('img_barang');
+            $table->string('nama_barang');
+            $table->integer('jumlah_barang');
+            $table->string('kondisi_barang');
+            $table->string('detail_barang');
+            $table->string('spesifikasi_barang')->nullable();
+            $table->string('gambar_barang');
+            $table->enum('status_barang', ['ready', 'not-ready', 'maintenance']);
             $table->timestamps();
         });
     }
