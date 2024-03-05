@@ -54,9 +54,9 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             $req_regis['roles_id'] = 2;
             User::create($req_regis);
             DB::commit();
-        } catch (\Exception $erros) {
+        } catch (\Exception $errors) {
             DB::rollBack();
-            $mapLog = array('message' => $erros->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            $mapLog = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Errorlog::create($mapLog);
         }
     }
