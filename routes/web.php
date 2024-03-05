@@ -37,9 +37,15 @@ Route::prefix('user')->group(function () {
          */
     });
     Route::middleware('user_middleware:user')->group(function () { //use session for next to dashboard user
-        Route::get('dashboard', function () {
-            return 'hello dashboard users';
-        })->name('user.dashboard');
+        /**
+         * user dashboard setelah login
+         */
+        Route::prefix('dashboard')->group(function () {
+            Route::get('/', [])->name('user.dashboard');
+        });
+        /**
+         * pinjam barang dan aula setelah login (booking)
+         */
         Route::prefix('pinjam')->group(function () {
             Route::post('{id_barang}/barang', [])->name('pinjam.barang');
             Route::post('{id_barang}/aula', [])->name('pinjam.aula');
@@ -53,13 +59,22 @@ Route::prefix('admin')->group(function () {
         Route::post('login', [AuthAdminController::class, 'doLogin'])->name('admin.login');
     });
     Route::middleware('admin_middleware:admin')->group(function () { //use session for next to dashboard admin
+        /**
+         * dashboard admin setelah login
+         */
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', function () {
-                return 'halo dashboard admin';
-            })->name('admin.dashboard');
+            Route::get('/', [])->name('admin.dashboard');
+            /**
+             * master data dashboard
+             */
             Route::prefix('master_data')->group(function () {
-                Route::get('/', function () {
-                })->name('admin.dashboard.master-data-list');
+                Route::get('/', [])->name('admin.dashboard.master-data-list');
+            });
+            /**
+             * rekap peminjaman barang dan aula
+             */
+            Route::prefix('rekap/peminjaman')->group(function () {
+                Route::get('/', [])->name('admin.dashboard.rekap-peminjaman');
             });
         });
     });
