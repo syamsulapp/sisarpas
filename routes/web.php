@@ -38,7 +38,7 @@ Route::prefix('user')->group(function () {
     });
     Route::middleware('user_middleware:user')->group(function () { //use session for next to dashboard user
         /**
-         * user dashboard setelah login
+         * user dashboard setelah login (dashboard utama)
          */
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [])->name('user.dashboard');
@@ -60,7 +60,7 @@ Route::prefix('admin')->group(function () {
     });
     Route::middleware('admin_middleware:admin')->group(function () { //use session for next to dashboard admin
         /**
-         * dashboard admin setelah login
+         * dashboard admin setelah login (dashboard utama)
          */
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [])->name('admin.dashboard');
