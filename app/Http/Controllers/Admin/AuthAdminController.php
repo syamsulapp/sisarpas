@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class AuthAdminController extends Controller
 {
-    public function login(): View
+    public function login()
     {
-        return view();
+        return 'admin login';
     }
 
     public function doLogin()
