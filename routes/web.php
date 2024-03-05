@@ -24,24 +24,26 @@ Route::prefix('peminjaman')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
+    /**
+     * authentikasi user
+     */
     Route::prefix('auth')->group(function () {
-        /**
-         * begin::register and login
-         */
         Route::get('login', [AuthUserController::class, 'login'])->name('user.login');
         Route::post('login', [AuthUserController::class, 'doLogin'])->name('user.login');
         Route::get('register', [AuthUserController::class, 'register'])->name('user.register');
         Route::patch('register', [AuthUserController::class, 'doRegister'])->name('user.register');
-        /**
-         * end::register and login
-         */
     });
+    /**
+     * fitur user menggunakan session
+     */
     Route::middleware('user_middleware:user')->group(function () { //use session for next to dashboard user
         /**
          * user dashboard setelah login (dashboard utama)
          */
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', [])->name('user.dashboard');
+            Route::get('/', function () {
+                return 'hello user dashboard';
+            })->name('user.dashboard');
         });
         /**
          * pinjam barang dan aula setelah login (booking)
@@ -54,11 +56,17 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
+    /**
+     * authentikasi admin
+     */
     Route::prefix('auth')->group(function () {
         Route::get('login', [AuthAdminController::class, 'login'])->name('admin.login');
         Route::post('login', [AuthAdminController::class, 'doLogin'])->name('admin.login');
     });
-    Route::middleware('admin_middleware:admin')->group(function () { //use session for next to dashboard admin
+    /**
+     * fitur admin menggunakan session
+     */
+    Route::middleware('admin_middleware:admin')->group(function () {
         /**
          * dashboard admin setelah login (dashboard utama)
          */
