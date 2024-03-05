@@ -29,6 +29,6 @@ class AuthUserController extends Controller
     public function doRegister(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
         $authUserRepositories->registerRepositories();
-        return redirect()->route('/')->with('success', 'Berhasil register');
+        return redirect()->route('user.login')->with('success', 'Berhasil register');
     }
 }

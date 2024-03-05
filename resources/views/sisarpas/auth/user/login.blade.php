@@ -28,6 +28,11 @@
 
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
+                    @session('success')
+                        <div class="alert alert-success" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
                     <div class="header-text mb-4">
                         <h2>Hello,Again</h2>
                         <p>We are happy to have you back.</p>
