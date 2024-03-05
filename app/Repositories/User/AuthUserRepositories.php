@@ -21,4 +21,8 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
     public function loginRepositories(): void
     {
     }
+
+    public function registerRepositories(): void
+    {
+    }
 }

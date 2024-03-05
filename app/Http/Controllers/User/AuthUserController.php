@@ -20,4 +20,10 @@ class AuthUserController extends Controller
         $authUserRepositories->loginRepositories();
         return redirect()->route('/')->with('success', 'Berhasil Login');
     }
+
+    public function doRegister(AuthUserRepositories $authUserRepositories): RedirectResponse
+    {
+        $authUserRepositories->registerRepositories();
+        return redirect()->route('/')->with('success', 'Berhasil register');
+    }
 }
