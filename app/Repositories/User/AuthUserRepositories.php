@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use App\Interface\User\AuthUserInterface;
 use App\Models\Errorlog;
+use App\Models\Successlog;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -52,12 +53,14 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             $req_regis = request()->only('nama_user', 'nim_user', 'email_user', 'password_user', 'roles_id');
             $req_regis['password_user'] = Hash::make($req_regis['password_user']);
             $req_regis['roles_id'] = 2;
-            User::create($req_regis);
+            $user = User::create($req_regis);
+            $mapSuccessLogs = array('message' => "user dengan ID: {$user->id}, nama: {$user->nama_user} Berhasil Registrasi", 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLogs);
             DB::commit();
         } catch (\Exception $errors) {
             DB::rollBack();
-            $mapLog = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapLog);
+            $mapLogErrors = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapLogErrors);
         }
     }
 }

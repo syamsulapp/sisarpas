@@ -29,6 +29,11 @@
 
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
+                    @session('error')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             @foreach ($errors->all() as $errors)
@@ -91,8 +96,9 @@
                         </div>
                         <div class="input-group mb-1">
                             <span class="input-group-text" id="basic-addon1">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04"
+                                    stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="css-i6dzq1">
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2">
                                     </rect>
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -103,12 +109,12 @@
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between">
                             <!-- <div class="form-check">
-                                                                                                                                                                    <input type="checkbox" class="form-check-input" id="formCheck" />
-                                                                                                                                                                    <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
-                                                                                                                                                                </div>
-                                                                                                                                                                <div class="forgot">
-                                                                                                                                                                    <small><a href="#">Forgot Password?</a></small>
-                                                                                                                    </div> -->
+                                                                                                                                                                        <input type="checkbox" class="form-check-input" id="formCheck" />
+                                                                                                                                                                        <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="forgot">
+                                                                                                                                                                        <small><a href="#">Forgot Password?</a></small>
+                                                                                                                        </div> -->
                         </div>
                         <div class="input-group mb-3">
                             <button class="btn-primary w-100 fs-6">Daftar</button>
