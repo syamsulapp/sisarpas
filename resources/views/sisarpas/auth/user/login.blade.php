@@ -62,7 +62,7 @@
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
                             </span>
-                            <input type="text" name="email_user" class="form-control form-control-lg bg-light fs-6"
+                            <input type="text" name="email" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="Email address" />
                         </div>
                         <div class="input-group mb-1">
@@ -73,7 +73,7 @@
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
                             </span>
-                            <input type="password" name="password_user" class="form-control form-control-lg bg-light fs-6"
+                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="Password" />
                         </div>
                         <div class="input-group mb-5 mt-3 d-flex justify-content-between">

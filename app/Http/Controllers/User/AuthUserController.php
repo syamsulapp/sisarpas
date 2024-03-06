@@ -7,6 +7,7 @@ use App\Models\Errorlog;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Models\Successlog;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +15,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthUserController extends Controller
 {
-    public function login(): View
+    public function login(): RedirectResponse
     {
         if (Auth::guard('user')->check()) {
             return redirect()->route('user.dashboard');
         } else {
-            return view('sisarpas.auth.user.login');
+            return redirect()->route('user.login');
         }
     }
 
@@ -30,6 +31,8 @@ class AuthUserController extends Controller
         if (Auth::guard('user')->attempt($credential)) {
             $user = Auth::getProvider()->retrieveByCredentials($credential);
             Auth::guard('user')->login($user);
+            $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create([$mapSuccessLog]);
             return redirect()->intended('user/dashboard');
         } else {
             Session::flash('error', 'Email Atau Password Salah');
@@ -41,9 +44,13 @@ class AuthUserController extends Controller
     {
     }
 
-    public function register(): View
+    public function register(): RedirectResponse
     {
-        return view('sisarpas.auth.user.register');
+        if (Auth::guard('user')->check()) {
+            return redirect()->route('user.dashboard');
+        } else {
+            return redirect()->route('user.register');
+        }
     }
 
     public function doRegister(AuthUserRepositories $authUserRepositories): RedirectResponse

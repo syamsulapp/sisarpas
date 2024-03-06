@@ -25,16 +25,16 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
     {
         if (request()->isMethod('post')) { //login
             return [
-                'email_user' => 'required|email',
-                'password_user' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
             ];
         } else if (request()->isMethod('patch')) { //register
             return [
-                'nama_user' => 'required',
-                'nim_user' => 'required',
-                'email_user' => 'required|unique:users,email_user',
-                'password_user' => 'required|min:8',
-                'confirm_password' => 'required|same:password_user|min:8',
+                'name' => 'required',
+                'nim' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|same:password|min:8',
                 'roles_id' => 'integer',
             ];
         } else {
@@ -55,7 +55,7 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
     // get credential login
     public function loginRepositories()
     {
-        return request()->only('email_user', 'password_user');
+        return request()->only('email', 'password');
     }
 
     public function logoutRepositories()

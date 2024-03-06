@@ -57,8 +57,8 @@
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </span>
-                            <input type="text" name="nama_user" class="form-control  form-control-lg bg-light fs-6"
-                                placeholder="Nama Panjang" value="{{ old('nama_user') }}" />
+                            <input type="text" name="name" class="form-control  form-control-lg bg-light fs-6"
+                                placeholder="Nama Panjang" value="{{ old('name') }}" />
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
@@ -68,8 +68,8 @@
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </span>
-                            <input type="text" name="nim_user" class="form-control  form-control-lg bg-light fs-6"
-                                placeholder="Nim User" value="{{ old('nim_user') }}" />
+                            <input type="text" name="nim" class="form-control  form-control-lg bg-light fs-6"
+                                placeholder="Nim User" value="{{ old('nim') }}" />
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
@@ -80,8 +80,8 @@
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
                             </span>
-                            <input type="email" name="email_user" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Email address" value="{{ old('email_user') }}" />
+                            <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="Email address" value="{{ old('email') }}" />
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
@@ -91,7 +91,7 @@
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
                             </span>
-                            <input type="password" name="password_user" class="form-control form-control-lg bg-light fs-6"
+                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="Password" />
                         </div>
                         <div class="input-group mb-1">
@@ -109,12 +109,12 @@
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between">
                             <!-- <div class="form-check">
-                                                                                                                                                                        <input type="checkbox" class="form-check-input" id="formCheck" />
-                                                                                                                                                                        <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="forgot">
-                                                                                                                                                                        <small><a href="#">Forgot Password?</a></small>
-                                                                                                                        </div> -->
+                                                                                                                                                                                <input type="checkbox" class="form-check-input" id="formCheck" />
+                                                                                                                                                                                <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="forgot">
+                                                                                                                                                                                <small><a href="#">Forgot Password?</a></small>
+                                                                                                                                </div> -->
                         </div>
                         <div class="input-group mb-3">
                             <button class="btn-primary w-100 fs-6">Daftar</button>
