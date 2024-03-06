@@ -39,8 +39,8 @@
                         </div>
                     @endsession
                     <div class="header-text mb-4">
-                        <h2>Hello,Again</h2>
-                        <p>We are happy to have you back.</p>
+                        <h2>Selamat Datang Di Halman</h2>
+                        <p>Login User Si Sarpas.</p>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">

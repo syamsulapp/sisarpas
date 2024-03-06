@@ -10,7 +10,7 @@ class AuthAdminController extends Controller
 {
     public function login()
     {
-        return 'admin login';
+        return view('sisarpas.auth.admin.login');
     }
 
     public function doLogin()
