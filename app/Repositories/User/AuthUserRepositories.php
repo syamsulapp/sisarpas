@@ -64,6 +64,12 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 
     public function registerRepositories(): void
     {
+        /**
+         * awali transaksi data
+         * 1. cek permintaan yang akan di daftarkan di sistem
+         * 2. setelah permintaan terpenuhi selanjutnya daftarkan data tersebut
+         * 3. setelah data berhasil di daftarkan ke sistem selanjutnya simpan sukses daftar kedalam log success
+         */
         DB::beginTransaction();
         try {
             $req_regis = request()->only('name', 'nim', 'email', 'password', 'roles_id');
