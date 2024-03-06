@@ -30,6 +30,7 @@ Route::prefix('user')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::get('login', [AuthUserController::class, 'login'])->name('user.login');
         Route::post('login', [AuthUserController::class, 'doLogin'])->name('user.login');
+        Route::post('logout', [AuthUserController::class, 'doLogout'])->name('user.logout');
         Route::get('register', [AuthUserController::class, 'register'])->name('user.register');
         Route::patch('register', [AuthUserController::class, 'doRegister'])->name('user.register');
     });

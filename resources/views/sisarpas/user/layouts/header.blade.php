@@ -39,8 +39,8 @@
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">
-                                     <span class="fw-medium d-block">Miftahul Jannah</span>
-                                     <small class="text-muted">Mahasiswa</small>
+                                     <span class="fw-medium d-block">{{ Auth::guard('user')->user()->name }}</span>
+                                     <small class="text-muted">{{ Auth::guard('user')->user()->roles_id }}</small>
                                  </div>
                              </div>
                          </a>
@@ -50,10 +50,15 @@
                          <div class="dropdown-divider"></div>
                      </li>
                      <li>
-                         <a class="dropdown-item" href="../../login.html">
-                             <i class="bx bx-power-off me-2"></i>
-                             <span class="align-middle">Log Out</span>
-                         </a>
+                         <form id="logout-user" action="{{ route('user.logout') }}" method="POST">
+                             @csrf
+                             <a class="dropdown-item" href="{{ route('user.logout') }}"
+                                 onclick="event.preventDefault(); document.getElementById('logout-user').submit();">
+                                 <i class="bx bx-power-off me-2"></i>
+                                 <span class="align-middle">Log Out</span>
+                             </a>
+                         </form>
+
                      </li>
                  </ul>
              </li>
