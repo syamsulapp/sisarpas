@@ -14,6 +14,11 @@ class Admin extends Authenticatable
 
     protected $fillable = ['name', 'email', 'password', 'roles_id', 'created_at', 'updated_at'];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
         'updated_at' => 'date:Y-m-d H:i:s'

@@ -33,8 +33,6 @@ class AuthAdminController extends Controller
              */
             $credential = $authAdminRepositories->loginRepositories();
             if (Auth::guard('admin')->attempt($credential)) {
-                $login = Auth::getProvider()->retrieveByCredentials($credential);
-                Auth::guard('admin')->login($login);
                 /**
                  * setelah login ambil data admin berdasarkan session login
                  * simpan informasi sukses login kedalam logs sukses dan arahkan admin ke halaman dashboard admin
