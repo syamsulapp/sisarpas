@@ -2,7 +2,7 @@
 <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
         <h1 class="logo">
-            <a href="index.html"><img src="{{ asset('sisarpas/assets/img/logo.png') }}" alt="logo"
+            <a href="{{ route('sisarpas.landing') }}"><img src="{{ asset('sisarpas/assets/img/logo.png') }}" alt="logo"
                     style="border-radius: 50%" /></a>
         </h1>
         <nav id="navbar" class="navbar">
