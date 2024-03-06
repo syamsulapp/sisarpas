@@ -90,9 +90,6 @@
                             <button class="btn-primary w-100 fs-6">Login</button>
                         </div>
                     </form>
-                    {{-- <div class="row">
-                        <small>Belum punya Akun? <a href="{{ route('user.register') }}">Daftar Sekarang!</a></small>
-                    </div> --}}
                 </div>
             </div>
         </div>
