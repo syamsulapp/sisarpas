@@ -4,6 +4,7 @@ namespace App\Interface\User;
 
 interface AuthUserInterface
 {
-    public function loginRepositories(): void;
+    public function loginRepositories();
     public function registerRepositories(): void;
+    public function logoutRepositories();
 }

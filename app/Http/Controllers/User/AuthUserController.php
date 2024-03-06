@@ -9,18 +9,36 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthUserController extends Controller
 {
     public function login(): View
     {
-        return view('sisarpas.auth.user.login');
+        if (Auth::guard('user')->check()) {
+            return redirect()->route('user.dashboard');
+        } else {
+            return view('sisarpas.auth.user.login');
+        }
     }
 
     public function doLogin(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
-        $authUserRepositories->loginRepositories();
-        return redirect()->route('/')->with('success', 'Berhasil Login');
+        $credential = $authUserRepositories->loginRepositories();
+
+        if (Auth::guard('user')->attempt($credential)) {
+            $user = Auth::getProvider()->retrieveByCredentials($credential);
+            Auth::guard('user')->login($user);
+            return redirect()->intended('user/dashboard');
+        } else {
+            Session::flash('error', 'Email Atau Password Salah');
+            return redirect()->route('user.login');
+        }
+    }
+
+    public function doLogout()
+    {
     }
 
     public function register(): View

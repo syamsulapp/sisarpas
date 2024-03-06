@@ -9,16 +9,26 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthUserRepositories extends FormRequest implements AuthUserInterface
 {
+    public function authorize()
+    {
+        return true;
+    }
+
     public function rules(): array //validation rules
     {
-        if (request()->isMethod('post')) {
-            return [];
-        } else if (request()->isMethod('patch')) {
+        if (request()->isMethod('post')) { //login
+            return [
+                'email_user' => 'required|email',
+                'password_user' => 'required',
+            ];
+        } else if (request()->isMethod('patch')) { //register
             return [
                 'nama_user' => 'required',
                 'nim_user' => 'required',
@@ -42,7 +52,13 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         ];
     }
 
-    public function loginRepositories(): void
+    // get credential login
+    public function loginRepositories()
+    {
+        return request()->only('email_user', 'password_user');
+    }
+
+    public function logoutRepositories()
     {
     }
 
@@ -50,8 +66,8 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
     {
         DB::beginTransaction();
         try {
-            $req_regis = request()->only('nama_user', 'nim_user', 'email_user', 'password_user', 'roles_id');
-            $req_regis['password_user'] = Hash::make($req_regis['password_user']);
+            $req_regis = request()->only('name', 'nim', 'email', 'password', 'roles_id');
+            $req_regis['password'] = Hash::make($req_regis['password']);
             $req_regis['roles_id'] = 2;
             $user = User::create($req_regis);
             $mapSuccessLogs = array('message' => "user dengan ID: {$user->id}, nama: {$user->nama_user} Berhasil Registrasi", 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
