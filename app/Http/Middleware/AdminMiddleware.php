@@ -23,7 +23,7 @@ class AdminMiddleware
                 return $next($request);
             }
         } else {
-            return redirect()->route('admin.login')->with('error', 'Untuk Mengakses Fitur Anda Harus Login');
+            return redirect()->route('admin.login')->with('error', 'Untuk Mengakses Fitur Admin Anda Harus Login');
         }
     }
 }

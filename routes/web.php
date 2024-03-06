@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthAdminController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Landing\LandingControllers;
 use App\Http\Controllers\User\{AuthUserController, DashboardController};
 use Illuminate\Support\Facades\Route;
@@ -64,8 +65,8 @@ Route::prefix('admin')->group(function () {
      */
     Route::prefix('auth')->group(function () {
         Route::get('login', [AuthAdminController::class, 'login'])->name('admin.login');
-        Route::post('logout', [AuthAdminController::class, 'doLogout'])->name('admin.logout');
         Route::post('login', [AuthAdminController::class, 'doLogin'])->name('admin.login');
+        Route::post('logout', [AuthAdminController::class, 'doLogout'])->name('admin.logout');
     });
     /**
      * fitur admin menggunakan session
@@ -75,7 +76,7 @@ Route::prefix('admin')->group(function () {
          * dashboard admin setelah login (dashboard utama)
          */
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', [])->name('admin.dashboard');
+            Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
             /**
              * master data dashboard
              */

@@ -23,7 +23,7 @@ class UserMiddleware
                 return $next($request);
             }
         } else {
-            return redirect()->route('user.login')->with('error', 'Untuk Mengakses Fitur Anda Harus Login');
+            return redirect()->route('user.login')->with('error', 'Untuk Mengakses Fitur User Anda Harus Login');
         }
     }
 }
