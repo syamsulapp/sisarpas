@@ -4,8 +4,6 @@ namespace App\Http\Controllers\User;
 
 use Carbon\Carbon;
 use App\Models\Errorlog;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\Successlog;
 use Illuminate\Http\RedirectResponse;
@@ -15,13 +13,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthUserController extends Controller
 {
-    public function login(): RedirectResponse
+    public function login()
     {
-        if (Auth::guard('user')->check()) {
-            return redirect()->route('user.dashboard');
-        } else {
-            return redirect()->route('user.login');
+        if (!Auth::guard('user')->check()) {
+            return view('sisarpas.auth.user.login');
         }
+        return redirect()->route('user.dashboard');
     }
 
     public function doLogin(AuthUserRepositories $authUserRepositories): RedirectResponse
@@ -40,7 +37,7 @@ class AuthUserController extends Controller
                  * setelah login ambil data user berdasarkan session login
                  * simpan informasi sukses login kedalam logs sukses dan arahkan user ke halaman dashboard user
                  */
-                $user = Auth::guard()->user();
+                $user = Auth::guard('user')->user();
                 $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
                 Successlog::create($mapSuccessLog);
                 return redirect()->intended('user/dashboard');
@@ -58,14 +55,13 @@ class AuthUserController extends Controller
     {
     }
 
-    public function register(): RedirectResponse
+    public function register()
     {
         try {
-            if (Auth::guard('user')->check()) {
-                return redirect()->route('user.dashboard');
-            } else {
-                return redirect()->route('user.register');
+            if (!Auth::guard('user')->check()) {
+                return view('sisarpas.auth.user.register');
             }
+            return redirect()->route('user.dashboard');
         } catch (\Exception $errors) {
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             return Errorlog::create($mapErrorLogs);
