@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthUserController extends Controller
 {
-    public function login(): View
+    public function login(): RedirectResponse
     {
         if (Auth::guard('user')->check()) {
             return redirect()->route('user.dashboard');
         } else {
-            return view('sisarpas.auth.user.login');
+            return redirect()->route('user.login');
         }
     }
 
@@ -58,13 +58,13 @@ class AuthUserController extends Controller
     {
     }
 
-    public function register(): View
+    public function register(): RedirectResponse
     {
         try {
             if (Auth::guard('user')->check()) {
                 return redirect()->route('user.dashboard');
             } else {
-                return view('sisarpas.auth.user.register');
+                return redirect()->route('user.register');
             }
         } catch (\Exception $errors) {
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));

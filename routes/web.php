@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Landing\LandingControllers;
-use App\Http\Controllers\User\AuthUserController;
+use App\Http\Controllers\User\{AuthUserController, DashboardController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,9 +41,7 @@ Route::prefix('user')->group(function () {
          * user dashboard setelah login (dashboard utama)
          */
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', function () {
-                return 'hello user dashboard';
-            })->name('user.dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('user.dashboard');
         });
         /**
          * pinjam barang dan aula setelah login (booking)

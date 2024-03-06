@@ -25,7 +25,13 @@
                 </li>
                 <!-- <li></li> -->
                 <div class="button">
-                    <a href="{{ route('user.login') }}" class="btn-login">Login</a>
+                    @if (Route::has('user.login'))
+                        @auth
+                            <a href="{{ route('user.dashboard') }}" class="btn-login">Dashboard</a>
+                        @else
+                            <a href="{{ route('user.login') }}" class="btn-login">Login</a>
+                        @endauth
+                    @endif
                 </div>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
