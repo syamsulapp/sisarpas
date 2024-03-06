@@ -16,4 +16,8 @@ class AuthAdminController extends Controller
     public function doLogin()
     {
     }
+
+    public function doLogout()
+    {
+    }
 }

@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function () {
      */
     Route::prefix('auth')->group(function () {
         Route::get('login', [AuthAdminController::class, 'login'])->name('admin.login');
+        Route::post('logout', [AuthAdminController::class, 'doLogout'])->name('admin.logout');
         Route::post('login', [AuthAdminController::class, 'doLogin'])->name('admin.login');
     });
     /**
