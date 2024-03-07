@@ -96,7 +96,7 @@ class AuthUserController extends Controller
     public function doforgotPass(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
         try {
-            if ($user = User::where('email', request()->input('email'))->first()) {
+            if (User::where('email', request()->input('email'))->first()) {
                 $authUserRepositories->forgotPasswordRepositories();
             } else {
                 Session::flash('error', 'Email Pada Account Anda Tidak Terdaftar');
