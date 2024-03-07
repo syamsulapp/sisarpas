@@ -9,6 +9,7 @@ use App\Models\Successlog;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class AuthUserController extends Controller
@@ -51,8 +52,23 @@ class AuthUserController extends Controller
         }
     }
 
-    public function doLogout()
+    public function doLogout(): RedirectResponse
     {
+        /**
+         * masukan informasi dari user yang logout di log success agar dapat diketahui user siapa yang logout
+         * jalankan fungsi logout untuk keluar sistem(user) dan setelah logout berhasil selanjutnya arahkan ke halaman login
+         */
+        try {
+            $userLogout = Auth::guard('user')->user();
+            $mapSuccessLog = array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
+            Auth::guard('user')->logout();
+            Session::flash('success', 'Berhasil Logout Dari User');
+            return Redirect::route('user.login');
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            return Errorlog::create($mapErrorLogs);
+        }
     }
 
     public function register()
