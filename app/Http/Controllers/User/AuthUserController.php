@@ -93,10 +93,10 @@ class AuthUserController extends Controller
         return view('sisarpas.auth.user.reset-password.index');
     }
 
-    public function doforgotPass(AuthUserRepositories $authUserRepositories)
+    public function doforgotPass(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
         try {
-            if (User::where('email', request()->input('email'))->first()) {
+            if ($user = User::where('email', request()->input('email'))->first()) {
                 $authUserRepositories->forgotPasswordRepositories();
             } else {
                 Session::flash('error', 'Email Anda Tidak Terdaftar');

@@ -50,23 +50,27 @@
                             @endforeach
                         </div>
                     @endif
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                </path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                        </span>
-                        <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
-                            placeholder="Email address" />
-                    </div>
-                    <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
-                    <div class="input-group mb-3">
-                        <button class="btn-primary w-100 fs-6" data-toggle="modal" data-target="#exampleModal">Reset
-                            password</button>
-                    </div>
+                    <form action="{{ route('user.forgot_password') }}" method="POST">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="Email address" />
+
+                        </div>
+                        <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
+                        <div class="input-group mb-3">
+                            <button class="btn-primary w-100 fs-6" data-toggle="modal">Reset
+                                password</button>
+                        </div>
+                    </form>
                     <div class="input-group mb-3">
                         <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -79,7 +83,7 @@
                     </div>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -95,17 +99,16 @@
                                                 <b>email@gmail.com</b>
                                             </p>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-info">Go it</button>
+                                            <a href="{{ route('user.forgot_password') }}" class="btn btn-secondary">Back</a>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-info">Go it</button>
-                                    <a href="{{ route('user.forgot_password') }}" class="btn btn-secondary">Back</a>
-                                </div>
-                                </form>
-
                             </div>
                         </div>
                     </div>
-                    <!-- end modal -->
+                    <!-- end modal --> --}}
                 </div>
             </div>
         </div>
