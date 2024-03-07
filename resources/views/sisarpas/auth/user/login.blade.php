@@ -83,7 +83,7 @@
                                         Me</small></label>
                             </div>
                             <div class="forgot">
-                                <small><a href="#">Forgot Password?</a></small>
+                                <small><a href="{{ route('user.forgot_password') }}">Forgot Password?</a></small>
                             </div>
                         </div>
                         <div class="input-group mb-3">

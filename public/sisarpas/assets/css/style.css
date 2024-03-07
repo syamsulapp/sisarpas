@@ -455,7 +455,7 @@ h6 {
 #beranda {
   width: 100%;
   height: 100vh;
-  background: url("../img/gerbang.jpeg") top left;
+  background: url("../img/laut.jpeg") top left;
   background-size: cover;
   position: relative;
 }
@@ -1449,7 +1449,7 @@ section {
 }
 
 .pricing .box img {
- 
+
   margin-bottom: 20px;
   width: 150px;
   height: 150px;
@@ -1673,6 +1673,64 @@ section {
   background: #8F0D04;
   border-radius: 10px;
 
+}
+
+.contact .warna-form {
+  box-shadow: 0 0 30px rgba(253, 182, 41, 0.4);
+  padding: 30px;
+  background: #E8AA42;
+  border-radius: 10px;
+
+}
+
+.contact .warna {
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: center;
+  margin-bottom: 50px;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #E8AA42;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact .ajukan {
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: center;
+  margin-top: 50px;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #fdfdfd;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact .btn-ajukan {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #8F0D04;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px #999;
+}
+
+.contact .btn-ajukan:hover {
+  background-color: #c93a3a
+}
+
+.contact .btn-ajukan:active {
+  background-color: #8F0D04;
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
 }
 
 .contact .php-email-form .error-message {

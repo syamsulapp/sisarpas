@@ -29,11 +29,20 @@ Route::prefix('user')->group(function () {
      * authentikasi user
      */
     Route::prefix('auth')->group(function () {
+        /**login */
         Route::get('login', [AuthUserController::class, 'login'])->name('user.login');
         Route::post('login', [AuthUserController::class, 'doLogin'])->name('user.login');
+        /**logout */
         Route::post('logout', [AuthUserController::class, 'doLogout'])->name('user.logout');
+        /**register */
         Route::get('register', [AuthUserController::class, 'register'])->name('user.register');
         Route::patch('register', [AuthUserController::class, 'doRegister'])->name('user.register');
+        /**forgot password */
+        Route::get('forgot_password', [AuthUserController::class, 'forgotPass'])->name('user.forgot_password');
+        Route::post('forgot_password', [AuthUserController::class, 'doforgotPass'])->name('user.forgot_password');
+        /**check code reset */
+        Route::get('check_code_reset', [AuthUserController::class, 'checkCodeReset'])->name('user.check_code_reset');
+        Route::post('check_code_reset', [AuthUserController::class, 'docheckCodeReset'])->name('user.check_code_reset');
     });
     /**
      * fitur user menggunakan session

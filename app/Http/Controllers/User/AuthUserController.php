@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Successlog;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -88,5 +89,23 @@ class AuthUserController extends Controller
     {
         $authUserRepositories->registerRepositories();
         return redirect()->route('user.login')->with('success', 'Berhasil register');
+    }
+
+    public function forgotPass(): View
+    {
+        return view('sisarpas.auth.user.reset-password.index');
+    }
+
+    public function doforgotPass()
+    {
+    }
+
+    public function checkCodeReset(): View
+    {
+        return view('');
+    }
+
+    public function docheckCodeReset()
+    {
     }
 }
