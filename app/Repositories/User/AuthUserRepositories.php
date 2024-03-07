@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Repositories\User;
+
+use App\Interface\User\AuthUserInterface;
+use App\Models\Errorlog;
+use App\Models\Successlog;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+
+class AuthUserRepositories extends FormRequest implements AuthUserInterface
+{
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules(): array //validation rules
+    {
+        if (request()->isMethod('post')) { //login
+            return [
+                'email' => 'required|email',
+                'password' => 'required',
+            ];
+        } else if (request()->isMethod('patch')) { //register
+            return [
+                'name' => 'required',
+                'nim' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|same:password|min:8',
+                'roles_id' => 'integer',
+            ];
+        } else {
+            return [];
+        }
+    }
+
+    public function messages(): array //vustom message validation
+    {
+        return [
+            'required' => ':attribute wajib di isi',
+            'same' => 'password tidak sama',
+            'min' => ':attribute minimal 8 karakter',
+            'unique' => ':attribute sudah ada'
+        ];
+    }
+
+    // get credential login
+    public function loginRepositories()
+    {
+        return request()->only('email', 'password');
+    }
+
+    public function logoutRepositories()
+    {
+    }
+
+    public function registerRepositories(): void
+    {
+        /**
+         * awali transaksi data
+         * 1. cek permintaan yang akan di daftarkan di sistem
+         * 2. setelah permintaan terpenuhi selanjutnya daftarkan data tersebut
+         * 3. setelah data berhasil di daftarkan ke sistem selanjutnya simpan sukses daftar kedalam log success
+         */
+        DB::beginTransaction();
+        try {
+            $req_regis = request()->only('name', 'nim', 'email', 'password', 'roles_id');
+            $req_regis['password'] = Hash::make($req_regis['password']);
+            $req_regis['roles_id'] = 2;
+            $user = User::create($req_regis);
+            $mapSuccessLogs = array('message' => "user dengan ID: {$user->id}, nama: {$user->nama_user} Berhasil Registrasi", 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLogs);
+            DB::commit();
+        } catch (\Exception $errors) {
+            DB::rollBack();
+            $mapLogErrors = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapLogErrors);
+        }
+    }
+}

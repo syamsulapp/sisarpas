@@ -12,4 +12,14 @@ class LandingControllers extends Controller
     {
         return $landingRepositories->indexRepositories();
     }
+
+    public function alat_barang(): View
+    {
+        return view('sisarpas.landing.peminjaman.alat_barang');
+    }
+
+    public function aula_barang(): View
+    {
+        return view('sisarpas.landing.peminjaman.aula_barang');
+    }
 }

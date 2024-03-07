@@ -12,7 +12,7 @@ class Admin extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    protected $fillable = ['nama_admin', 'email_admin', 'password_admin', 'roles_id', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'email', 'password', 'roles_id', 'created_at', 'updated_at'];
 
     protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
