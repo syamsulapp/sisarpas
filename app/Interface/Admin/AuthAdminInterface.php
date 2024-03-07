@@ -6,5 +6,5 @@ use Illuminate\Foundation\Http\FormRequest;
 
 interface AuthAdminInterface
 {
-    public function loginRepositories(): void;
+    public function loginRepositories();
 }

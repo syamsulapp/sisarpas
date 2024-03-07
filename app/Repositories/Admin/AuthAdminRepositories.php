@@ -9,15 +9,28 @@ class AuthAdminRepositories extends FormRequest implements AuthAdminInterface
 {
     public function rules(): array
     {
-        return [];
+        if (request()->isMethod('post')) { //login admin
+            return [
+                'email' => 'required|email',
+                'password' => 'required',
+            ];
+        } else {
+            return [];
+        }
     }
 
-    public function messages(): array
+    public function messages(): array //custom message validation for admin
     {
-        return [];
+        return [
+            'required' => ':attribute wajib di isi',
+            'same' => 'password tidak sama',
+            'min' => ':attribute minimal 8 karakter',
+            'unique' => ':attribute sudah ada'
+        ];
     }
 
-    public function loginRepositories(): void
+    public function loginRepositories()
     {
+        return request()->only('email', 'password');
     }
 }

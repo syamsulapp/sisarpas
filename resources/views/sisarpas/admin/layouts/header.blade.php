@@ -39,10 +39,10 @@
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">
-                                     <span class="fw-medium d-block">{{ Auth::guard('user')->user()->name }}</span>
+                                     <span class="fw-medium d-block">{{ Auth::guard('admin')->user()->name }}</span>
                                      <small class="text-muted">
-                                         @if (Auth::guard('user')->user()->roles_id == 2)
-                                             {{ __('User') }}
+                                         @if (Auth::guard('admin')->user()->roles_id == 1)
+                                             {{ __('Administrator') }}
                                          @endif
                                      </small>
                                  </div>
@@ -54,10 +54,10 @@
                          <div class="dropdown-divider"></div>
                      </li>
                      <li>
-                         <form id="logout-user" action="{{ route('user.logout') }}" method="POST">
+                         <form id="logout-admin" action="{{ route('admin.logout') }}" method="POST">
                              @csrf
-                             <a class="dropdown-item" href="{{ route('user.logout') }}"
-                                 onclick="event.preventDefault(); document.getElementById('logout-user').submit();">
+                             <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                 onclick="event.preventDefault(); document.getElementById('logout-admin').submit();">
                                  <i class="bx bx-power-off me-2"></i>
                                  <span class="align-middle">Log Out</span>
                              </a>
