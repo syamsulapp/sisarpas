@@ -39,7 +39,7 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             ];
         } else if (request()->is('user/auth/forgot_password')) { // reset password user
             return [
-                'email' => 'required|email'
+                'email' => 'required|email',
             ];
         } else {
             return [];
@@ -60,10 +60,6 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
     public function loginRepositories()
     {
         return request()->only('email', 'password');
-    }
-
-    public function logoutRepositories()
-    {
     }
 
     public function registerRepositories(): void
@@ -88,5 +84,21 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             $mapLogErrors = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Errorlog::create($mapLogErrors);
         }
+    }
+
+    public function logoutRepositories(): void
+    {
+        /**
+         * masukan informasi dari user yang logout di log success agar dapat diketahui user siapa yang logout
+         * jalankan fungsi logout untuk keluar sistem(user)
+         */
+        $userLogout = Auth::guard('user')->user();
+        $mapSuccessLog = array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+        Successlog::create($mapSuccessLog);
+        Auth::guard('user')->logout();
+    }
+
+    public function forgotPasswordRepositories(): void
+    {
     }
 }

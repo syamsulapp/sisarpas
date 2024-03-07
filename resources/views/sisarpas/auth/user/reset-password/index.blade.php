@@ -31,6 +31,16 @@
                         <h2>Forgot Password?</h2>
                         <p>No worries, we'll send you reset instructions</p>
                     </div>
+                    @session('success')
+                        <div class="alert alert-success" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
+                    @session('error')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             @foreach ($errors->all() as $errors)
@@ -49,7 +59,7 @@
                                 <polyline points="22,6 12,13 2,6"></polyline>
                             </svg>
                         </span>
-                        <input type="email" class="form-control form-control-lg bg-light fs-6"
+                        <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
                             placeholder="Email address" />
                     </div>
                     <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
