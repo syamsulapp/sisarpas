@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use App\Models\Errorlog;
 use App\Http\Controllers\Controller;
 use App\Models\Successlog;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -52,25 +54,6 @@ class AuthUserController extends Controller
         }
     }
 
-    public function doLogout(): RedirectResponse
-    {
-        /**
-         * masukan informasi dari user yang logout di log success agar dapat diketahui user siapa yang logout
-         * jalankan fungsi logout untuk keluar sistem(user) dan setelah logout berhasil selanjutnya arahkan ke halaman login
-         */
-        try {
-            $userLogout = Auth::guard('user')->user();
-            $mapSuccessLog = array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            Auth::guard('user')->logout();
-            Session::flash('success', 'Berhasil Logout Dari User');
-            return Redirect::route('user.login');
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
-        }
-    }
-
     public function register()
     {
         try {
@@ -88,5 +71,49 @@ class AuthUserController extends Controller
     {
         $authUserRepositories->registerRepositories();
         return redirect()->route('user.login')->with('success', 'Berhasil register');
+    }
+
+    public function doLogout(AuthUserRepositories $authUserRepositories): RedirectResponse
+    {
+        /**
+         *  setelah logout berhasil selanjutnya arahkan ke halaman login dan memberikan pesan flash success login
+         */
+        try {
+            $authUserRepositories->logoutRepositories();
+            Session::flash('success', 'Berhasil Logout Dari User');
+            return Redirect::route('user.login');
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            return Errorlog::create($mapErrorLogs);
+        }
+    }
+
+    public function forgotPass(): View
+    {
+        return view('sisarpas.auth.user.reset-password.index');
+    }
+
+    public function doforgotPass(AuthUserRepositories $authUserRepositories): RedirectResponse
+    {
+        try {
+            if ($user = User::where('email', request()->input('email'))->first()) {
+                $authUserRepositories->forgotPasswordRepositories();
+            } else {
+                Session::flash('error', 'Email Anda Tidak Terdaftar');
+                return Redirect::route('user.forgot_password');
+            }
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            return Errorlog::create($mapErrorLogs);
+        }
+    }
+
+    public function checkCodeReset(): View
+    {
+        return view('');
+    }
+
+    public function docheckCodeReset()
+    {
     }
 }

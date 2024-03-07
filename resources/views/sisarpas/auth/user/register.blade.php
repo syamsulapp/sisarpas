@@ -14,7 +14,7 @@
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
                 style="background: #8f0d04">
                 <div class="featured-image mb-3">
-                    <img src="{{ asset('sisarpas/assets/img/1.png') }}" class="img-fluid" style="width: 250px" />
+                    <img src="{{ asset('sisarpas/assets/img/itera-new.png') }}" class="img-fluid" style="width: 250px" />
                 </div>
                 <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600">Be
                     Verified</p>
@@ -109,12 +109,12 @@
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between">
                             <!-- <div class="form-check">
-                                                                                                                                                                                <input type="checkbox" class="form-check-input" id="formCheck" />
-                                                                                                                                                                                <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
-                                                                                                                                                                            </div>
-                                                                                                                                                                            <div class="forgot">
-                                                                                                                                                                                <small><a href="#">Forgot Password?</a></small>
-                                                                                                                                </div> -->
+                                                                                                                                                                                    <input type="checkbox" class="form-check-input" id="formCheck" />
+                                                                                                                                                                                    <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="forgot">
+                                                                                                                                                                                    <small><a href="#">Forgot Password?</a></small>
+                                                                                                                                    </div> -->
                         </div>
                         <div class="input-group mb-3">
                             <button class="btn-primary w-100 fs-6">Daftar</button>
