@@ -31,6 +31,15 @@
                         <h2>Forgot Password?</h2>
                         <p>No worries, we'll send you reset instructions</p>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $errors)
+                                <ul>
+                                    <li> {{ $errors }}</li>
+                                </ul>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
                             <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
@@ -65,7 +74,8 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <form action="#">
+                                    <form action="{{ route('user.forgot_password') }}" method="POST">
+                                        @csrf
                                         <div class="form-group mb-4" style="text-align: center">
                                             <img src="{{ asset('sisarpas/assets/img/Mail-icon.png') }}" />
                                         </div>
@@ -75,12 +85,13 @@
                                                 <b>email@gmail.com</b>
                                             </p>
                                         </div>
-                                    </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="pass_otp.html" class="btn btn-info">Go it</a>
-                                    <a href="{{ route('user.login') }}" class="btn btn-secondary">Back</a>
+                                    <button type="submit" class="btn btn-info">Go it</button>
+                                    <a href="{{ route('user.forgot_password') }}" class="btn btn-secondary">Back</a>
                                 </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>

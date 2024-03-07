@@ -23,12 +23,12 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 
     public function rules(): array //validation rules
     {
-        if (request()->isMethod('post')) { //login
+        if (request()->is('user/auth/login')) { //login user
             return [
                 'email' => 'required|email',
                 'password' => 'required',
             ];
-        } else if (request()->isMethod('patch')) { //register
+        } else if (request()->is('user/auth/register')) { //register user
             return [
                 'name' => 'required',
                 'nim' => 'required',
@@ -36,6 +36,10 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
                 'password' => 'required|min:8',
                 'confirm_password' => 'required|same:password|min:8',
                 'roles_id' => 'integer',
+            ];
+        } else if (request()->is('user/auth/forgot_password')) { // reset password user
+            return [
+                'email' => 'required|email'
             ];
         } else {
             return [];

@@ -96,7 +96,7 @@ class AuthUserController extends Controller
         return view('sisarpas.auth.user.reset-password.index');
     }
 
-    public function doforgotPass()
+    public function doforgotPass(AuthUserRepositories $authUserRepositories)
     {
     }
 
