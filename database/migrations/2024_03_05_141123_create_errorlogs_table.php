@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('errorlogs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_admin');
-            $table->string('email_admin');
-            $table->string('password_admin');
-            $table->foreignId('roles_id')->references('id')->on('roles');
+            $table->text('message');
+            $table->string('route');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('errorlogs');
     }
 };
