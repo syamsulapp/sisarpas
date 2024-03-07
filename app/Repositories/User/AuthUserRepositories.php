@@ -100,5 +100,6 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 
     public function forgotPasswordRepositories(): void
     {
+        dd(request()->input('email'));
     }
 }

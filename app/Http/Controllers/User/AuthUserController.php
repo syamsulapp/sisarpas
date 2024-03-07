@@ -99,7 +99,7 @@ class AuthUserController extends Controller
             if ($user = User::where('email', request()->input('email'))->first()) {
                 $authUserRepositories->forgotPasswordRepositories();
             } else {
-                Session::flash('error', 'Email Anda Tidak Terdaftar');
+                Session::flash('error', 'Email Pada Account Anda Tidak Terdaftar');
                 return Redirect::route('user.forgot_password');
             }
         } catch (\Exception $errors) {
