@@ -14,7 +14,7 @@
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
                 style="background: #8f0d04">
                 <div class="featured-image mb-3">
-                    <img src="{{ asset('sisarpas/assets/img/1.png') }}" class="img-fluid" style="width: 250px" />
+                    <img src="{{ asset('sisarpas/assets/img/itera-new.png') }}" class="img-fluid" style="width: 250px" />
                 </div>
                 <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600">Be
                     Verified</p>
