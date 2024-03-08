@@ -33,8 +33,8 @@
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-4">
-                        <h2>Password Reset</h2>
-                        <p>we sent a token to <b>Your Email Then Please Check Your Email About The Tokens</b></p>
+                        <h2>Reset Password</h2>
+                        <p>Token Untuk Reset Password Telah Dikirim K Email, Harap Cek Di Email Anda </b></p>
                     </div>
                     @session('success')
                         <div class="alert alert-success" role="alert">
@@ -83,8 +83,7 @@
                     </a>
                 </div>
                 <div class="row">
-                    <small>Didn't receive the email? <a href="{{ route('user.forgot_password') }}">Click to
-                            resend!</a></small>
+                    <small>Belum Mendapatkan Token? <a href="{{ route('user.forgot_password') }}">Minta Di Sini!</a></small>
                 </div>
             </div>
         </div>

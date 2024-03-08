@@ -46,7 +46,12 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             ];
         } else if (request()->is('user/auth/reset_password')) { // reset password
             return [
-                'token' => 'required'
+                'token1' => 'required',
+                'token2' => 'required',
+                'token3' => 'required',
+                'token4' => 'required',
+                'token5' => 'required',
+                'token6' => 'required',
             ];
         } else {
             return [];

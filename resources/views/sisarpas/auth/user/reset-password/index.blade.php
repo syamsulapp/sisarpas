@@ -29,7 +29,8 @@
                 <div class="row align-items-center">
                     <div class="header-text mb-4">
                         <h2>Forgot Password?</h2>
-                        <p>No worries, we'll send you reset instructions</p>
+                        <p>Setelah melakukan permintaan reset password,selanjutnya sistem akan mengirimkan token dan link
+                            reset ke email anda,harap cek email</p>
                     </div>
                     @session('success')
                         <div class="alert alert-success" role="alert">

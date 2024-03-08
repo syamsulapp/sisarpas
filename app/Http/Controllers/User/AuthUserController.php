@@ -122,6 +122,10 @@ class AuthUserController extends Controller
         //     return Redirect::route('user.reset_password');
         // }
 
-        dd(request()->input('token'));
+        $x = 1;
+        while ($x <= 6) {
+            return request()->input("token{$x}");
+            $x++;
+        }
     }
 }
