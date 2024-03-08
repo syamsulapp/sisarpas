@@ -89,6 +89,10 @@ class AuthUserController extends Controller
         }
     }
 
+    /**
+     * begin::forgot and reset pass
+     */
+
     public function forgotPass(): View
     {
         return view('sisarpas.auth.user.reset-password.index');
@@ -106,26 +110,65 @@ class AuthUserController extends Controller
         }
     }
 
-    public function resetPass(): View
+    public function CheckVerifyToken(): View
     {
-        return view('sisarpas.auth.user.reset-password.change');
+        return view('sisarpas.auth.user.reset-password.verify_token');
     }
 
-    public function doResetPass(AuthUserRepositories $authUserRepositories)
+    public function doCheckVerifyToken()
     {
-        // if ($reset = Password_reset_token::where('token', request()->input('token'))->first()) {
-        //     $authUserRepositories->resetPasswordRepositories($reset);
-        //     Session::flash('success', 'Berhasil Reset Password Silahkan Login Kembali');
-        //     return Redirect::route('user.login');
-        // } else {
-        //     Session::flash('error', 'token invalid');
-        //     return Redirect::route('user.reset_password');
-        // }
-
-        $x = 1;
-        while ($x <= 6) {
-            return request()->input("token{$x}");
-            $x++;
+        try {
+            /**
+             *  gabung setiap input token
+             *  ubah string token menjadi integer token
+             *  jika token valid maka jalankan fungsi reset password
+             *  akan tetapi jika invalid maka menampilkan pesan token invalid
+             */
+            $token1 = request()->input('token1');
+            $token2 = request()->input('token2');
+            $token3 = request()->input('token3');
+            $token4 = request()->input('token4');
+            $token5 = request()->input('token5');
+            $token6 = request()->input('token6');
+            $getToken = "$token1$token2$token3$token4$token5$token6";
+            $intToken = (int)$getToken;
+            $token = Password_reset_token::where('token', $intToken)->firstOrFail();
+            $mapSuccessLog = array('message' => "Email {$token['email']} token valid dan diarahkan kehalaman reset password", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
+            Session::flash('success', 'token benar harap reset password anda');
+            return Redirect::route('user.reset_password', $token['token']);
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+            Session::flash('error', 'token invalid credentials');
+            return Redirect::route('user.check_verify_token');
         }
     }
+
+    public function resetPass($token)
+    {
+        /**
+         * cek token sebelum melakukan reset password pastikan token benar
+         * jika token benar maka akan diarahkan kehalaman reset password
+         * akan tetapi jika token invalid maka balik ke halaman input token
+         */
+        try {
+            $token = Password_reset_token::where('token', $token)->firstOrFail();
+            return view('sisarpas.auth.user.reset-password.reset_pass', compact('token'));
+        } catch (\Exception $error) {
+            $mapErrorLogs = array('message' => $error->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+            Session::flash('error', 'token invalid credentials');
+            return Redirect::route('user.check_verify_token');
+        }
+    }
+
+
+    public function doResetPass(AuthUserRepositories $authUserRepositories, $token)
+    {
+    }
+
+    /**
+     * end::forgot and reset pass
+     */
 }

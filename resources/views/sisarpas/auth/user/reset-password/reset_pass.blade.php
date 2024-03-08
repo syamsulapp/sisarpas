@@ -33,8 +33,8 @@
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-4">
-                        <h2>Reset Password</h2>
-                        <p>Token Untuk Reset Password Telah Dikirim K Email, Harap Cek Di Email Anda </b></p>
+                        <h2>Set New password</h2>
+                        <p>Must be at least 8 characters</p>
                     </div>
                     @session('success')
                         <div class="alert alert-success" role="alert">
@@ -55,39 +55,47 @@
                             @endforeach
                         </div>
                     @endif
-                    <form action="{{ route('user_reset_password') }}" method="POST">
-                        @csrf
+                    <form action="{{ route('user.reset_password', $token['email']) }}" method="POST">
                         <div class="input-group mb-3">
-                            <div class="otp-field mb-4">
-                                <input name="token1" type="number" />
-                                <input name="token2" type="number" disabled />
-                                <input name="token3" type="number" disabled />
-                                <input name="token4" type="number" disabled />
-                                <input name="token5" type="number" disabled />
-                                <input name="token6" type="number" disabled />
-                            </div>
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="Password" />
+                        </div>
+                        <div class="input-group mb-1">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" name="password_confirmation"
+                                class="form-control form-control-lg bg-light fs-6" placeholder="Confirm password" />
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
                         <div class="input-group mb-3">
-                            <button type="submit" class="btn-primary w-100 fs-6">Continue</button>
+                            <button type="submit" class="btn-primary w-100 fs-6">Reset password</button>
+                        </div>
                     </form>
-                </div>
-                <div class="input-group mb-3">
-                    <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
-                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                            <polyline points="9 10 4 15 9 20"></polyline>
-                            <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
-                        </svg>
-                        <small>Back to login</small>
-                    </a>
-                </div>
-                <div class="row">
-                    <small>Belum Mendapatkan Token? <a href="{{ route('user.forgot_password') }}">Minta Di Sini!</a></small>
+                    <div class="input-group mb-3">
+                        <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <polyline points="9 10 4 15 9 20"></polyline>
+                                <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                            </svg>
+                            <small>Back to login</small>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
