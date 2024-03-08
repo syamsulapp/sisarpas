@@ -3,7 +3,9 @@
 namespace App\Repositories\User;
 
 use App\Interface\User\AuthUserInterface;
+use App\Mail\ForgotPassword;
 use App\Models\Errorlog;
+use App\Models\Password_reset_token;
 use App\Models\Successlog;
 use App\Models\User;
 use Carbon\Carbon;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthUserRepositories extends FormRequest implements AuthUserInterface
@@ -98,8 +101,30 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         Auth::guard('user')->logout();
     }
 
-    public function forgotPasswordRepositories(): void
+
+    /**
+     * begin:: reset password
+     */
+
+    private static function createTokenReset($user): void
     {
-        dd(request()->input('email'));
+        Password_reset_token::create([
+            'email' => $user->email,
+            'token' => random_int(100000, 999999),
+        ]);
     }
+
+    public function forgotPasswordRepositories($user): void
+    {
+        try {
+            Mail::to($user->email)->send(new ForgotPassword($user, $this->createTokenReset($user)));
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+        }
+    }
+
+    /**
+     * end:: reset password
+     */
 }

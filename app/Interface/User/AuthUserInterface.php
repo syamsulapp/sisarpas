@@ -7,5 +7,5 @@ interface AuthUserInterface
     public function loginRepositories();
     public function registerRepositories(): void;
     public function logoutRepositories(): void;
-    public function forgotPasswordRepositories(): void;
+    public function forgotPasswordRepositories($email): void;
 }
