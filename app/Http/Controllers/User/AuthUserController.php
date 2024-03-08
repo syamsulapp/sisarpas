@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Carbon\Carbon;
 use App\Models\Errorlog;
 use App\Http\Controllers\Controller;
+use App\Models\Password_reset_token;
 use App\Models\Successlog;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -107,10 +108,18 @@ class AuthUserController extends Controller
 
     public function resetPass(): View
     {
-        return view('');
+        return view('sisarpas.auth.user.reset-password.change');
     }
 
-    public function doResetPass()
+    public function doResetPass(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
+        if ($reset = Password_reset_token::where('token', request()->input('token'))->first()) {
+            $authUserRepositories->resetPasswordRepositories($reset);
+            Session::flash('success', 'Berhasil Reset Password Silahkan Login Kembali');
+            return Redirect::route('user.login');
+        } else {
+            Session::flash('error', 'token invalid');
+            return Redirect::route('user.reset_password');
+        }
     }
 }

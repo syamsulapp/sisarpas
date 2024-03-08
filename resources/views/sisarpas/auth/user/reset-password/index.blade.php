@@ -1,6 +1,6 @@
 @extends('sisarpas.auth.layouts.app')
 
-@section('title', 'Reset Password')
+@section('title', 'Forgot Password')
 
 @section('content')
     <!----------------------- Main Container -------------------------->

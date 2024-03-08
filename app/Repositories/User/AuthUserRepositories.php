@@ -40,9 +40,13 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
                 'confirm_password' => 'required|same:password|min:8',
                 'roles_id' => 'integer',
             ];
-        } else if (request()->is('user/auth/forgot_password')) { // reset password user
+        } else if (request()->is('user/auth/forgot_password')) { // forgot password
             return [
                 'email' => 'required|email',
+            ];
+        } else if (request()->is('user/auth/reset_password')) { // reset password
+            return [
+                'token' => 'required'
             ];
         } else {
             return [];
@@ -134,8 +138,9 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         }
     }
 
-    public function resetPasswordRepositories(): void
+    public function resetPasswordRepositories($reset): void
     {
+        dd($reset);
     }
     /**
      * end:: reset and change password
