@@ -111,15 +111,17 @@ class AuthUserController extends Controller
         return view('sisarpas.auth.user.reset-password.change');
     }
 
-    public function doResetPass(AuthUserRepositories $authUserRepositories): RedirectResponse
+    public function doResetPass(AuthUserRepositories $authUserRepositories)
     {
-        if ($reset = Password_reset_token::where('token', request()->input('token'))->first()) {
-            $authUserRepositories->resetPasswordRepositories($reset);
-            Session::flash('success', 'Berhasil Reset Password Silahkan Login Kembali');
-            return Redirect::route('user.login');
-        } else {
-            Session::flash('error', 'token invalid');
-            return Redirect::route('user.reset_password');
-        }
+        // if ($reset = Password_reset_token::where('token', request()->input('token'))->first()) {
+        //     $authUserRepositories->resetPasswordRepositories($reset);
+        //     Session::flash('success', 'Berhasil Reset Password Silahkan Login Kembali');
+        //     return Redirect::route('user.login');
+        // } else {
+        //     Session::flash('error', 'token invalid');
+        //     return Redirect::route('user.reset_password');
+        // }
+
+        dd(request()->input('token'));
     }
 }

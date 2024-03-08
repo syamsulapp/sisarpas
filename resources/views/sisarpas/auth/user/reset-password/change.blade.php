@@ -55,37 +55,40 @@
                             @endforeach
                         </div>
                     @endif
-                    <div class="input-group mb-3">
-                        <div class="otp-field mb-4">
-                            <input type="number" />
-                            <input type="number" disabled />
-                            <input type="number" disabled />
-                            <input type="number" disabled />
-                            <input type="number" disabled />
-                            <input type="number" disabled />
+                    <form action="{{ route('user_reset_password') }}" method="POST">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <div class="otp-field mb-4">
+                                <input name="token" type="number" />
+                                <input name="token" type="number" disabled />
+                                <input name="token" type="number" disabled />
+                                <input name="token" type="number" disabled />
+                                <input name="token" type="number" disabled />
+                                <input name="token" type="number" disabled />
+                            </div>
                         </div>
-                    </div>
-                    <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
-                    <div class="input-group mb-3">
-                        <button class="btn-primary w-100 fs-6">Continue</button>
-                    </div>
-                    <div class="input-group mb-3">
-                        <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                <polyline points="9 10 4 15 9 20"></polyline>
-                                <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
-                            </svg>
-                            <small>Back to login</small>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <small>Didn't receive the email? <a href="{{ route('user.forgot_password') }}">Click to
-                                resend!</a></small>
-                    </div>
+                        <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
+                        <div class="input-group mb-3">
+                            <button type="submit" class="btn-primary w-100 fs-6">Continue</button>
+                    </form>
+                </div>
+                <div class="input-group mb-3">
+                    <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                            <polyline points="9 10 4 15 9 20"></polyline>
+                            <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                        </svg>
+                        <small>Back to login</small>
+                    </a>
+                </div>
+                <div class="row">
+                    <small>Didn't receive the email? <a href="{{ route('user.forgot_password') }}">Click to
+                            resend!</a></small>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
