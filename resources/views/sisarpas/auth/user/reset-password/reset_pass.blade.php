@@ -69,6 +69,18 @@
                             <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="email" value="{{ $token['email'] }}" hidden />
                         </div>
+                        <div class="input-group mb-3" hidden>
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <input type="number" name="token" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="token" value="{{ $token['token'] }}" hidden />
+                        </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
                                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
@@ -98,8 +110,9 @@
                     </form>
                     <div class="input-group mb-3">
                         <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                class="css-i6dzq1">
                                 <polyline points="9 10 4 15 9 20"></polyline>
                                 <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
                             </svg>
