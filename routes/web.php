@@ -45,7 +45,7 @@ Route::prefix('user')->group(function () {
         Route::post('check_verify_token', [AuthUserController::class, 'doCheckVerifyToken'])->name('user.check_verify_token');
         /**check reset password */
         Route::get('reset/{token}/password', [AuthUserController::class, 'resetPass'])->name('user.reset_password');
-        Route::post('reset/{token}/password', [AuthUserController::class, 'doResetPass'])->name('user.reset_password');
+        Route::post('reset_password', [AuthUserController::class, 'doResetPass'])->name('user_reset_password');
     });
     /**
      * fitur user menggunakan session

@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Repositories\User\AuthUserRepositories;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -164,8 +165,11 @@ class AuthUserController extends Controller
     }
 
 
-    public function doResetPass(AuthUserRepositories $authUserRepositories, $token)
+    public function doResetPass(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
+        $authUserRepositories->resetPasswordRepositories();
+        Session::flash('success', 'Berhasil Ubah Password Harap Login kembali');
+        return Redirect::route('user.login');
     }
 
     /**

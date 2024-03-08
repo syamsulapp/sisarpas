@@ -40,9 +40,13 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
                 'confirm_password' => 'required|same:password|min:8',
                 'roles_id' => 'integer',
             ];
-        } else if (request()->is('user/auth/forgot_password')) { // forgot password
+        } else if (request()->is('user/auth/forgot_password')) {
             return [
                 'email' => 'required|email',
+            ];
+        } else if (request()->is('user/auth/reset_password')) { // forgot password
+            return [
+                'password' => 'required|confirmed|min:8',
             ];
         } else {
             return [];
@@ -55,7 +59,8 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
             'required' => ':attribute wajib di isi',
             'same' => 'password tidak sama',
             'min' => ':attribute minimal 8 karakter',
-            'unique' => ':attribute sudah ada'
+            'unique' => ':attribute sudah ada',
+            'confirmed' => 'password tidak sama',
         ];
     }
 
@@ -126,7 +131,7 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         try {
             $link_reset_password = env('APP_URL') . '/' . 'user/auth/check_verify_token'; // link mengarah ke cek token reset password
             Mail::to($user->email)->send(new ForgotPassword($user, $this->createTokenReset($user), $link_reset_password));
-            $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil reset password", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil meminta perubahan password", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Successlog::create($mapSuccessLog);
         } catch (\Exception $errors) {
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
@@ -134,11 +139,13 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         }
     }
 
-    public function resetPasswordRepositories($user): void
+    public function resetPasswordRepositories(): void
     {
         try {
-            $user = User::where('email', $user['email'])->firstOrFail();
-            $user->update(['password' => Hash::make('12345')]);
+            $user = User::where('email', request()->input('email'))->firstOrFail();
+            $user->update(['password' => Hash::make(request()->input('password'))]);
+            $mapSuccessLog = array('message' => "Email atas nama {$user->email} berhasil mengubah password", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
         } catch (\Exception $errors) {
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Errorlog::create($mapErrorLogs);
