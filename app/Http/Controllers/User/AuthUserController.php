@@ -95,16 +95,13 @@ class AuthUserController extends Controller
 
     public function doforgotPass(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
-        try {
-            if ($user = User::where('email', request()->input('email'))->first()) {
-                $authUserRepositories->forgotPasswordRepositories($user);
-            } else {
-                Session::flash('error', 'Email Pada Account Anda Tidak Terdaftar');
-                return Redirect::route('user.forgot_password');
-            }
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
+        if ($user = User::where('email', request()->input('email'))->first()) {
+            $authUserRepositories->forgotPasswordRepositories($user);
+            Session::flash('success', 'Token Dan Link Reset Password Dikirim Ke Email Anda');
+            return Redirect::route('user.forgot_password');
+        } else {
+            Session::flash('error', 'Email Tidak Terdaftar');
+            return Redirect::route('user.forgot_password');
         }
     }
 

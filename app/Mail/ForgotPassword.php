@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ForgotPassword extends Mailable
@@ -17,41 +14,17 @@ class ForgotPassword extends Mailable
      * Create a new message instance.
      */
 
-    protected $user, $token;
+    protected $user, $token, $link_reset_password;
 
-    public function __construct($user, $token)
+    public function __construct($user, $token, $link_reset_password)
     {
         $this->user = $user['name'];
-        $this->token = $token;
+        $this->token = $token['token'];
+        $this->link_reset_password = $link_reset_password;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Forgot Password',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject('Reset Password Tokens')->view('sisarpas.forgot_password.index', ['name' => $this->user, 'token' => $this->token, 'url' => $this->link_reset_password]);
     }
 }

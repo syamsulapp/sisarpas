@@ -41,8 +41,8 @@ Route::prefix('user')->group(function () {
         Route::get('forgot_password', [AuthUserController::class, 'forgotPass'])->name('user.forgot_password');
         Route::post('forgot_password', [AuthUserController::class, 'doforgotPass'])->name('user.forgot_password');
         /**check reset password */
-        Route::get('reset_password', [AuthUserController::class, 'resetPass'])->name('user.check_code_reset');
-        Route::post('reset_password', [AuthUserController::class, 'doResetPass'])->name('user.check_code_reset');
+        Route::get('reset_password', [AuthUserController::class, 'resetPass'])->name('user.reset_password');
+        Route::post('reset_password', [AuthUserController::class, 'doResetPass'])->name('user_reset_password');
     });
     /**
      * fitur user menggunakan session

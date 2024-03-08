@@ -103,28 +103,41 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 
 
     /**
-     * begin:: reset password
+     * begin:: reset and change password
      */
 
-    private static function createTokenReset($user): void
+    private static function createTokenReset($user)
     {
-        Password_reset_token::create([
-            'email' => $user->email,
-            'token' => random_int(100000, 999999),
-        ]);
+
+        $tokens =  Password_reset_token::updateOrCreate(
+            [
+                'email' => $user->email
+            ],
+            [
+                'email' => $user->email,
+                'token' => random_int(100000, 999999)
+            ]
+        );
+        return $tokens;
     }
 
     public function forgotPasswordRepositories($user): void
     {
         try {
-            Mail::to($user->email)->send(new ForgotPassword($user, $this->createTokenReset($user)));
+            $link_reset_password = env('APP_URL') . '/' . 'user/auth/reset_password'; // link redirect to reset password
+            Mail::to($user->email)->send(new ForgotPassword($user, $this->createTokenReset($user), $link_reset_password));
+            $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil reset password", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
         } catch (\Exception $errors) {
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Errorlog::create($mapErrorLogs);
         }
     }
 
+    public function resetPasswordRepositories(): void
+    {
+    }
     /**
-     * end:: reset password
+     * end:: reset and change password
      */
 }
