@@ -1,4 +1,4 @@
-@extends('sisarpas.auth.layouts.app')
+@extends('sisarpas.auth.layouts.app-reset')
 
 @section('title', 'Reset Password')
 
@@ -59,12 +59,12 @@
                         @csrf
                         <div class="input-group mb-3">
                             <div class="otp-field mb-4">
-                                <input name="token" type="number" />
-                                <input name="token" type="number" disabled />
-                                <input name="token" type="number" disabled />
-                                <input name="token" type="number" disabled />
-                                <input name="token" type="number" disabled />
-                                <input name="token" type="number" disabled />
+                                <input name="token1" type="number" />
+                                <input name="token2" type="number" disabled />
+                                <input name="token3" type="number" disabled />
+                                <input name="token4" type="number" disabled />
+                                <input name="token5" type="number" disabled />
+                                <input name="token6" type="number" disabled />
                             </div>
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
