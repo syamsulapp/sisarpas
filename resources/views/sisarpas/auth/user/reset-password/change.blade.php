@@ -34,8 +34,27 @@
                 <div class="row align-items-center">
                     <div class="header-text mb-4">
                         <h2>Password Reset</h2>
-                        <p>we sent a code to <b>admin@gmail.com</b></p>
+                        <p>we sent a token to <b>Your Email Then Please Check Your Email About The Tokens</b></p>
                     </div>
+                    @session('success')
+                        <div class="alert alert-success" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
+                    @session('error')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
+                    @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $errors)
+                                <ul>
+                                    <li> {{ $errors }}</li>
+                                </ul>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="input-group mb-3">
                         <div class="otp-field mb-4">
                             <input type="number" />
