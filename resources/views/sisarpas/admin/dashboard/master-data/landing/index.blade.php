@@ -35,9 +35,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                <th>Tanggal Kembali</th>
-                                                                                                                                                <th>Tujuan</th>
-                                                                                                                                                <th>Keterangan</th> -->
+                                                                                                                                                                                                                    <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                    <th>Tujuan</th>
+                                                                                                                                                                                                                    <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -64,9 +64,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                <th>Tanggal Kembali</th>
-                                                                                                                                                <th>Tujuan</th>
-                                                                                                                                                <th>Keterangan</th> -->
+                                                                                                                                                                                                                    <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                    <th>Tujuan</th>
+                                                                                                                                                                                                                    <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -212,14 +212,14 @@
                                     </td>
                                 </tr>
                                 <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                                                                                        <td>Aksi:</td>
-                                                                                                                                                        <td>
-                                                                                                                                                            <button type="button" class="btn btn-success">
-                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                                                                                Simpan
-                                                                                                                                                            </button>
-                                                                                                                                                        </td>
-                                                                                                                                                    </tr> -->
+                                                                                                                                                                                                                            <td>Aksi:</td>
+                                                                                                                                                                                                                            <td>
+                                                                                                                                                                                                                                <button type="button" class="btn btn-success">
+                                                                                                                                                                                                                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                                                                                    Simpan
+                                                                                                                                                                                                                                </button>
+                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                                                        </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -242,63 +242,78 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalToggleLabel2">Edit Data Peminjam</h5>
+                        <h5 class="modal-title" id="modalToggleLabel2">Create Data Landing</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <tr data-dt-row="99" data-dt-column="2">
-                                    <td>File:</td>
-                                    <td>
-                                        <input type="file" class="form-control" id="defaultFormControlInput"
-                                            placeholder="Please Drop File Here" name="file"
-                                            aria-describedby="defaultFormControlHelp" />
-                                    </td>
+                    <form action="{{ route('admin.dashboard_create_landing') }}" method="POST">
+                        @csrf
+                        <div class="modal-body table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr data-dt-row="99" data-dt-column="2">
+                                        <td>File:</td>
+                                        <td>
+                                            <input type="file" class="form-control @error('file') is-invalid @enderror"
+                                                id="defaultFormControlInput" placeholder="Please Drop File Here"
+                                                name="file" aria-describedby="defaultFormControlHelp" />
+                                            @error('file')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </td>
 
-                                    <td>Type:</td>
-                                    <td>
-                                        <select name="type" id="defaultFormControlInput" class="form-control">
-                                            <option value="">Image</option>
-                                            <option value="">Video</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr data-dt-row="99" data-dt-column="8">
-                                    <td>Status:</td>
-                                    <td>
-                                        <div class="form-check form-check-inline mt-3">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                id="inlineRadio1" value="option1" />
-                                            <label class="form-check-label" for="inlineRadio1">Hide</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                id="inlineRadio2" value="option2" />
-                                            <label class="form-check-label" for="inlineRadio2">Unhide</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                                                                                        <td>Aksi:</td>
-                                                                                                                                                        <td>
-                                                                                                                                                            <button type="button" class="btn btn-success">
-                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                                                                                Simpan
-                                                                                                                                                            </button>
-                                                                                                                                                        </td>
-                                                                                                                                                    </tr> -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
-                            Batal</button>
-                        <button type="button" class="btn btn-success">
-                            <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                            Simpan
-                        </button>
-                    </div>
+                                        <td>Type:</td>
+                                        <td>
+                                            <select name="type" id="defaultFormControlInput"
+                                                class="form-control @error('type') is-invalid @enderror"
+                                                placeholder="Pilih Jenis File">
+                                                <option value="" selected>Pilih Jenis File</option>
+                                                <option value="image">image</option>
+                                                <option value="video">video</option>
+                                            </select>
+                                            @error('type')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="8">
+                                        <td>Status:</td>
+                                        <td>
+                                            <div class="form-check form-check-inline mt-3">
+                                                <input class="form-check-input @error('status') is-invalid @enderror"
+                                                    type="radio" name="status" id="inlineRadio1" value="hide" />
+                                                <label class="form-check-label" for="inlineRadio1">Hide</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input  @error('status') is-invalid @enderror"
+                                                    type="radio" name="status" id="inlineRadio2" value="unhide" />
+                                                <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                            </div>
+                                            @error('status')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </td>
+                                    </tr>
+                                    <!-- <tr data-dt-row="99" data-dt-column="8">
+                                                                                                                                                                                                                        <td>Aksi:</td>
+                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                            <button type="button" class="btn btn-success">
+                                                                                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                                                                                Simpan
+                                                                                                                                                                                                                            </button>
+                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
+                                Batal</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
