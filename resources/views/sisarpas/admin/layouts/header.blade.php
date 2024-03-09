@@ -12,7 +12,7 @@
          <!-- Search -->
          <div class="navbar-nav align-items-center">
              <div class="nav-item d-flex align-items-center">
-                 <p class="fs-5" style="margin-top: 15px;">Dashboard User</p>
+                 <p class="fs-5" style="margin-top: 15px;">Dashboard Admin</p>
              </div>
          </div>
          <!-- /Search -->
