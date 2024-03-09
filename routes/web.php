@@ -93,7 +93,9 @@ Route::prefix('admin')->group(function () {
              * master data dashboard
              */
             Route::prefix('master_data')->group(function () {
-                Route::get('/', [])->name('admin.dashboard.master-data-list');
+                Route::prefix('landing')->group(function () {
+                    Route::get('/', [AdminDashboardController::class, 'landing'])->name('admin.dashboard_landing');
+                });
             });
             /**
              * rekap peminjaman barang dan aula

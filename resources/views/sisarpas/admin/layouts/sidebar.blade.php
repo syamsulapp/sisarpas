@@ -20,8 +20,8 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
 
-        <li class="menu-item active open">
-            <a href="index.html" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/dashboard') ? 'active open' : '' }}">
+            <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
             </a>
@@ -30,10 +30,10 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp;
                 Tables</span></li>
 
-        <li class="menu-item">
-            <a href="peminjaman.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Data Peminjaman</div>
+        <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing') ? 'active open' : '' }}">
+            <a href="{{ route('admin.dashboard_landing') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-world"></i>
+                <div data-i18n="Tables">Landing</div>
             </a>
         </li>
 

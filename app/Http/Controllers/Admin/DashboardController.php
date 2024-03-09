@@ -12,4 +12,9 @@ class DashboardController extends DashboardRepositories
     {
         return view('sisarpas.admin.dashboard.index');
     }
+
+    public function landing()
+    {
+        return view('sisarpas.admin.dashboard.master-data.landing.index');
+    }
 }
