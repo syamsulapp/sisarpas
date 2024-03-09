@@ -27,8 +27,8 @@
             </a>
         </li>
 
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp;
-                Tables</span></li>
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Module ADMIN&amp;
+                SI SARPRAS</span></li>
 
         <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing') ? 'active open' : '' }}">
             <a href="{{ route('admin.dashboard_landing') }}" class="menu-link">
