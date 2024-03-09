@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Landing;
-use App\Repositories\Admin\DashboardRepositories;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use App\Repositories\Admin\DashboardRepositories;
+use Illuminate\Http\RedirectResponse;
 
 class DashboardController extends DashboardRepositories
 {
@@ -16,13 +19,14 @@ class DashboardController extends DashboardRepositories
 
     public function landing(): View
     {
-        $landing = Landing::orderByDesc('id');
-
+        $landing = Landing::orderBy('id', 'desc')->get();
         return view('sisarpas.admin.dashboard.master-data.landing.index', compact('landing'));
     }
 
-    public function doCreateLanding()
+    public function doCreateLanding(Request $request): RedirectResponse
     {
+        $this->createLandingRepositories($request);
+        return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil create data landing');
     }
 
     public function doUpdateLanding()

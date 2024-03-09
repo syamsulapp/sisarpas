@@ -4,5 +4,5 @@ namespace App\Interface\Admin;
 
 interface DashboardInterface
 {
-    public function createLandingRepositories(): void;
+    public function createLandingRepositories($request): void;
 }
