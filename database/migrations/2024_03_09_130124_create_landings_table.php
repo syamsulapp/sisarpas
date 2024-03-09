@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('landings', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable();
-            $table->string('video')->nullable();
+            $table->string('file');
             $table->enum('type', ['image', 'video']);
             $table->enum('status', ['hide', 'unhide']);
             $table->timestamps();

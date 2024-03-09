@@ -5,26 +5,24 @@
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Peminjaman /</span> Alat dan Barang SARPRAS ITERA
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Landing /</span> Website Si Sarpras
         </h4>
 
         <!-- DataTable with Buttons -->
         <div class="card">
-            <h5 class="card-header">Daftar Peminjaman Barang SARPRAS</h5>
+            <h5 class="card-header">Daftar Data Landing SARPRAS</h5>
             <div class="table-responsive text-nowrap">
                 <table id="example" class="table" style="width: 100%">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ID Peminjaman</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Barang Dipinjam</th>
+                            <th>File</th>
+                            <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                            <th>Tanggal Kembali</th>
-                                                            <th>Tujuan</th>
-                                                            <th>Keterangan</th> -->
+                                                                                    <th>Tanggal Kembali</th>
+                                                                                    <th>Tujuan</th>
+                                                                                    <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -38,107 +36,20 @@
                                 1
                             </td>
                             <td>System Architect</td>
-                            <td>Edinburgh</td>
                             <td>61</td>
-                            <td>2011-04-25</td>
-                            <td><span class="badge bg-label-primary me-1">Active</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                2
-                            </td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>63</td>
-                            <td>2011-07-25</td>
-                            <td><span class="badge bg-label-success me-1">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                3
-                            </td>
-                            <td>Junior Technical Author</td>
-                            <td>San Francisco</td>
-                            <td>66</td>
-                            <td>2009-01-12</td>
-                            <td><span class="badge bg-label-success me-1">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                4
-                            </td>
-                            <td>Senior Javascript Developer</td>
-                            <td>Edinburgh</td>
-                            <td>22</td>
-                            <td>2012-03-29</td>
-                            <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                5
-                            </td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>33</td>
-                            <td>2008-11-28</td>
-                            <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                6
-                            </td>
-                            <td>Integration Specialist</td>
-                            <td>New York</td>
-                            <td>61</td>
-                            <td>2012-12-02</td>
-                            <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                    data-bs-toggle="modal" data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                7
-                            </td>
-                            <td>Sales Assistant</td>
-                            <td>San Francisco</td>
-                            <td>59</td>
-                            <td>2012-08-06</td>
-                            <td><span class="badge bg-label-warning me-1">Pending</span></td>
+                            <td><span class="badge bg-label-danger me-1">Hide</span></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>ID Peminjaman</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Barang Dipinjam</th>
+                            <th>File</th>
+                            <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                            <th>Tanggal Kembali</th>
-                                                            <th>Tujuan</th>
-                                                            <th>Keterangan</th> -->
+                                                                                    <th>Tanggal Kembali</th>
+                                                                                    <th>Tujuan</th>
+                                                                                    <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -284,14 +195,14 @@
                                     </td>
                                 </tr>
                                 <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                    <td>Aksi:</td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-success">
-                                                                            <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                            Simpan
-                                                                        </button>
-                                                                    </td>
-                                                                </tr> -->
+                                                                                            <td>Aksi:</td>
+                                                                                            <td>
+                                                                                                <button type="button" class="btn btn-success">
+                                                                                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                    Simpan
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr> -->
                             </tbody>
                         </table>
                     </div>
