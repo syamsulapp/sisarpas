@@ -1,9 +1,14 @@
-@extends('sisarpas.auth.layouts.app')
+@extends('sisarpas.auth.layouts.app-reset')
 
-@section('title', 'Forgot Password')
+@section('title', 'Reset Password')
+
+@push('css_reset_password')
+    <link rel="stylesheet" href="{{ asset('sisarpas/assets/css/boostraps.css') }}" />
+@endpush
 
 @section('content')
     <!----------------------- Main Container -------------------------->
+
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <!----------------------- Login Container -------------------------->
 
@@ -28,9 +33,8 @@
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-4">
-                        <h2>Forgot Password?</h2>
-                        <p>Setelah melakukan permintaan reset password,selanjutnya sistem akan mengirimkan token dan link
-                            reset ke email anda,harap cek email</p>
+                        <h2>Set New password</h2>
+                        <p>Must be at least 8 characters</p>
                     </div>
                     @session('success')
                         <div class="alert alert-success" role="alert">
@@ -51,9 +55,9 @@
                             @endforeach
                         </div>
                     @endif
-                    <form action="{{ route('user.forgot_password') }}" method="POST">
+                    <form action="{{ route('user_reset_password') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" hidden>
                             <span class="input-group-text" id="basic-addon1">
                                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
                                     fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
@@ -63,55 +67,64 @@
                                 </svg>
                             </span>
                             <input type="email" name="email" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Email address" />
-
+                                placeholder="email" value="{{ $token['email'] }}" hidden />
+                        </div>
+                        <div class="input-group mb-3" hidden>
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <input type="number" name="token" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="token" value="{{ $token['token'] }}" hidden />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6"
+                                placeholder="Password" />
+                        </div>
+                        <div class="input-group mb-1">
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#8F0D04" stroke-width="3"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" name="password_confirmation"
+                                class="form-control form-control-lg bg-light fs-6" placeholder="Confirm password" />
                         </div>
                         <div class="input-group mb-4 mt-3 d-flex justify-content-between"></div>
                         <div class="input-group mb-3">
-                            <button class="btn-primary w-100 fs-6" data-toggle="modal">Reset
-                                password</button>
+                            <button type="submit" class="btn-primary w-100 fs-6">Reset password</button>
                         </div>
                     </form>
                     <div class="input-group mb-3">
                         <a href="{{ route('user.login') }}" class="btn btn-lg btn-light w-100 fs-6">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                class="css-i6dzq1">
                                 <polyline points="9 10 4 15 9 20"></polyline>
                                 <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
                             </svg>
                             <small>Back to login</small>
                         </a>
                     </div>
-
-                    <!-- Modal -->
-                    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <form action="{{ route('user.forgot_password') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group mb-4" style="text-align: center">
-                                            <img src="{{ asset('sisarpas/assets/img/Mail-icon.png') }}" />
-                                        </div>
-                                        <div class="satu" style="text-align: center">
-                                            <h4 style="font-weight: bold">Reset email sent</h4>
-                                            <p class="mb-4">We hava just sent an email with a password reset link to
-                                                <b>email@gmail.com</b>
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-info">Go it</button>
-                                            <a href="{{ route('user.forgot_password') }}" class="btn btn-secondary">Back</a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end modal --> --}}
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('script_reset_password')
+    <script type="text/javascript" src="{{ asset('sisarpas/assets/script.js') }}"></script>
+@endpush

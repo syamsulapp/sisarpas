@@ -8,7 +8,7 @@
     <!-- login and register css -->
     <link href="{{ asset('sisarpas/assets/img/logo.png') }}" rel="icon" />
     <link href="{{ asset('sisarpas/assets/img/logo.png') }}" rel="apple-touch-icon" />
-    <link rel="stylesheet" href="{{ asset('sisarpas/assets/boostraps.css') }}" />
+    @stack('css_reset_password')
     <link rel="stylesheet" href="{{ asset('sisarpas/assets/style.css') }}" />
 </head>
 
@@ -18,6 +18,8 @@
     @yield('content')
 
 </body>
+
+@stack('script_reset_password')
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
 </script>

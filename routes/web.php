@@ -40,9 +40,12 @@ Route::prefix('user')->group(function () {
         /**forgot password */
         Route::get('forgot_password', [AuthUserController::class, 'forgotPass'])->name('user.forgot_password');
         Route::post('forgot_password', [AuthUserController::class, 'doforgotPass'])->name('user.forgot_password');
-        /**check code reset */
-        Route::get('check_code_reset', [AuthUserController::class, 'checkCodeReset'])->name('user.check_code_reset');
-        Route::post('check_code_reset', [AuthUserController::class, 'docheckCodeReset'])->name('user.check_code_reset');
+        /**check verify password */
+        Route::get('check_verify_token', [AuthUserController::class, 'CheckVerifyToken'])->name('user.check_verify_token');
+        Route::post('check_verify_token', [AuthUserController::class, 'doCheckVerifyToken'])->name('user.check_verify_token');
+        /**check reset password */
+        Route::get('reset/{token}/password', [AuthUserController::class, 'resetPass'])->name('user.reset_password');
+        Route::post('reset_password', [AuthUserController::class, 'doResetPass'])->name('user_reset_password');
     });
     /**
      * fitur user menggunakan session
