@@ -39,8 +39,8 @@
 
         <li class="menu-item">
             <a href="pengembalian.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Tables">Data Pengembalian</div>
+                <i class="menu-icon tf-icons bx bxs-contact"></i>
+                <div data-i18n="Tables">Contact</div>
             </a>
         </li>
     </ul>
