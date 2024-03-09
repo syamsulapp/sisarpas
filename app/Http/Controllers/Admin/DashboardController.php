@@ -21,7 +21,15 @@ class DashboardController extends DashboardRepositories
         return view('sisarpas.admin.dashboard.master-data.landing.index', compact('landing'));
     }
 
-    public function createLanding()
+    public function doCreateLanding()
+    {
+    }
+
+    public function doUpdateLanding()
+    {
+    }
+
+    public function doDeleteLanding()
     {
     }
 }
