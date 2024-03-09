@@ -20,25 +20,27 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                    <th>Tanggal Kembali</th>
-                                                                                    <th>Tujuan</th>
-                                                                                    <th>Keterangan</th> -->
+                                                                                                <th>Tanggal Kembali</th>
+                                                                                                <th>Tujuan</th>
+                                                                                                <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <button type="button" class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#basicModal">
-                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
-                                </button>
-                                1
-                            </td>
-                            <td>System Architect</td>
-                            <td>61</td>
-                            <td><span class="badge bg-label-danger me-1">Hide</span></td>
-                        </tr>
+                        @foreach ($landing as $l)
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn rounded-pill btn-icon btn-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#basicModal">
+                                        <i class='bx bx-info-circle' style='color:#8f0d04'></i> </button>
+                                    </button>
+                                    {{ $l->id }}
+                                </td>
+                                <td>{{ $l->file }}</td>
+                                <td>{{ $l->Type }}</td>
+                                <td><span class="badge bg-label-danger me-1">{{ $l->status }}</span></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -47,9 +49,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                    <th>Tanggal Kembali</th>
-                                                                                    <th>Tujuan</th>
-                                                                                    <th>Keterangan</th> -->
+                                                                                                <th>Tanggal Kembali</th>
+                                                                                                <th>Tujuan</th>
+                                                                                                <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -195,14 +197,14 @@
                                     </td>
                                 </tr>
                                 <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                            <td>Aksi:</td>
-                                                                                            <td>
-                                                                                                <button type="button" class="btn btn-success">
-                                                                                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                    Simpan
-                                                                                                </button>
-                                                                                            </td>
-                                                                                        </tr> -->
+                                                                                                        <td>Aksi:</td>
+                                                                                                        <td>
+                                                                                                            <button type="button" class="btn btn-success">
+                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                Simpan
+                                                                                                            </button>
+                                                                                                        </td>
+                                                                                                    </tr> -->
                             </tbody>
                         </table>
                     </div>

@@ -17,4 +17,8 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         return [];
     }
+
+    public function createLandingRepositories(): void
+    {
+    }
 }
