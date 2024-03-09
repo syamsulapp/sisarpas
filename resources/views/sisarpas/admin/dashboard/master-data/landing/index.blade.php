@@ -45,9 +45,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                    <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                    <th>Tujuan</th>
-                                                                                                                                                                                                                                    <th>Keterangan</th> -->
+                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                                        <th>Tujuan</th>
+                                                                                                                                                                                                                                        <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -56,7 +56,7 @@
                             <tr>
                                 <td>
                                     <button type="button" class="btn rounded-pill btn-icon btn-secondary"
-                                        data-bs-toggle="modal" data-bs-target="#basicModal">
+                                        data-bs-toggle="modal" data-bs-target="#detailModal">
                                         <i class='bx bx-info-circle' style='color:#8f0d04'></i>
                                     </button>
                                     {{ $l->id }}
@@ -66,8 +66,8 @@
                                 <td>
                                     @if ($l->status != 'unhide')
                                         <span class="badge bg-label-danger me-1"> {{ $l->status }}
-                                    @else
-                                        <span class="badge bg-label-success me-1"> {{ $l->status }}
+                                        @else
+                                            <span class="badge bg-label-success me-1"> {{ $l->status }}
                                     @endif
                                     </span>
                                 </td>
@@ -81,9 +81,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                    <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                    <th>Tujuan</th>
-                                                                                                                                                                                                                                    <th>Keterangan</th> -->
+                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                                        <th>Tujuan</th>
+                                                                                                                                                                                                                                        <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -92,7 +92,7 @@
         </div>
 
         <!-- modal detail -->
-        <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,20 +103,16 @@
                         <table class="table">
                             <tbody>
                                 <tr data-dt-row="99" data-dt-column="2">
-                                    <td>Tanggal Pinjam:</td>
+                                    <td>File:</td>
                                     <td>01 Januari 2024</td>
                                 </tr>
                                 <tr data-dt-row="99" data-dt-column="3">
-                                    <td>Tanggal Kembali:</td>
+                                    <td>Tipe:</td>
                                     <td>03 Maret 2024</td>
                                 </tr>
                                 <tr data-dt-row="99" data-dt-column="4">
-                                    <td>Tujuan:</td>
+                                    <td>Status:</td>
                                     <td>Pribadi</td>
-                                </tr>
-                                <tr data-dt-row="99" data-dt-column="5">
-                                    <td>Keterangan:</td>
-                                    <td>Apapun yang penting saya pinjam</td>
                                 </tr>
                                 <tr data-dt-row="99" data-dt-column="8">
                                     <td>Aksi:</td>
@@ -229,14 +225,14 @@
                                     </td>
                                 </tr>
                                 <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                                                                                                                                                                            <td>Aksi:</td>
-                                                                                                                                                                                                                                            <td>
-                                                                                                                                                                                                                                                <button type="button" class="btn btn-success">
-                                                                                                                                                                                                                                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                                                                                                                                                                    Simpan
-                                                                                                                                                                                                                                                </button>
-                                                                                                                                                                                                                                            </td>
-                                                                                                                                                                                                                                        </tr> -->
+                                                                                                                                                                                                                                                <td>Aksi:</td>
+                                                                                                                                                                                                                                                <td>
+                                                                                                                                                                                                                                                    <button type="button" class="btn btn-success">
+                                                                                                                                                                                                                                                        <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                                                                                                        Simpan
+                                                                                                                                                                                                                                                    </button>
+                                                                                                                                                                                                                                                </td>
+                                                                                                                                                                                                                                            </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -312,14 +308,14 @@
                                         </td>
                                     </tr>
                                     <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                                                                                                                                                                        <td>Aksi:</td>
-                                                                                                                                                                                                                                        <td>
-                                                                                                                                                                                                                                            <button type="button" class="btn btn-success">
-                                                                                                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                                                                                                                                                                Simpan
-                                                                                                                                                                                                                                            </button>
-                                                                                                                                                                                                                                        </td>
-                                                                                                                                                                                                                                    </tr> -->
+                                                                                                                                                                                                                                            <td>Aksi:</td>
+                                                                                                                                                                                                                                            <td>
+                                                                                                                                                                                                                                                <button type="button" class="btn btn-success">
+                                                                                                                                                                                                                                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                                                                                                    Simpan
+                                                                                                                                                                                                                                                </button>
+                                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                                                                        </tr> -->
                                 </tbody>
                             </table>
                         </div>
