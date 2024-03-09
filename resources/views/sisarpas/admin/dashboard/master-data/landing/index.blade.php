@@ -10,7 +10,22 @@
 
         <!-- DataTable with Buttons -->
         <div class="card">
-            <h5 class="card-header">Daftar Data Landing SARPRAS</h5>
+            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+                    <div class="head-label text-center">
+                        <h5 class="card-title mb-0">Daftar Data Landing SARPRAS</h5>
+                    </div>
+                    <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                        <div class="dt-buttons btn-group flex-wrap">
+                            <button class="btn btn-primary" type="button" data-bs-target="#createDataLanding"
+                                data-bs-toggle="modal" data-bs-dismiss="modal">
+                                <span class="tf-icons bx bxs-file-plus me-1"></span>
+                                Tambah Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive text-nowrap">
                 <table id="example" class="table" style="width: 100%">
                     <thead>
@@ -20,9 +35,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                <th>Tanggal Kembali</th>
-                                                                                                                <th>Tujuan</th>
-                                                                                                                <th>Keterangan</th> -->
+                                                                                                                                                <th>Tanggal Kembali</th>
+                                                                                                                                                <th>Tujuan</th>
+                                                                                                                                                <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -49,9 +64,9 @@
                             <th>Type</th>
                             <th>Status</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                <th>Tanggal Kembali</th>
-                                                                                                                <th>Tujuan</th>
-                                                                                                                <th>Keterangan</th> -->
+                                                                                                                                                <th>Tanggal Kembali</th>
+                                                                                                                                                <th>Tujuan</th>
+                                                                                                                                                <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -197,14 +212,14 @@
                                     </td>
                                 </tr>
                                 <!-- <tr data-dt-row="99" data-dt-column="8">
-                                                                                                                        <td>Aksi:</td>
-                                                                                                                        <td>
-                                                                                                                            <button type="button" class="btn btn-success">
-                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                                                                                                                Simpan
-                                                                                                                            </button>
-                                                                                                                        </td>
-                                                                                                                    </tr> -->
+                                                                                                                                                        <td>Aksi:</td>
+                                                                                                                                                        <td>
+                                                                                                                                                            <button type="button" class="btn btn-success">
+                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                Simpan
+                                                                                                                                                            </button>
+                                                                                                                                                        </td>
+                                                                                                                                                    </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -220,6 +235,74 @@
             </div>
         </div>
         <!-- modal edit -->
+
+
+        <!-- modal create -->
+        <div class="modal fade" id="createDataLanding" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalToggleLabel2">Edit Data Peminjam</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr data-dt-row="99" data-dt-column="2">
+                                    <td>File:</td>
+                                    <td>
+                                        <input type="file" class="form-control" id="defaultFormControlInput"
+                                            placeholder="Please Drop File Here" name="file"
+                                            aria-describedby="defaultFormControlHelp" />
+                                    </td>
+
+                                    <td>Type:</td>
+                                    <td>
+                                        <select name="type" id="defaultFormControlInput" class="form-control">
+                                            <option value="">Image</option>
+                                            <option value="">Video</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr data-dt-row="99" data-dt-column="8">
+                                    <td>Status:</td>
+                                    <td>
+                                        <div class="form-check form-check-inline mt-3">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1" />
+                                            <label class="form-check-label" for="inlineRadio1">Hide</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio2" value="option2" />
+                                            <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr data-dt-row="99" data-dt-column="8">
+                                                                                                                                                        <td>Aksi:</td>
+                                                                                                                                                        <td>
+                                                                                                                                                            <button type="button" class="btn btn-success">
+                                                                                                                                                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                                                                                                                                                Simpan
+                                                                                                                                                            </button>
+                                                                                                                                                        </td>
+                                                                                                                                                    </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
+                            Batal</button>
+                        <button type="button" class="btn btn-success">
+                            <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal create -->
     </div>
     <!-- / Content -->
 
