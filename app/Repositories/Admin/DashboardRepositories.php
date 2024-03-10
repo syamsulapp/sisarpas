@@ -51,7 +51,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         try {
             $reqLandingCreate = $request->only('file', 'type', 'status');
             $file = $request->file('file');
-            $namaFile = time() . "_" . $file->getClientOriginalName();
+            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
             $destination_upload = "sisarpas/assets/landingFile";
             $file->move($destination_upload, $namaFile);
             $reqLandingCreate['file'] = $namaFile;
@@ -63,6 +63,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
             Errorlog::create($mapErrorLogs);
         }
+    }
+
+    public function updateLandingRepositories($id): void
+    {
     }
 
     public function deleteLandingRepositories($id): void
