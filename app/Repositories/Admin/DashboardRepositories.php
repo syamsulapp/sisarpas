@@ -64,4 +64,8 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             Errorlog::create($mapErrorLogs);
         }
     }
+
+    public function deleteLandingRepositories($id): void
+    {
+    }
 }

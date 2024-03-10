@@ -33,7 +33,9 @@ class DashboardController extends DashboardRepositories
     {
     }
 
-    public function doDeleteLanding()
+    public function doDeleteLanding($id): RedirectResponse
     {
+        $this->deleteLandingRepositories($id);
+        return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil delete data landing');
     }
 }
