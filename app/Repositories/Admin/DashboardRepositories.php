@@ -30,6 +30,12 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'type' => 'required|string|in:image,video',
                 'status' => 'required|string|in:hide,unhide',
             ];
+        } else if (request()->is('admin/dashboard/master_data/landing/update')) {
+            return [
+                'file' => 'file|image|mimes:jpg,png,jpeg',
+                'type' => 'string|in:image,video',
+                'status' => 'string|required|in:hide,unhide',
+            ];
         } else {
             return [];
         }
@@ -65,8 +71,25 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         }
     }
 
-    public function updateLandingRepositories($id): void
+    public function updateLandingRepositories($request): void
     {
+        try {
+            $landing = Landing::where('id', $request->id)->firstOrFail();
+            $reqLandingCreate = $request->only('file', 'type', 'status');
+            if (isset($reqLandingCreate['file'])) {
+                $file = $request->file('file');
+                $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+                $destination_upload = "sisarpas/assets/landingFile";
+                $file->move($destination_upload, $namaFile);
+                $reqLandingCreate['file'] = $namaFile;
+            }
+            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah update konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
+            $landing->update($reqLandingCreate);
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+        }
     }
 
     public function deleteLandingRepositories($id): void

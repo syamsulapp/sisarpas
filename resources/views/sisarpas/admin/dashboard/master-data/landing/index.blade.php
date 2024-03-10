@@ -46,9 +46,9 @@
                             <th>Status</th>
                             <th>Tanggal Dibuat</th>
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Tujuan</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Keterangan</th> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tujuan</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -86,9 +86,9 @@
                             <th>Tanggal Dibuat</th>
 
                             <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Tujuan</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Keterangan</th> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tujuan</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Keterangan</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
@@ -167,77 +167,85 @@
                             <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr data-dt-row="99" data-dt-column="10">
-                                        <td>Preview Image:</td>
-                                        <td><img id="preview"
-                                                src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
-                                                width="50%" />
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="9">
-                                        <td>File:</td>
-                                        <td>
-                                            <input type="file" id="selectImage"
-                                                class="form-control @error('file') is-invalid @enderror"
-                                                placeholder="Please Drop File Here" name="file"
-                                                aria-describedby="defaultFormControlHelp" />
-                                            @error('file')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="9">
+                        <form action="{{ route('admin.dashboard_update_landing') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
+                            <div class="modal-body table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <input type="number" name="id" value="{{ $l->id }}" hidden>
+                                        <tr data-dt-row="99" data-dt-column="10">
+                                            <td>Preview Image:</td>
+                                            <td><img id="preview"
+                                                    src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
+                                                    width="50%" />
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="9">
+                                            <td>File:</td>
+                                            <td>
+                                                <input type="file" id="selectImage"
+                                                    class="form-control @error('file') is-invalid @enderror"
+                                                    placeholder="Please Drop File Here" name="file"
+                                                    aria-describedby="defaultFormControlHelp" />
+                                                @error('file')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="9">
 
-                                        <td>Type:</td>
-                                        <td>
-                                            <select name="type" id="defaultFormControlInput"
-                                                class="form-control @error('type') is-invalid @enderror"
-                                                placeholder="Pilih Jenis File">
-                                                <option value="" selected>Pilih Jenis File</option>
-                                                <option value="video" {{ $l->type == 'video' ? 'selected' : '' }}>
-                                                    video
-                                                </option>
-                                                <option value="image" {{ $l->type == 'image' ? 'selected' : '' }}>
-                                                    image
-                                                </option>
-                                            </select>
-                                            @error('type')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="8">
-                                        <td>Status:</td>
-                                        <td>
-                                            <div class="form-check form-check-inline mt-3">
-                                                <input class="form-check-input @error('status') is-invalid @enderror"
-                                                    type="radio" name="status" id="inlineRadio1" value="hide" />
-                                                <label class="form-check-label" for="inlineRadio1">hide</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input  @error('status') is-invalid @enderror"
-                                                    type="radio" name="status" id="inlineRadio2" value="unhide" />
-                                                <label class="form-check-label" for="inlineRadio2">Unhide</label>
-                                            </div>
-                                            @error('status')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
-                                Batal</button>
-                            <button type="button" class="btn btn-success">
-                                <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
-                                Simpan
-                            </button>
-                        </div>
+                                            <td>Type:</td>
+                                            <td>
+                                                <select name="type" id="defaultFormControlInput"
+                                                    class="form-control @error('type') is-invalid @enderror"
+                                                    placeholder="Pilih Jenis File">
+                                                    <option value="" selected>Pilih Jenis File</option>
+                                                    <option value="video" {{ $l->type == 'video' ? 'selected' : '' }}>
+                                                        video
+                                                    </option>
+                                                    <option value="image" {{ $l->type == 'image' ? 'selected' : '' }}>
+                                                        image
+                                                    </option>
+                                                </select>
+                                                @error('type')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="8">
+                                            <td>Status:</td>
+                                            <td>
+                                                <div class="form-check form-check-inline mt-3">
+                                                    <input class="form-check-input @error('status') is-invalid @enderror"
+                                                        type="radio" name="status" id="inlineRadio1"
+                                                        value="hide" />
+                                                    <label class="form-check-label" for="inlineRadio1">hide</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input  @error('status') is-invalid @enderror"
+                                                        type="radio" name="status" id="inlineRadio2"
+                                                        value="unhide" />
+                                                    <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                                </div>
+                                                @error('status')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
+                                    Batal</button>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

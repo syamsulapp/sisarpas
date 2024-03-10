@@ -96,7 +96,7 @@ Route::prefix('admin')->group(function () {
                 Route::prefix('landing')->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'landing'])->name('admin.dashboard_landing');
                     Route::post('create', [AdminDashboardController::class, 'doCreateLanding'])->name('admin.dashboard_create_landing');
-                    Route::put('{id}/update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
+                    Route::put('update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
                     Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLanding'])->name('admin.dashboard_delete_landing');
                 });
             });
