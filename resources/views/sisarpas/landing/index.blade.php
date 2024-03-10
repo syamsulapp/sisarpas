@@ -5,22 +5,25 @@
 @section('content-landing')
 
     <!-- ======= beranda Section ======= -->
-    <section id="beranda" class="d-flex align-items-center">
-        <div class="container" data-aos="zoom-out" data-aos-delay="100">
-            <h1>Sistem Informasi</h1>
-            <h1>Sarana dan Prasarana</h1>
-            <h1>ITERA</h1>
-            <h2>
-                Sistem Informasi Sarana dan Prasarana berfungsi untuk mengelola <br />
-                dan memfasilitasi mahasiswa dalam penggunaan sarana dan <br />
-                prasarana di Institut Teknologi Sumatera
-            </h2>
-            <div class="d-flex">
-                <a href="{{ route('peminjaman.alat_barang') }}" class="btn-get-started scrollto">Lihat Fasilitas</a>
+    @foreach ($landing_image as $li)
+        <section id="beranda" class="d-flex align-items-center"
+            style="background: url('{{ asset('/sisarpas/assets/landingFile/' . $li->file) }}') top left">
+            <div class="container" data-aos="zoom-out" data-aos-delay="100">
+                <h1>Sistem Informasi</h1>
+                <h1>Sarana dan Prasarana</h1>
+                <h1>ITERA</h1>
+                <h2>
+                    Sistem Informasi Sarana dan Prasarana berfungsi untuk mengelola <br />
+                    dan memfasilitasi mahasiswa dalam penggunaan sarana dan <br />
+                    prasarana di Institut Teknologi Sumatera
+                </h2>
+                <div class="d-flex">
+                    <a href="{{ route('peminjaman.alat_barang') }}" class="btn-get-started scrollto">Lihat Fasilitas</a>
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- End beranda -->
+        </section>
+        <!-- End beranda -->
+    @endforeach
 
     <main id="main">
         <!-- ======= Layanan Sarana ======= -->
@@ -156,16 +159,35 @@
                 </div>
                 <div class="row" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-lg-6">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form action="{{ route('sisarpas.contact') }}" method="POST" class="php-email-form">
+                            @csrf
                             <div class="text-centers">
                                 <h3>Hubungi Kami</h3>
                             </div>
+                            @session('success')
+                                <div class="alert alert-success" role="alert">
+                                    {{ $value }}
+                                </div>
+                            @endsession
+                            @session('error')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $value }}
+                                </div>
+                            @endsession
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Masukkan Email Anda" required />
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" id="email" placeholder="Masukkan Email Anda" />
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Masukkan Pesan Anda" required></textarea>
+                                <textarea class="form-control  @error('message') is-invalid @enderror" name="message" rows="5"
+                                    placeholder="Masukkan Pesan Anda"></textarea>
+                                @error('message')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="my-3">
                                 <div class="loading">Loading</div>

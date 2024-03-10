@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 class Admin extends Authenticatable
 {
@@ -27,5 +28,10 @@ class Admin extends Authenticatable
     public function roles_id(): HasOne
     {
         return $this->hasOne(Role::class, 'id', 'roles_id'); //roles_id dari table admin ke id table roles
+    }
+
+    public function authAdmin()
+    {
+        return Auth::guard('admin')->user();
     }
 }

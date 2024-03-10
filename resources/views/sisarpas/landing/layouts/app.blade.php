@@ -68,7 +68,7 @@
     <script src="{{ asset('sisarpas/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('sisarpas/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('sisarpas/assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-    <script src="{{ asset('sisarpas/assets/vendor/php-email-form/validate.js') }}"></script>
+    {{-- <script src="{{ asset('sisarpas/assets/vendor/php-email-form/validate.js') }}"></script> --}}
 
     <!-- Template Main JS File -->
     <script src="{{ asset('sisarpas/assets/js/main.js') }}"></script>

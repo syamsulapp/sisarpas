@@ -43,6 +43,13 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('sisarpas/assets/admin/assets/js/config.js') }}"></script>
+
+    <!-- data table -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" />
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
+    <script defer src="{{ asset('sisarpas/assets/admin/assets/vendor/js/script.js') }}"></script>
 </head>
 
 <body>
@@ -76,11 +83,11 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
-
     <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
 
+    <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    @stack('script-image-prev')
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
@@ -99,6 +106,8 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
 </body>
 
 </html>

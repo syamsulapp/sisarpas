@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingControllers::class, 'index'])->name('sisarpas.landing');
+Route::post('contact', [LandingControllers::class, 'contact'])->name('sisarpas.contact');
 
 Route::prefix('peminjaman')->group(function () {
     Route::get('alat_barang', [LandingControllers::class, 'alat_barang'])->name('peminjaman.alat_barang');
@@ -93,7 +94,17 @@ Route::prefix('admin')->group(function () {
              * master data dashboard
              */
             Route::prefix('master_data')->group(function () {
-                Route::get('/', [])->name('admin.dashboard.master-data-list');
+                Route::prefix('landing')->group(function () {
+                    Route::get('/', [AdminDashboardController::class, 'landing'])->name('admin.dashboard_landing');
+                    Route::post('create', [AdminDashboardController::class, 'doCreateLanding'])->name('admin.dashboard_create_landing');
+                    Route::put('update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
+                    Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLanding'])->name('admin.dashboard_delete_landing');
+                });
+                Route::prefix('contacts')->group(function () {
+                    Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');
+                    Route::put('update', [AdminDashboardController::class, 'doUpdateContacts'])->name('admin.dashboard_update_contacts');
+                    Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteContacts'])->name('admin.dashboard_delete_contacts');
+                });
             });
             /**
              * rekap peminjaman barang dan aula
