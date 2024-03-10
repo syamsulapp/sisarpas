@@ -33,9 +33,10 @@ class LandingRepositories extends FormRequest implements LandingInterface
         ];
     }
 
-    public function indexRepositories(): View
+    public function indexRepositories($data): View
     {
-        return view('sisarpas.landing.index');
+        $landing_image = $data;
+        return view('sisarpas.landing.index', compact('landing_image'));
     }
 
     public function contactRepositories(): void

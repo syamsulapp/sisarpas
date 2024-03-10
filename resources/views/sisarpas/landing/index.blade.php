@@ -5,22 +5,25 @@
 @section('content-landing')
 
     <!-- ======= beranda Section ======= -->
-    <section id="beranda" class="d-flex align-items-center">
-        <div class="container" data-aos="zoom-out" data-aos-delay="100">
-            <h1>Sistem Informasi</h1>
-            <h1>Sarana dan Prasarana</h1>
-            <h1>ITERA</h1>
-            <h2>
-                Sistem Informasi Sarana dan Prasarana berfungsi untuk mengelola <br />
-                dan memfasilitasi mahasiswa dalam penggunaan sarana dan <br />
-                prasarana di Institut Teknologi Sumatera
-            </h2>
-            <div class="d-flex">
-                <a href="{{ route('peminjaman.alat_barang') }}" class="btn-get-started scrollto">Lihat Fasilitas</a>
+    @foreach ($landing_image as $li)
+        <section id="beranda" class="d-flex align-items-center"
+            style="background: url('{{ asset('/sisarpas/assets/landingFile/' . $li->file) }}') top left">
+            <div class="container" data-aos="zoom-out" data-aos-delay="100">
+                <h1>Sistem Informasi</h1>
+                <h1>Sarana dan Prasarana</h1>
+                <h1>ITERA</h1>
+                <h2>
+                    Sistem Informasi Sarana dan Prasarana berfungsi untuk mengelola <br />
+                    dan memfasilitasi mahasiswa dalam penggunaan sarana dan <br />
+                    prasarana di Institut Teknologi Sumatera
+                </h2>
+                <div class="d-flex">
+                    <a href="{{ route('peminjaman.alat_barang') }}" class="btn-get-started scrollto">Lihat Fasilitas</a>
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- End beranda -->
+        </section>
+        <!-- End beranda -->
+    @endforeach
 
     <main id="main">
         <!-- ======= Layanan Sarana ======= -->

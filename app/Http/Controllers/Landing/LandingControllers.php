@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use App\Models\Landing;
 use App\Repositories\LandingRepositories;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +14,8 @@ class LandingControllers extends Controller
 {
     public function index(LandingRepositories $landingRepositories)
     {
-        return $landingRepositories->indexRepositories();
+        $landing = Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
+        return $landingRepositories->indexRepositories($landing);
     }
 
     public function alat_barang(): View

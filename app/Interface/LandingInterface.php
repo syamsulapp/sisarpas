@@ -6,6 +6,6 @@ use Illuminate\Contracts\View\View;
 
 interface LandingInterface
 {
-    public function indexRepositories(): View;
+    public function indexRepositories($data): View;
     public function contactRepositories(): void;
 }
