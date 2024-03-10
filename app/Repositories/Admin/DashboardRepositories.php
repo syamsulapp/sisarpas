@@ -9,6 +9,7 @@ use App\Models\Successlog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\Contact;
 use App\Models\Landing;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -36,6 +37,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'type' => 'string|in:image,video',
                 'status' => 'string|required|in:hide,unhide',
             ];
+        } else if (request()->is('admin/dashboard/master_data/contacts/update')) {
+            return [
+                'email' => 'required|email',
+                'message' => 'required|string',
+            ];
         } else {
             return [];
         }
@@ -52,6 +58,9 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         ];
     }
 
+    /**
+     * begin::landing
+     */
     public function createLandingRepositories($request): void
     {
         try {
@@ -104,4 +113,40 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             Errorlog::create($mapErrorLogs);
         }
     }
+    /**
+     * end::landing
+     */
+
+    /**
+     * begin::contacts
+     */
+
+    public function updateContactsRepositories($request): void
+    {
+        try {
+            $contacts = Contact::where('id', $request->id)->firstOrFail();
+            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah mengubah data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
+            $contacts->update(['email' => $request->email, 'message' => $request->message]);
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+        }
+    }
+
+    public function deleteContactsRepositories($id): void
+    {
+        try {
+            $contacts = Contact::where('id', $id)->firstOrFail();
+            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menghapus data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Successlog::create($mapSuccessLog);
+            $contacts->delete();
+        } catch (\Exception $errors) {
+            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+            Errorlog::create($mapErrorLogs);
+        }
+    }
+    /**
+     * end::contacts
+     */
 }

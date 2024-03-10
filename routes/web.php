@@ -100,6 +100,11 @@ Route::prefix('admin')->group(function () {
                     Route::put('update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
                     Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLanding'])->name('admin.dashboard_delete_landing');
                 });
+                Route::prefix('contacts')->group(function () {
+                    Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');
+                    Route::put('update', [AdminDashboardController::class, 'doUpdateContacts'])->name('admin.dashboard_update_contacts');
+                    Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteContacts'])->name('admin.dashboard_delete_contacts');
+                });
             });
             /**
              * rekap peminjaman barang dan aula

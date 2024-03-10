@@ -37,8 +37,8 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="pengembalian.html" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/dashboard/master_data/contacts') ? 'active open' : '' }}">
+            <a href="{{ route('admin.dashboard_contacts') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-contact"></i>
                 <div data-i18n="Tables">Contact</div>
             </a>
