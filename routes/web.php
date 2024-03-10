@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingControllers::class, 'index'])->name('sisarpas.landing');
+Route::post('contact', [LandingControllers::class, 'contact'])->name('sisarpas.contact');
 
 Route::prefix('peminjaman')->group(function () {
     Route::get('alat_barang', [LandingControllers::class, 'alat_barang'])->name('peminjaman.alat_barang');

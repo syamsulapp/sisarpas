@@ -156,16 +156,35 @@
                 </div>
                 <div class="row" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-lg-6">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form action="{{ route('sisarpas.contact') }}" method="POST" class="php-email-form">
+                            @csrf
                             <div class="text-centers">
                                 <h3>Hubungi Kami</h3>
                             </div>
+                            @session('success')
+                                <div class="alert alert-success" role="alert">
+                                    {{ $value }}
+                                </div>
+                            @endsession
+                            @session('error')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $value }}
+                                </div>
+                            @endsession
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Masukkan Email Anda" required />
+                                <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" id="email" placeholder="Masukkan Email Anda" />
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Masukkan Pesan Anda" required></textarea>
+                                <textarea class="form-control  @error('message') is-invalid @enderror" name="message" rows="5"
+                                    placeholder="Masukkan Pesan Anda"></textarea>
+                                @error('message')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="my-3">
                                 <div class="loading">Loading</div>
