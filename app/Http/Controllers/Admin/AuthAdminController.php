@@ -33,11 +33,11 @@ class AuthAdminController extends Controller
                 return $this->flashErrorLogin();
             } else {
                 $session = $this->generateSessionAdmin();
-                Successlog::create($this->logSuccess($session));
+                Successlog::create($this->logSuccessLogin($session));
                 return $this->redirectSuccessLogin();
             }
         } catch (\Exception $errors) {
-            Errorlog::create($this->logError($errors));
+            Errorlog::create($this->logErrorLogin($errors));
             return $this->redirectErrorLogin();
         }
     }
@@ -72,12 +72,12 @@ class AuthAdminController extends Controller
         return redirect()->route('admin.login');
     }
 
-    private function logSuccess($admin): array
+    private function logSuccessLogin($admin): array
     {
         return array('message' => "admin atas nama {$admin->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
     }
 
-    private function logError($errors): array
+    private function logErrorLogin($errors): array
     {
         return array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
     }
@@ -90,23 +90,43 @@ class AuthAdminController extends Controller
      * begin::logout
      */
 
-    public function doLogout()
+    public function doLogout(AuthAdminRepositories $authAdminRepositories)
     {
-        /**
-         * masukan informasi dari admin yang logout di log success agar dapat diketahui admin siapa yang logout
-         * jalankan fungsi logout untuk keluar sistem(admin) dan setelah logout berhasil selanjutnya arahkan ke halaman admin
-         */
         try {
-            $admin_logout = Auth::guard('admin')->user();
-            $mapSuccessLog = array('message' => "admin atas nama {$admin_logout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            Auth::guard('admin')->logout();
-            Session::flash('success', 'Berhasil Logout Dari Admin');
-            return Redirect::route('admin.login');
+            Successlog::create($this->logSuccessLogout($this->getSessionAdmin()));
+            $authAdminRepositories->logoutRepositories();
+            return $this->redirectResponseAfterLogoutSuccess();
         } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
+            Errorlog::create($this->logErrorLogout($errors));
+            return $this->redirectResponseAfterLogoutError();
         }
+    }
+
+    private function getSessionAdmin()
+    {
+        return Auth::guard('admin')->user();
+    }
+
+    private function logSuccessLogout($admin_logout): array
+    {
+        return array('message' => "admin atas nama {$admin_logout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function logErrorLogout($errors): array
+    {
+        return array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function redirectResponseAfterLogoutSuccess()
+    {
+        Session::flash('success', 'Berhasil Logout Dari Admin');
+        return Redirect::route('admin.login');
+    }
+
+    private function redirectResponseAfterLogoutError()
+    {
+        Session::flash('error', 'Maaf sistem logout sedang bermasalah');
+        return Redirect::route('admin.dashboard');
     }
 
     /**
