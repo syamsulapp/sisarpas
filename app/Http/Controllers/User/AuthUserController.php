@@ -167,14 +167,40 @@ class AuthUserController extends Controller
          *  setelah logout berhasil selanjutnya arahkan ke halaman login dan memberikan pesan flash success login
          */
         try {
+            Successlog::create($this->logSuccess($this->getUserBySession()));
             $authUserRepositories->logoutRepositories();
-            Session::flash('success', 'Berhasil Logout Dari User');
-            return Redirect::route('user.login');
+            return $this->successLogoutResponse();
         } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
+            Errorlog::create($this->logError($errors));
+            return $this->errorLogoutResponse();
         }
     }
+
+    private function successLogoutResponse()
+    {
+        Session::flash('success', 'Berhasil Logout Dari User');
+        return Redirect::route('user.login');
+    }
+    private function errorLogoutResponse()
+    {
+        Session::flash('error', 'Logout Bermasalah');
+        return Redirect::route('user.dashboard');
+    }
+
+    private function getUserBySession()
+    {
+        return Auth::guard('user')->user();
+    }
+
+    private function logSuccess($userLogout): array
+    {
+        return array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+    private function logError($errors): array
+    {
+        return array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
 
     /**
      *end::logout

@@ -77,13 +77,6 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
 
     public function logoutRepositories(): void
     {
-        /**
-         * masukan informasi dari user yang logout di log success agar dapat diketahui user siapa yang logout
-         * jalankan fungsi logout untuk keluar sistem(user)
-         */
-        $userLogout = Auth::guard('user')->user();
-        $mapSuccessLog = array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-        Successlog::create($mapSuccessLog);
         Auth::guard('user')->logout();
     }
 
