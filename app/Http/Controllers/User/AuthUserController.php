@@ -47,8 +47,15 @@ class AuthUserController extends Controller
                 return $this->flashErrrorCredentiaLInvalid();
             }
         } catch (\Exception $errors) {
-            return $this->errorLogResponse($errors);
+            Errorlog::create($this->errorLogResponse($errors));
+            return $this->redirectErrorLoginUsers();
         }
+    }
+
+    private function redirectErrorLoginUsers()
+    {
+        Session::flash('error', 'Mohon Maaf Ada Kesalahan Dibagian Login');
+        return redirect()->route('user.login');
     }
 
     private function flashErrrorCredentiaLInvalid(): RedirectResponse
