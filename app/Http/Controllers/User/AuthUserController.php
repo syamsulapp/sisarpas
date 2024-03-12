@@ -26,6 +26,10 @@ class AuthUserController extends Controller
         return redirect()->route('user.dashboard');
     }
 
+    /**
+     * begin::login
+     */
+
     public function doLogin(AuthUserRepositories $authUserRepositories): RedirectResponse
     {
         try {
@@ -34,27 +38,57 @@ class AuthUserController extends Controller
              * jika benar maka lanjut jalankan fungsi login akan tetapi jika salah
              * maka akan di kembalikan ke halaman login dengan pesan error yaitu email atau password salah
              */
-            $credential = $authUserRepositories->loginRepositories();
-            if (Auth::guard('user')->attempt($credential)) {
-                $login = Auth::getProvider()->retrieveByCredentials($credential);
-                Auth::guard('user')->login($login);
-                /**
-                 * setelah login ambil data user berdasarkan session login
-                 * simpan informasi sukses login kedalam logs sukses dan arahkan user ke halaman dashboard user
-                 */
-                $user = Auth::guard('user')->user();
-                $mapSuccessLog = array('message' => "user atas nama {$user->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-                Successlog::create($mapSuccessLog);
-                return redirect()->intended('user/dashboard');
+            if ($this->checkLoginCredential($authUserRepositories->loginRepositories())) {
+                $session = $this->generateSessionUsers($authUserRepositories->loginRepositories());
+                Successlog::create($this->successLogResponse($session));
+                return $this->redirectSuccessLoginUsers();
             } else {
-                Session::flash('error', 'Email Atau Password Salah');
-                return redirect()->route('user.login');
+                return $this->flashErrorResponse();
             }
         } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
+            return $this->errorLogResponse($errors);
         }
     }
+
+    private function flashErrorResponse(): RedirectResponse
+    {
+        Session::flash('error', 'Email Atau Password Salah');
+        return redirect()->route('user.login');
+    }
+
+    private function checkLoginCredential($credential): bool
+    {
+        if (Auth::guard('user')->attempt($credential)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function generateSessionUsers($credential)
+    {
+        $login = Auth::getProvider()->retrieveByCredentials($credential);
+        Auth::guard('user')->login($login);
+        return Auth::guard('user')->user();
+    }
+
+    private function redirectSuccessLoginUsers(): RedirectResponse
+    {
+        return redirect()->intended('user/dashboard');
+    }
+
+    private function successLogResponse($user): array
+    {
+        return array('message' => "user atas nama {$user->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function errorLogResponse($errors): array
+    {
+        return array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    /**
+     * end::login
+     */
 
     public function register()
     {
