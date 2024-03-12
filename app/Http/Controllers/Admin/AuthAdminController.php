@@ -15,6 +15,9 @@ use App\Repositories\Admin\AuthAdminRepositories;
 
 class AuthAdminController extends Controller
 {
+    /**
+     * begin::login
+     */
     public function login()
     {
         if (!Auth::guard('admin')->check()) {
@@ -26,30 +29,66 @@ class AuthAdminController extends Controller
     public function doLogin(AuthAdminRepositories $authAdminRepositories)
     {
         try {
-            /**
-             * cek terlebih dahulu credential login(email dan password)
-             * jika benar maka lanjut jalankan fungsi login akan tetapi jika salah
-             * maka akan di kembalikan ke halaman login dengan pesan error yaitu email atau password salah
-             */
-            $credential = $authAdminRepositories->loginRepositories();
-            if (Auth::guard('admin')->attempt($credential)) {
-                /**
-                 * setelah login ambil data admin berdasarkan session login
-                 * simpan informasi sukses login kedalam logs sukses dan arahkan admin ke halaman dashboard admin
-                 */
-                $admin = Auth::guard('admin')->user();
-                $mapSuccessLog = array('message' => "admin atas nama {$admin->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-                Successlog::create($mapSuccessLog);
-                return redirect()->intended('admin/dashboard');
+            if (!$this->checkCredentialAdmin($authAdminRepositories->loginRepositories())) {
+                return $this->flashErrorLogin();
             } else {
-                Session::flash('error', 'Email Atau Password Salah');
-                return redirect()->route('admin.login');
+                $session = $this->generateSessionAdmin();
+                Successlog::create($this->logSuccess($session));
+                return $this->redirectSuccessLogin();
             }
         } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            return Errorlog::create($mapErrorLogs);
+            Errorlog::create($this->logError($errors));
+            return $this->redirectErrorLogin();
         }
     }
+
+    private function checkCredentialAdmin($credential)
+    {
+        if (Auth::guard('admin')->attempt($credential)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function generateSessionAdmin()
+    {
+        return Auth::guard('admin')->user();
+    }
+
+    private function redirectSuccessLogin()
+    {
+        return redirect()->intended('admin/dashboard');
+    }
+
+    private function flashErrorLogin()
+    {
+        Session::flash('error', 'Email Atau Password Salah');
+        return redirect()->route('admin.login');
+    }
+
+    private function redirectErrorLogin()
+    {
+        Session::flash('error', 'Maaf ada kesalahan pada login admin');
+        return redirect()->route('admin.login');
+    }
+
+    private function logSuccess($admin): array
+    {
+        return array('message' => "admin atas nama {$admin->name} berhasil login", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function logError($errors): array
+    {
+        return array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    /**
+     * end::login
+     */
+
+    /**
+     * begin::logout
+     */
 
     public function doLogout()
     {
@@ -69,4 +108,8 @@ class AuthAdminController extends Controller
             return Errorlog::create($mapErrorLogs);
         }
     }
+
+    /**
+     * end::logout
+     */
 }
