@@ -63,21 +63,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      */
     public function createLandingRepositories($request): void
     {
-        try {
-            $reqLandingCreate = $request->only('file', 'type', 'status');
-            $file = $request->file('file');
-            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-            $destination_upload = "sisarpas/assets/landingFile";
-            $file->move($destination_upload, $namaFile);
-            $reqLandingCreate['file'] = $namaFile;
-            Landing::create($reqLandingCreate);
-            //map success logs jika sukses create landing
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menambahkan konten landing", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        Landing::create($request);
     }
 
     public function updateLandingRepositories($request): void

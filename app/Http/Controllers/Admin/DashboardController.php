@@ -39,9 +39,14 @@ class DashboardController extends DashboardRepositories
         return $this->errorlog->create($getLogError);
     }
 
-    private function dataLogSuccess($data, $message): array
+    private function dataLogSuccessByID($data, $message): array
     {
         return array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah {$message} di ID: {$data->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function dataLogSuccess($message): array
+    {
+        return array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah {$message}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
     }
 
     private function dataLogError($message): array
@@ -81,14 +86,24 @@ class DashboardController extends DashboardRepositories
      */
     public function landing(): View
     {
-        $landing = Landing::orderBy('id', 'desc')->get();
-        return view('sisarpas.admin.dashboard.master-data.landing.index', compact('landing'));
+        try {
+            return $this->viewForListLanding($this->getListLanding());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing', 'Mohon maaf ada kesalahan dibagian list landing');
+        }
     }
 
     public function doCreateLanding(Request $request): RedirectResponse
     {
-        $this->createLandingRepositories($request);
-        return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil create data landing');
+        try {
+            $this->createLandingRepositories($this->submitRequest($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing'));
+            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Menambahkan Landing');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada create landing');
+        }
     }
 
     public function doUpdateLanding(Request $request)
@@ -101,6 +116,37 @@ class DashboardController extends DashboardRepositories
     {
         $this->deleteLandingRepositories($id);
         return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil delete data landing');
+    }
+
+    private function viewForListLanding($landing)
+    {
+        return view('sisarpas.admin.dashboard.master-data.landing.index', compact('landing'));
+    }
+
+    private function getListLanding()
+    {
+        return Landing::orderBy('id', 'desc')->get();
+    }
+
+    private function landingRequest($request)
+    {
+        return $request->only('file', 'type', 'status');
+    }
+
+    private function fileRequestImg($request)
+    {
+        $file = $request->file('file');
+        $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+        $destination_upload = "sisarpas/assets/landingFile";
+        $file->move($destination_upload, $namaFile);
+        return $namaFile;
+    }
+
+    private function submitRequest($request)
+    {
+        $req = $this->landingRequest($request);
+        $req['file'] = $this->fileRequestImg($request);
+        return $req;
     }
 
     /**
@@ -137,7 +183,7 @@ class DashboardController extends DashboardRepositories
             if (!$this->checkIdUpdateContact($request)) {
                 return $this->redirectError('admin.dashboard_contacts', 'Maaf ID Tidak Di temukan');
             }
-            $this->logSuccess($this->dataLogSuccess(Contact::where('id', $request->id)->first(), 'telah mengubah contact'));
+            $this->logSuccess($this->dataLogSuccessByID(Contact::where('id', $request->id)->first(), 'telah mengubah contact'));
             $this->updateContactsRepositories(Contact::where('id', $request->id)->first(), $request);
             return $this->redirectSuccess('admin.dashboard_contacts', 'Berhasil Mengubah Contacts');
         } catch (Exception $errors) {
@@ -161,7 +207,7 @@ class DashboardController extends DashboardRepositories
             if (!$this->checkIdDeleteContact($id)) {
                 return $this->redirectError('admin.dashboard_contacts', 'Maaf ID Tidak Di temukan');
             }
-            $this->logSuccess($this->dataLogSuccess(Contact::where('id', $id)->first(), 'telah menghapus contact'));
+            $this->logSuccess($this->dataLogSuccessByID(Contact::where('id', $id)->first(), 'telah menghapus contact'));
             $this->deleteContactsRepositories(Contact::where('id', $id)->first());
             return $this->redirectSuccess('admin.dashboard_contacts', 'Berhasil Menghapus Contacts');
         } catch (Exception $errors) {
