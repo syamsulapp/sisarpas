@@ -66,25 +66,26 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         Landing::create($request);
     }
 
-    public function updateLandingRepositories($request): void
+    public function updateLandingRepositories($model, $request): void
     {
-        try {
-            $landing = Landing::where('id', $request->id)->firstOrFail();
-            $reqLandingCreate = $request->only('file', 'type', 'status');
-            if (isset($reqLandingCreate['file'])) {
-                $file = $request->file('file');
-                $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-                $destination_upload = "sisarpas/assets/landingFile";
-                $file->move($destination_upload, $namaFile);
-                $reqLandingCreate['file'] = $namaFile;
-            }
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah update konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $landing->update($reqLandingCreate);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        // try {
+        //     $landing = Landing::where('id', $request->id)->firstOrFail();
+        //     $reqLandingCreate = $request->only('file', 'type', 'status');
+        //     if (isset($reqLandingCreate['file'])) {
+        //         $file = $request->file('file');
+        //         $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+        //         $destination_upload = "sisarpas/assets/landingFile";
+        //         $file->move($destination_upload, $namaFile);
+        //         $reqLandingCreate['file'] = $namaFile;
+        //     }
+        //     $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah update konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+        //     Successlog::create($mapSuccessLog);
+        //     $landing->update($reqLandingCreate);
+        // } catch (\Exception $errors) {
+        //     $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+        //     Errorlog::create($mapErrorLogs);
+        // }
+        $model->update($request);
     }
 
     public function deleteLandingRepositories($id): void

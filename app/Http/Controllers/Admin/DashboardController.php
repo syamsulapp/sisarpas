@@ -106,16 +106,41 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doUpdateLanding(Request $request)
+    public function doUpdateLanding(Request $request): RedirectResponse
     {
-        $this->updateLandingRepositories($request);
-        return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil update data landing');
+        try {
+            if (!$this->checkIdByUpdateLanding($request)) {
+                return $this->redirectError('admin.dashboard_landing', 'Maaf ID Tidak Di temukan');
+            }
+
+            if (!isset($this->landingRequest($request)['file'])) {
+                $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitLandingRequestUpdateNoFile($request));
+            }
+
+            if (isset($this->landingRequest($request)['file'])) {
+                $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitRequest($request));
+            }
+
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing'));
+            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Mengubah Landing');
+        } catch (\Exception $errros) {
+            $this->logError($this->dataLogError($errros->getMessage()));
+            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada update landing');
+        }
     }
 
     public function doDeleteLanding(Landing $id): RedirectResponse
     {
         $this->deleteLandingRepositories($id);
         return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil delete data landing');
+    }
+
+    private function checkIdByUpdateLanding($request): bool
+    {
+        if (Landing::where('id', $request->id)->first()) {
+            return true;
+        }
+        return false;
     }
 
     private function viewForListLanding($landing)
@@ -147,6 +172,11 @@ class DashboardController extends DashboardRepositories
         $req = $this->landingRequest($request);
         $req['file'] = $this->fileRequestImg($request);
         return $req;
+    }
+
+    private function submitLandingRequestUpdateNoFile($request)
+    {
+        return $request->only('type', 'status');
     }
 
     /**
