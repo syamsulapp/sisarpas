@@ -121,30 +121,14 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::contacts
      */
 
-    public function updateContactsRepositories($request): void
+    public function updateContactsRepositories($model, $request): void
     {
-        try {
-            $contacts = Contact::where('id', $request->id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah mengubah data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $contacts->update(['email' => $request->email, 'message' => $request->message]);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->update(['email' => $request->email, 'message' => $request->message]);
     }
 
-    public function deleteContactsRepositories($id): void
+    public function deleteContactsRepositories($model): void
     {
-        try {
-            $contacts = Contact::where('id', $id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menghapus data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $contacts->delete();
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->delete();
     }
     /**
      * end::contacts

@@ -2,21 +2,80 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
+use App\Models\Admin;
 use App\Models\Contact;
 use App\Models\Landing;
+use App\Models\Errorlog;
+use App\Models\Successlog;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\Admin\DashboardRepositories;
-use Illuminate\Http\RedirectResponse;
+use Exception;
 
 class DashboardController extends DashboardRepositories
 {
+    protected $admin, $successLog, $errorlog;
+    public function __construct(Admin $admin, Successlog $successLog, Errorlog $errorlog)
+    {
+        $this->admin = $admin;
+        $this->successLog = $successLog;
+        $this->errorlog = $errorlog;
+    }
+
+    /**
+     * begin::logging and redirect response
+     */
+    private function logSuccess($getLogSuccess)
+    {
+        return $this->successLog->create($getLogSuccess);
+    }
+
+    private function logError($getLogError)
+    {
+        return $this->errorlog->create($getLogError);
+    }
+
+    private function dataLogSuccess($data, $message): array
+    {
+        return array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah {$message} di ID: {$data->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function dataLogError($message): array
+    {
+        return array('message' => $message, 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
+    }
+
+    private function redirectSuccess($route, $message): RedirectResponse
+    {
+        Session::flash("success", $message);
+        return Redirect::route($route);
+    }
+
+    private function redirectError($route, $message): RedirectResponse
+    {
+        Session::flash("error", $message);
+        return Redirect::route($route);
+    }
+
+    /**
+     * end::logging and redirect response
+     */
+
+
+    /**
+     * begin::dashboard view
+     */
     public function index(): View
     {
         return view('sisarpas.admin.dashboard.index');
     }
+    /**
+     * end::dashboard view
+     */
     /**
      * begin::landing
      */
@@ -54,23 +113,74 @@ class DashboardController extends DashboardRepositories
 
     public function contacts(): View
     {
-        $contacs = Contact::orderBy('id', 'desc')->get();
+        try {
+            return $this->viewForListContact($this->getListContact());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_contacts', 'Maaf Ada Kesalahan Dibagian List Contacts');
+        }
+    }
+
+    private function getListContact()
+    {
+        return Contact::orderBy('id', 'desc')->get();
+    }
+
+    private function viewForListContact($contacs): View
+    {
         return view('sisarpas.admin.dashboard.master-data.contact.index', compact('contacs'));
     }
 
     public function doUpdateContacts(Request $request): RedirectResponse
     {
-        $this->updateContactsRepositories($request);
-        Session::flash('success', 'Berhasil Update Contacts');
-        return Redirect::route('admin.dashboard_contacts');
+        try {
+            if (!$this->checkIdUpdateContact($request)) {
+                return $this->redirectError('admin.dashboard_contacts', 'Maaf ID Tidak Di temukan');
+            }
+            $this->logSuccess($this->dataLogSuccess(Contact::where('id', $request->id)->first(), 'telah mengubah contact'));
+            $this->updateContactsRepositories(Contact::where('id', $request->id)->first(), $request);
+            return $this->redirectSuccess('admin.dashboard_contacts', 'Berhasil Mengubah Contacts');
+        } catch (Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_contacts', 'Maaf ada kesalahan pada update contacts');
+        }
     }
+
+    private function checkIdUpdateContact($request): bool
+    {
+        if (Contact::where('id', $request->id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function doDeleteContacts($id): RedirectResponse
     {
-        $this->deleteContactsRepositories($id);
-        Session::flash('success', 'Berhasil Delete Contacts');
-        return Redirect::route('admin.dashboard_contacts');
+        try {
+            if (!$this->checkIdDeleteContact($id)) {
+                return $this->redirectError('admin.dashboard_contacts', 'Maaf ID Tidak Di temukan');
+            }
+            $this->logSuccess($this->dataLogSuccess(Contact::where('id', $id)->first(), 'telah menghapus contact'));
+            $this->deleteContactsRepositories(Contact::where('id', $id)->first());
+            return $this->redirectSuccess('admin.dashboard_contacts', 'Berhasil Menghapus Contacts');
+        } catch (Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_contacts', 'Maaf ada kesalahan pada delete contacts');
+        }
     }
+
+    private function checkIdDeleteContact($id): bool
+    {
+        if (Contact::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
 
     /**
      * end::contacts
