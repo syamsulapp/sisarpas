@@ -71,17 +71,9 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         $model->update($request);
     }
 
-    public function deleteLandingRepositories($id): void
+    public function deleteLandingRepositories($model): void
     {
-        try {
-            $landing = Landing::where('id', $id->id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menghapus konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $landing->delete();
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->delete();
     }
     /**
      * end::landing

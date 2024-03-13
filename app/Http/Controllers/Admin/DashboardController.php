@@ -131,13 +131,30 @@ class DashboardController extends DashboardRepositories
 
     public function doDeleteLanding(Landing $id): RedirectResponse
     {
-        $this->deleteLandingRepositories($id);
-        return redirect()->route('admin.dashboard_landing')->with('success', 'berhasil delete data landing');
+        try {
+            if (!$this->checkIdByDeleteLanding($id)) {
+                $this->redirectError('admin.dashboard_landing', 'Maaf ID tidak di temukan');
+            }
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing'));
+            $this->deleteLandingRepositories(Landing::where('id', $id->id)->first());
+            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Delete Landing');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada delete landing');
+        }
     }
 
     private function checkIdByUpdateLanding($request): bool
     {
         if (Landing::where('id', $request->id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkIdByDeleteLanding($id): bool
+    {
+        if (Landing::where('id', $id->id)->first()) {
             return true;
         }
         return false;
