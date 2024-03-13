@@ -178,10 +178,6 @@ class DashboardController extends DashboardRepositories
         return false;
     }
 
-
-
-
-
     /**
      * end::contacts
      */
