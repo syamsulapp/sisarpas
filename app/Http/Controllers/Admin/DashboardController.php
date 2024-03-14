@@ -335,6 +335,10 @@ class DashboardController extends DashboardRepositories
         return $req;
     }
 
+    public function doDeleteBarang($id)
+    {
+    }
+
     /**
      * End::inventori(barang)
      */

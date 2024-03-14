@@ -51,12 +51,12 @@
                         @foreach ($barang as $b)
                             <tr>
                                 <td>
-                                    <button type="button" data-item="{{ $b->id }}"
+                                    <button type="button" data-item="{{ $b->id_barang }}"
                                         class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#detailModalBarang--{{ $b->id }}">
+                                        data-bs-target="#detailModalBarang--{{ $b->id_barang }}">
                                         <i class='bx bx-info-circle' style='color:#8f0d04'></i>
                                     </button>
-                                    {{ $b->id }}
+                                    {{ $b->id_barang }}
                                 </td>
                                 <td>{{ $b->nama_barang }}</td>
                                 <td>{{ $b->kategori_barang }}</td>
@@ -89,7 +89,7 @@
 
         @foreach ($barang as $b)
             <!-- modal detail -->
-            <div class="modal fade" id="detailModalBarang--{{ $b->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="detailModalBarang--{{ $b->id_barang }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -101,7 +101,7 @@
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>Image:</td>
-                                        <td><img src="{{ asset('/sisarpas/assets/landingFile/' . $b->file) }}"
+                                        <td><img src="{{ asset('/sisarpas/assets/inventoriFile/' . $b->gambar_barang) }}"
                                                 width="100%"></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
@@ -148,7 +148,8 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form action="{{ route('admin.dashboard_inventori_delete_barang', $b->id) }}"
+                                            <form
+                                                action="{{ route('admin.dashboard_inventori_delete_barang', $b->id_barang) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
@@ -158,7 +159,7 @@
                                                 </button>
                                                 |
                                                 <button type="button" class="btn btn-warning"
-                                                    data-bs-target="#modalEditBarang--{{ $b->id }}"
+                                                    data-bs-target="#modalEditBarang--{{ $b->id_barang }}"
                                                     data-bs-toggle="modal" data-bs-dismiss="modal">
                                                     <i class="bx bx-edit-alt" style="margin-right: 5px"></i>
                                                     Edit
@@ -177,7 +178,7 @@
 
         @foreach ($barang as $b)
             <!-- modal edit -->
-            <div class="modal fade" id="modalEditBarang--{{ $b->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="modalEditBarang--{{ $b->id_barang }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -191,11 +192,11 @@
                             <div class="modal-body table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <input type="number" name="id" value="{{ $b->id }}" hidden>
+                                        <input type="number" name="id" value="{{ $b->id_barang }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="10">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"
-                                                    src="{{ asset('/sisarpas/assets/landingFile/' . $b->file) }}"
+                                                    src="{{ asset('/sisarpas/assets/inventoriFile/' . $b->gambar_barang) }}"
                                                     width="50%" />
                                             </td>
                                         </tr>
@@ -219,10 +220,12 @@
                                                     class="form-control @error('kategori') is-invalid @enderror"
                                                     placeholder="Pilih Jenis File">
                                                     <option value="" selected>Pilih Kategori</option>
-                                                    <option value="barang" {{ $l->type == 'barang' ? 'selected' : '' }}>
+                                                    <option value="barang"
+                                                        {{ $b->kategori_barang == 'barang' ? 'selected' : '' }}>
                                                         Barang
                                                     </option>
-                                                    <option value="ruangan" {{ $l->type == 'ruangan' ? 'selected' : '' }}>
+                                                    <option value="ruangan"
+                                                        {{ $b->kategori_barang == 'ruangan' ? 'selected' : '' }}>
                                                         Ruangan
                                                     </option>
                                                 </select>
@@ -235,18 +238,20 @@
                                             <td>Status:</td>
                                             <td>
                                                 <div class="form-check form-check-inline mt-3">
-                                                    <input class="form-check-input @error('status') is-invalid @enderror"
-                                                        type="radio" name="status" id="inlineRadio1"
+                                                    <input
+                                                        class="form-check-input @error('status_barang') is-invalid @enderror"
+                                                        type="radio" name="status_barang" id="inlineRadio1"
                                                         value="hide" />
                                                     <label class="form-check-label" for="inlineRadio1">hide</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input  @error('status') is-invalid @enderror"
-                                                        type="radio" name="status" id="inlineRadio2"
+                                                    <input
+                                                        class="form-check-input  @error('status_barang') is-invalid @enderror"
+                                                        type="radio" name="status_barang" id="inlineRadio2"
                                                         value="unhide" />
                                                     <label class="form-check-label" for="inlineRadio2">Unhide</label>
                                                 </div>
-                                                @error('status')
+                                                @error('status_barang')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
