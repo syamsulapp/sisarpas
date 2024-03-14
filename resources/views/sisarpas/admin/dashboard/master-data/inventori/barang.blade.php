@@ -192,64 +192,104 @@
                             <div class="modal-body table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <input type="number" name="id" value="{{ $b->id_barang }}" hidden>
-                                        <tr data-dt-row="99" data-dt-column="10">
+                                        <input type="number" name="id_barang" value="{{ $b->id_barang }}" hidden>
+                                        <tr data-dt-row="99" data-dt-column="2">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"
                                                     src="{{ asset('/sisarpas/assets/inventoriFile/' . $b->gambar_barang) }}"
                                                     width="50%" />
                                             </td>
-                                        </tr>
-                                        <tr data-dt-row="99" data-dt-column="9">
                                             <td>Image:</td>
                                             <td>
-                                                <input type="file" id="selectImage"
-                                                    class="form-control @error('image') is-invalid @enderror"
-                                                    placeholder="Please Drop File Here" name="image"
+                                                <input type="file" id="gambar_barang"
+                                                    class="form-control @error('gambar_barang') is-invalid @enderror"
+                                                    placeholder="Please Drop File Here" name="gambar_barang"
                                                     aria-describedby="defaultFormControlHelp" />
-                                                @error('image')
+                                                @error('gambar_barang')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                         </tr>
-                                        <tr data-dt-row="99" data-dt-column="9">
-
-                                            <td>Kategori:</td>
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Nama:</td>
                                             <td>
-                                                <select name="kategori" id="defaultFormControlInput"
-                                                    class="form-control @error('kategori') is-invalid @enderror"
-                                                    placeholder="Pilih Jenis File">
-                                                    <option value="" selected>Pilih Kategori</option>
-                                                    <option value="barang"
-                                                        {{ $b->kategori_barang == 'barang' ? 'selected' : '' }}>
-                                                        Barang
-                                                    </option>
-                                                    <option value="ruangan"
-                                                        {{ $b->kategori_barang == 'ruangan' ? 'selected' : '' }}>
-                                                        Ruangan
-                                                    </option>
-                                                </select>
-                                                @error('kategori')
+                                                <input type="text" id="selectImage"
+                                                    class="form-control @error('nama_barang') is-invalid @enderror"
+                                                    placeholder="masukan nama barang" name="nama_barang"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $b->nama_barang }}" />
+                                                @error('nama_barang')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td>Jumlah:</td>
+                                            <td>
+                                                <input type="text" id="jumlah_barang"
+                                                    class="form-control @error('jumlah_barang') is-invalid @enderror"
+                                                    placeholder="masukan jumlah barang" name="jumlah_barang"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $b->jumlah_barang }}" />
+                                                @error('jumlah_barang')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
                                         </tr>
-                                        <tr data-dt-row="99" data-dt-column="8">
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Kondisi:</td>
+                                            <td>
+                                                <input type="text" id="kondisi_barang"
+                                                    class="form-control @error('kondisi_barang') is-invalid @enderror"
+                                                    placeholder="masukan kondisi barang" name="kondisi_barang"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $b->kondisi_barang }}" />
+                                                @error('kondisi_barang')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td>Informasi Detail:</td>
+                                            <td>
+                                                <input type="text" id="detailBarang"
+                                                    class="form-control @error('detail_barang') is-invalid @enderror"
+                                                    placeholder="masukan informasi detail barang" name="detail_barang"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $b->detail_barang }}" />
+                                                @error('detail_barang')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Spesifikasi Barang:</td>
+                                            <td>
+                                                <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
+                                                    aria-describedby="defaultFormControlHelp">{{ $b->spesifikasi_barang }}</textarea>
+                                                @error('spesifikasi_barang')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
                                             <td>Status:</td>
                                             <td>
                                                 <div class="form-check form-check-inline mt-3">
                                                     <input
                                                         class="form-check-input @error('status_barang') is-invalid @enderror"
                                                         type="radio" name="status_barang" id="inlineRadio1"
-                                                        value="hide" />
-                                                    <label class="form-check-label" for="inlineRadio1">hide</label>
+                                                        value="ready" />
+                                                    <label class="form-check-label" for="inlineRadio1">ready</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input
                                                         class="form-check-input  @error('status_barang') is-invalid @enderror"
                                                         type="radio" name="status_barang" id="inlineRadio2"
-                                                        value="unhide" />
-                                                    <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                                        value="not-ready" />
+                                                    <label class="form-check-label" for="inlineRadio2">not-ready</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input
+                                                        class="form-check-input  @error('status_barang') is-invalid @enderror"
+                                                        type="radio" name="status_barang" id="inlineRadio2"
+                                                        value="maintenance" />
+                                                    <label class="form-check-label" for="inlineRadio2">maintenance</label>
                                                 </div>
                                                 @error('status_barang')
                                                     <span class="text-danger">{{ $message }}</span>

@@ -303,6 +303,18 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doUpdateBarang(Request $request)
+    {
+        try {
+        } catch (\Exception $errors) {
+        }
+    }
+
+    public function doDeleteBarang($id)
+    {
+    }
+
+
     private function viewBarang($barang): View
     {
         return view('sisarpas.admin.dashboard.master-data.inventori.barang', compact('barang'));
@@ -336,9 +348,7 @@ class DashboardController extends DashboardRepositories
         return $req;
     }
 
-    public function doDeleteBarang($id)
-    {
-    }
+
 
     /**
      * End::inventori(barang)

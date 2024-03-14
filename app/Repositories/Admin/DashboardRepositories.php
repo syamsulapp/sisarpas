@@ -48,6 +48,18 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg',
                 'status_barang' => 'required|in:ready,not-ready,maintenance',
             ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/barang/update')) {
+            return [
+                'id_barang' => 'string',
+                'nama_barang' => 'required|string',
+                'jumlah_barang' => 'required|integer',
+                'kondisi_barang' => 'required|string',
+                'kategori_barang' => 'in:barang,ruangan',
+                'detail_barang' => 'required|string',
+                'spesifikasi_barang' => 'string',
+                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
+                'status_barang' => 'required|in:ready,not-ready,maintenance',
+            ];
         } else {
             return [];
         }
