@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Models\Admin;
 use App\Models\Barang;
+use App\Models\Barang as Ruangan;
 use App\Models\Contact;
 use App\Models\Landing;
 use App\Models\Errorlog;
@@ -370,7 +371,7 @@ class DashboardController extends DashboardRepositories
 
     private function listBarang()
     {
-        return Barang::orderByDesc('id')->get();
+        return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
     }
 
     private function imageBarang($request)
@@ -421,5 +422,151 @@ class DashboardController extends DashboardRepositories
 
     /**
      * End::inventori(barang)
+     */
+
+    /**
+     * begin::inventori(ruangan)
+     */
+
+    public function ruangan()
+    {
+        try {
+            return $this->viewRuangan($this->listRuangan());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori ruangan');
+        }
+    }
+
+    public function doCreateRuangan(Request $request)
+    {
+        try {
+            $this->createRuanganRepositories($this->submitRequestCreateRuangan($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori ruangan'));
+            $this->dataLogSuccess('telah menambahkan inventori ruangan');
+            return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menambahkan Inventori Ruangan');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Maaf ada kesalahan dibagian inventori create ruangan');
+        }
+    }
+
+    public function doUpdateRuangan(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdUpdateRuangan($request->id)) {
+                $this->logError($this->dataLogError('id update ruangan inventori salah'));
+                return $this->redirectError('admin.dashboard_inventori_barang', 'Id ruangan salah');
+            }
+
+            if ($this->checkIdUpdateRuangan($request->id)) {
+                if (!empty($request->file('gambar_barang'))) {
+                    $this->updateRuanganRepositories($this->submitRequestUpdateRuanganWithImg($request));
+                }
+
+                if (empty($request->file('gambar_barang'))) {
+                    $this->updateRuanganRepositories($this->submitRequestUpdateRuanganNoImg($request));
+                }
+
+                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori Ruangan'));
+                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Update Ruangan Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Maaf ada kesalahan dibagian inventori update ruangan');
+        }
+    }
+
+    public function doDeleteRuangan(Ruangan $id)
+    {
+        try {
+            if (!$this->checkIdDeleteRuangan($id->id)) {
+                return $this->redirectError('admin.dashboard_inventori_ruangan', 'Id ruangan salah');
+            }
+
+            if ($this->checkIdDeleteRuangan($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $id->id)->first(), 'Berhasil Menghapus Ruangan Inventori'));
+                $this->deleteRuanganRepositories($id->id);
+                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menghapus Ruangan Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Mohon maaf ada kesalahan dibagian delete inventori ruangan');
+        }
+    }
+
+    private function checkIdUpdateRuangan($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function checkIdDeleteRuangan($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function viewRuangan($ruangan): View
+    {
+        return view('sisarpas.admin.dashboard.master-data.inventori.ruangan', compact('ruangan'));
+    }
+
+    private function listRuangan()
+    {
+        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
+    }
+
+    private function imageRuangan($request)
+    {
+        $image = $request->file('gambar_barang');
+        $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
+        $destination_upload = "sisarpas/assets/inventoriFile";
+        $image->move($destination_upload, $namaFile);
+        return $namaFile;
+    }
+
+    private function requestCreateRuangan($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function requestUpdateRuanganNoImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'status_barang');
+    }
+
+    private function requestUpdateRuanganWithImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function submitRequestCreateRuangan($request)
+    {
+        $req = $this->requestCreateRuangan($request);
+        $req['gambar_barang'] = $this->imageRuangan($request);
+        $req['id'] = uniqid();
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    private function submitRequestUpdateRuanganWithImg($request)
+    {
+        $req = $this->requestUpdateRuanganWithImg($request);
+        $req['gambar_barang'] = $this->imageBarang($request);
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    private function submitRequestUpdateRuanganNoImg($request)
+    {
+        $req = $this->requestUpdateRuanganNoImg($request);
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    /**
+     * end::inventori(ruangan)
      */
 }

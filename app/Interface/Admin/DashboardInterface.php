@@ -15,4 +15,8 @@ interface DashboardInterface
     public function createBarangRepositories($request): void;
     public function updateBarangRepositories($request): void;
     public function deleteBarangRepositories($id): void;
+    //inventori ruangan
+    public function createRuanganRepositories($request): void;
+    public function updateRuanganRepositories($request): void;
+    public function deleteRuanganRepositories($id): void;
 }

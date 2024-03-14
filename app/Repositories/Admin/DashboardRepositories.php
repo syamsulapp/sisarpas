@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Interface\Admin\DashboardInterface;
 use App\Models\Barang;
+use App\Models\Barang as Ruangan;
 use App\Models\Landing;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -41,6 +42,30 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'status_barang' => 'required|in:ready,not-ready,maintenance',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/barang/update')) {
+            return [
+                'id' => 'string',
+                'nama_barang' => 'string',
+                'jumlah_barang' => 'integer',
+                'kondisi_barang' => 'string',
+                'kategori_barang' => 'in:barang,ruangan',
+                'detail_barang' => 'string',
+                'spesifikasi_barang' => 'string',
+                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
+                'status_barang' => 'in:ready,not-ready,maintenance',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/ruangan/create')) {
+            return [
+                'id' => 'string',
+                'nama_barang' => 'required|string',
+                'jumlah_barang' => 'required|integer',
+                'kondisi_barang' => 'required|string',
+                'kategori_barang' => 'in:barang,ruangan',
+                'detail_barang' => 'required|string',
+                'spesifikasi_barang' => 'string',
+                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg',
+                'status_barang' => 'required|in:ready,not-ready,maintenance',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/ruangan/update')) {
             return [
                 'id' => 'string',
                 'nama_barang' => 'string',
@@ -120,6 +145,26 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function deleteBarangRepositories($id): void
     {
         Barang::where('id', $id)->delete();
+    }
+    /**
+     * end::inventori_barang
+     */
+
+
+    /**
+     * begin::inventori_ruangan
+     */
+    public function createRuanganRepositories($request): void
+    {
+        Ruangan::create($request);
+    }
+    public function updateRuanganRepositories($request): void
+    {
+        Ruangan::where('id', $request['id'])->update($request);
+    }
+    public function deleteRuanganRepositories($id): void
+    {
+        Ruangan::where('id', $id)->delete();
     }
     /**
      * end::inventori_barang

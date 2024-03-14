@@ -57,8 +57,9 @@
                         <div data-i18n="Landing">Data Barang</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/ruangan') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_inventori_ruangan') }}" class="menu-link">
                         <div data-i18n="Pricing">Data Ruangan</div>
                     </a>
                 </li>
