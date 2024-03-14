@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->integer('jumlah_barang');
             $table->string('kondisi_barang');
+            $table->enum('kategori_barang', ['barang', 'ruangan']);
             $table->string('detail_barang');
             $table->string('spesifikasi_barang')->nullable();
             $table->string('gambar_barang');
