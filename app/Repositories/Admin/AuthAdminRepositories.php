@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\Interface\Admin\AuthAdminInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -9,7 +10,7 @@ class AuthAdminRepositories extends FormRequest implements AuthAdminInterface
 {
     public function rules(): array
     {
-        if (request()->isMethod('post')) { //login admin
+        if (request()->is('admin/auth/login')) { //login admin
             return [
                 'email' => 'required|email',
                 'password' => 'required',
@@ -32,5 +33,10 @@ class AuthAdminRepositories extends FormRequest implements AuthAdminInterface
     public function loginRepositories()
     {
         return request()->only('email', 'password');
+    }
+
+    public function logoutRepositories(): void
+    {
+        Auth::guard('admin')->logout();
     }
 }

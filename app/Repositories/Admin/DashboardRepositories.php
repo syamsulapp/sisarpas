@@ -63,55 +63,17 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      */
     public function createLandingRepositories($request): void
     {
-        try {
-            $reqLandingCreate = $request->only('file', 'type', 'status');
-            $file = $request->file('file');
-            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-            $destination_upload = "sisarpas/assets/landingFile";
-            $file->move($destination_upload, $namaFile);
-            $reqLandingCreate['file'] = $namaFile;
-            Landing::create($reqLandingCreate);
-            //map success logs jika sukses create landing
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menambahkan konten landing", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        Landing::create($request);
     }
 
-    public function updateLandingRepositories($request): void
+    public function updateLandingRepositories($model, $request): void
     {
-        try {
-            $landing = Landing::where('id', $request->id)->firstOrFail();
-            $reqLandingCreate = $request->only('file', 'type', 'status');
-            if (isset($reqLandingCreate['file'])) {
-                $file = $request->file('file');
-                $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-                $destination_upload = "sisarpas/assets/landingFile";
-                $file->move($destination_upload, $namaFile);
-                $reqLandingCreate['file'] = $namaFile;
-            }
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah update konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $landing->update($reqLandingCreate);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->update($request);
     }
 
-    public function deleteLandingRepositories($id): void
+    public function deleteLandingRepositories($model): void
     {
-        try {
-            $landing = Landing::where('id', $id->id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menghapus konten landing di ID: {$landing->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $landing->delete();
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->delete();
     }
     /**
      * end::landing
@@ -121,30 +83,14 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::contacts
      */
 
-    public function updateContactsRepositories($request): void
+    public function updateContactsRepositories($model, $request): void
     {
-        try {
-            $contacts = Contact::where('id', $request->id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah mengubah data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $contacts->update(['email' => $request->email, 'message' => $request->message]);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->update(['email' => $request->email, 'message' => $request->message]);
     }
 
-    public function deleteContactsRepositories($id): void
+    public function deleteContactsRepositories($model): void
     {
-        try {
-            $contacts = Contact::where('id', $id)->firstOrFail();
-            $mapSuccessLog = array('message' => "Admin atas nama {$this->admin->authAdmin()->name} telah menghapus data contact di ID: {$contacts->id}", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-            $contacts->delete();
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
+        $model->delete();
     }
     /**
      * end::contacts

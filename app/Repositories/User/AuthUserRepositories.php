@@ -64,45 +64,19 @@ class AuthUserRepositories extends FormRequest implements AuthUserInterface
         ];
     }
 
-    // get credential login
     public function loginRepositories()
     {
         return request()->only('email', 'password');
     }
 
-    public function registerRepositories(): void
+
+    public function registerRepositories($user)
     {
-        /**
-         * awali transaksi data
-         * 1. cek permintaan yang akan di daftarkan di sistem
-         * 2. setelah permintaan terpenuhi selanjutnya daftarkan data tersebut
-         * 3. setelah data berhasil di daftarkan ke sistem selanjutnya simpan sukses daftar kedalam log success
-         */
-        DB::beginTransaction();
-        try {
-            $req_regis = request()->only('name', 'nim', 'email', 'password', 'roles_id');
-            $req_regis['password'] = Hash::make($req_regis['password']);
-            $req_regis['roles_id'] = 2;
-            $user = User::create($req_regis);
-            $mapSuccessLogs = array('message' => "user dengan ID: {$user->id}, nama: {$user->nama_user} Berhasil Registrasi", 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLogs);
-            DB::commit();
-        } catch (\Exception $errors) {
-            DB::rollBack();
-            $mapLogErrors = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapLogErrors);
-        }
+        return User::create($user);
     }
 
     public function logoutRepositories(): void
     {
-        /**
-         * masukan informasi dari user yang logout di log success agar dapat diketahui user siapa yang logout
-         * jalankan fungsi logout untuk keluar sistem(user)
-         */
-        $userLogout = Auth::guard('user')->user();
-        $mapSuccessLog = array('message' => "user atas nama {$userLogout->name} berhasil logout", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-        Successlog::create($mapSuccessLog);
         Auth::guard('user')->logout();
     }
 
