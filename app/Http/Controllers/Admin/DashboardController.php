@@ -294,6 +294,7 @@ class DashboardController extends DashboardRepositories
     {
         try {
             $this->createBarangRepositories($this->submitRequestBarang($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori barang'));
             $this->dataLogSuccess('telah menambahkan inventori barang');
             return $this->redirectSuccess('admin.dashboard_inventori_barang', 'Berhasil Menambahkan Inventori Barang');
         } catch (\Exception $errors) {
