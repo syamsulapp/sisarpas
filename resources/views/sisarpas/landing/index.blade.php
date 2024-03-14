@@ -63,7 +63,7 @@
                                     height="100" />
                             </div>
                             <h4>
-                                <a href="{{ route('peminjaman.ruangan', ['kategori' => 'barang']) }}">Ruang Aula</a>
+                                <a href="{{ route('peminjaman.ruangan', ['kategori' => 'ruangan']) }}">Ruang Aula</a>
                             </h4>
                             <p>SARPRAS menyediakan layanan peminjaman ruang aula dengan fasilitas yang lengkap, memberikan
                                 dukungan optimal untuk beragam kegiatan.</p>
