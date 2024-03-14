@@ -310,10 +310,32 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doDeleteBarang($id)
+    public function doDeleteBarang(Barang $id)
     {
+        try {
+            if (!$this->checkIdDeleteBarang($id->id)) {
+                return $this->redirectError('admin.dashboard_inventori_barang', 'Id barang salah');
+            }
+
+            if ($this->checkIdDeleteBarang($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Barang::where('id', $id->id)->first(), 'Berhasil Menghapus Barang Inventori'));
+                $this->deleteBarangRepositories($id->id);
+                return $this->redirectSuccess('admin.dashboard_inventori_barang', 'Berhasil Menghapus Barang Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_barang', 'Mohon maaf ada kesalahan dibagian delete inventori barang');
+        }
     }
 
+
+    private function checkIdDeleteBarang($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
 
     private function viewBarang($barang): View
     {
@@ -322,12 +344,12 @@ class DashboardController extends DashboardRepositories
 
     private function listBarang()
     {
-        return Barang::orderByDesc('id_barang')->get();
+        return Barang::orderByDesc('id')->get();
     }
 
     private function requestCreateBarang($request)
     {
-        return $request->only('id_barang', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
     }
 
     private function createImageBarang($request)
@@ -343,12 +365,10 @@ class DashboardController extends DashboardRepositories
     {
         $req = $this->requestCreateBarang($request);
         $req['gambar_barang'] = $this->createImageBarang($request);
-        $req['id_barang'] = uniqid();
+        $req['id'] = uniqid();
         $req['kategori_barang'] = 'barang';
         return $req;
     }
-
-
 
     /**
      * End::inventori(barang)

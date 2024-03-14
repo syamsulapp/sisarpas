@@ -121,6 +121,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         Barang::create($request);
     }
+    public function deleteBarangRepositories($id_barang): void
+    {
+        Barang::where('id_barang', $id_barang)->delete();
+    }
     /**
      * end::inventori_barang
      */

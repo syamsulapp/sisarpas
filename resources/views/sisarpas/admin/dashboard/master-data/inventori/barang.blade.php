@@ -51,12 +51,12 @@
                         @foreach ($barang as $b)
                             <tr>
                                 <td>
-                                    <button type="button" data-item="{{ $b->id_barang }}"
+                                    <button type="button" data-item="{{ $b->id }}"
                                         class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#detailModalBarang--{{ $b->id_barang }}">
+                                        data-bs-target="#detailModalBarang--{{ $b->id }}">
                                         <i class='bx bx-info-circle' style='color:#8f0d04'></i>
                                     </button>
-                                    {{ $b->id_barang }}
+                                    {{ $b->id }}
                                 </td>
                                 <td>{{ $b->nama_barang }}</td>
                                 <td>{{ $b->kategori_barang }}</td>
@@ -89,7 +89,7 @@
 
         @foreach ($barang as $b)
             <!-- modal detail -->
-            <div class="modal fade" id="detailModalBarang--{{ $b->id_barang }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="detailModalBarang--{{ $b->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -106,7 +106,7 @@
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>ID:</td>
-                                        <td>{{ $b->id_barang }}</td>
+                                        <td>{{ $b->id }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Nama:</td>
@@ -148,8 +148,7 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form
-                                                action="{{ route('admin.dashboard_inventori_delete_barang', $b->id_barang) }}"
+                                            <form action="{{ route('admin.dashboard_inventori_delete_barang', $b->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
@@ -159,7 +158,7 @@
                                                 </button>
                                                 |
                                                 <button type="button" class="btn btn-warning"
-                                                    data-bs-target="#modalEditBarang--{{ $b->id_barang }}"
+                                                    data-bs-target="#modalEditBarang--{{ $b->id }}"
                                                     data-bs-toggle="modal" data-bs-dismiss="modal">
                                                     <i class="bx bx-edit-alt" style="margin-right: 5px"></i>
                                                     Edit
@@ -178,7 +177,7 @@
 
         @foreach ($barang as $b)
             <!-- modal edit -->
-            <div class="modal fade" id="modalEditBarang--{{ $b->id_barang }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="modalEditBarang--{{ $b->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -192,7 +191,7 @@
                             <div class="modal-body table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <input type="number" name="id_barang" value="{{ $b->id_barang }}" hidden>
+                                        <input type="number" name="id" value="{{ $b->id }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"

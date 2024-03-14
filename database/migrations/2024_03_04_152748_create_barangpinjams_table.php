@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('barangpinjams', function (Blueprint $table) {
             $table->string('id_pinjams')->unique()->primary();
-            $table->string('barangs_id_barang')->references('id_barang')->on('barangs');
+            $table->string('barangs_id')->references('id')->on('barangs');
             $table->foreignId('users_id')->references('id')->on('users');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_pengembalian');
