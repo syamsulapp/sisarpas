@@ -75,10 +75,10 @@ class LandingControllers extends Controller
         return $landingRepositories->indexRepositories($landing);
     }
 
-    public function alat_barang(Request $request)
+    public function alat_barang($kategori)
     {
         try {
-            return $this->viewBarang($this->listBarang($request));
+            return $this->viewBarang($this->listBarang($kategori));
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian pengajuan pinjaman sarana dan prasarana');
@@ -102,18 +102,12 @@ class LandingControllers extends Controller
         return view('sisarpas.landing.peminjaman.alat_barang', compact('barang'));
     }
 
-    private function listBarang($request)
+    private function listBarang($kategori)
     {
-        $limit = 20;
-        if ($limit >= $request->limit) {
-            $limit = $request->limit;
-        }
-
         $barang = Barang::orderByDesc('id')
-            ->when($request->kategori_barang, function ($model) use ($request) {
-                $model->where('kategori_barang', 'like', "{$request->kategori_barang}");
-            })
-            ->paginate($limit);
+            ->when($kategori, function ($model) use ($kategori) {
+                $model->where('kategori_barang', 'like', "{$kategori}");
+            })->get();
         return $barang;
     }
 }

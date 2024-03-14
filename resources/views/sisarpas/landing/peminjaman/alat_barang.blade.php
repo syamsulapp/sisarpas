@@ -1,6 +1,6 @@
 @extends('sisarpas.landing.layouts.app')
 
-@section('title', 'Peminjaman Alat')
+@section('title', 'Peminjaman Barang Dan Aula')
 
 @section('content-landing')
 
@@ -14,10 +14,12 @@
                             <h2>Sarana dan Prasarana ITERA</h2>
                             <p>Daftar alat dan barang, ruangan aula, serta pelayanan SARPRAS ITERA</p>
 
-                            <a href="{{ route('peminjaman.alat_barang') }}"
-                                class="btn-cari {{ request()->is('peminjaman/alat_barang') ? 'active' : '' }}">Alat &
+                            <a href="{{ route('peminjaman.barang', ['kategori' => 'barang']) }}"
+                                class="btn-cari {{ request()->is('peminjaman/alat/barang') ? 'active' : '' }}">Alat &
                                 Barang</a>
-                            <a class="btn-aula">Aula</a>
+                            <a href="{{ route('peminjaman.ruangan', ['kategori' => 'ruangan']) }}"
+                                class="btn-cari {{ request()->is('peminjaman/ruangan/aula') ? 'active' : '' }}">
+                                Aula</a>
 
                             <div class="input-box">
                                 <input type="text" placeholder="Search here..." />

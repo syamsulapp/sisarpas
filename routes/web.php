@@ -21,8 +21,8 @@ Route::get('/', [LandingControllers::class, 'index'])->name('sisarpas.landing');
 Route::post('contact', [LandingControllers::class, 'contact'])->name('sisarpas.contact');
 
 Route::prefix('peminjaman')->group(function () {
-    Route::get('alat_barang', [LandingControllers::class, 'alat_barang'])->name('peminjaman.alat_barang');
-    Route::get('aula_barang', [LandingControllers::class, 'aula_barang'])->name('peminjaman.aula_barang');
+    Route::get('/alat/{kategori}', [LandingControllers::class, 'alat_barang'])->name('peminjaman.barang');
+    Route::get('{kategori}/aula', [LandingControllers::class, 'alat_barang'])->name('peminjaman.ruangan');
 });
 
 Route::prefix('user')->group(function () {
