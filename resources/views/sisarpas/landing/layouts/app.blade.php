@@ -32,7 +32,7 @@
 <body>
 
     <!-- header with condition -->
-    @if (Request::is('peminjaman/alat_barang') || Request::is('peminjaman/aula_barang'))
+    @if (Request::is('peminjaman/alat/barang') || Request::is('peminjaman/ruangan/aula'))
         <!-- header peminjaman -->
         @include('sisarpas.landing.layouts.peminjaman.header')
     @else
