@@ -23,6 +23,7 @@ Route::post('contact', [LandingControllers::class, 'contact'])->name('sisarpas.c
 Route::prefix('peminjaman')->group(function () {
     Route::get('/alat/{kategori}', [LandingControllers::class, 'alat_barang'])->name('peminjaman.barang');
     Route::get('{kategori}/aula', [LandingControllers::class, 'alat_barang'])->name('peminjaman.ruangan');
+    Route::post('cari/barang', [LandingControllers::class, 'cari_barang'])->name('peminjaman.cari.barang');
 });
 
 Route::prefix('user')->group(function () {

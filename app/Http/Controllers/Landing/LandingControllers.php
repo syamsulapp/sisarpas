@@ -81,13 +81,18 @@ class LandingControllers extends Controller
             return $this->viewBarang($this->listBarang($kategori));
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian pengajuan pinjaman sarana dan prasarana');
+            return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian search barang');
         }
     }
 
-    public function aula_barang(): View
+    public function cari_barang(Request $request)
     {
-        return view('sisarpas.landing.peminjaman.aula_barang');
+        try {
+            return $this->viewBarang($this->cariBarang($request));
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian pengajuan pinjaman sarana dan prasarana');
+        }
     }
 
     public function contact(LandingRepositories $landingRepositories): RedirectResponse
@@ -106,8 +111,17 @@ class LandingControllers extends Controller
     {
         $barang = Barang::orderByDesc('id')
             ->when($kategori, function ($model) use ($kategori) {
-                $model->where('kategori_barang', 'like', "{$kategori}");
+                $model->where('kategori_barang', $kategori);
             })->get();
         return $barang;
+    }
+
+    private function cariBarang($request)
+    {
+        $cari_barang = Barang::orderByDesc('id')
+            ->when($request->cari, function ($model) use ($request) {
+                $model->where('nama_barang', 'like', "%{$request->cari}%");
+            })->get();
+        return $cari_barang;
     }
 }

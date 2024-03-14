@@ -21,18 +21,21 @@
                                 class="btn-cari {{ request()->is('peminjaman/ruangan/aula') ? 'active' : '' }}">
                                 Aula</a>
 
-                            <div class="input-box">
-                                <input type="text" placeholder="Search here..." />
-                                <button class="button">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="css-i6dzq1">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    </svg>
-                                    Cari
-                                </button>
-                            </div>
+                            <form action="{{ route('peminjaman.cari.barang') }}" method="POST">
+                                <div class="input-box">
+                                    @csrf
+                                    <input type="text" name="cari" placeholder="Search here..." />
+                                    <button class="button" type="submit">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                            stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                            class="css-i6dzq1">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                        Cari
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
