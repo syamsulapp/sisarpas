@@ -42,9 +42,18 @@
             </div>
         </section>
 
-
         <section id="pricing" class="pricing">
             <div class="container">
+                @session('success')
+                    <div class="alert alert-success" role="alert">
+                        {{ $value }}
+                    </div>
+                @endsession
+                @session('error')
+                    <div class="alert alert-danger" role="alert">
+                        {{ $value }}
+                    </div>
+                @endsession
                 <div class="row">
                     @foreach ($barang as $b)
                         <div class="col-lg-3 col-md-6 mt-4 mt-md-6" data-aos="fade-up" data-aos-delay="200">

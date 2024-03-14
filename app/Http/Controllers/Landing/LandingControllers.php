@@ -60,10 +60,10 @@ class LandingControllers extends Controller
         return Redirect::route($route);
     }
 
-    private function redirectError($route, $message): RedirectResponse
+    private function redirectError($route, $parameter, $message): RedirectResponse
     {
         Session::flash("error", $message);
-        return Redirect::route($route);
+        return Redirect::route($route, ['kategori' => $parameter]);
     }
 
     /**
@@ -81,17 +81,20 @@ class LandingControllers extends Controller
             return $this->viewBarang($this->listBarang($kategori));
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian search barang');
+            return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian halaman barang dan aula');
         }
     }
 
     public function cari_barang(Request $request)
     {
         try {
-            return $this->viewBarang($this->cariBarang($request));
+            if (!empty($request->cari)) {
+                return $this->viewBarang($this->cariBarang($request->cari));
+            }
+            return $this->redirectError('peminjaman.barang', 'barang', 'Silahkan Ketikan Pencarian');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('peminjaman.alat_barang', 'Mohon maaf ada kesalahan dibagian pengajuan pinjaman sarana dan prasarana');
+            return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian pengajuan pinjaman sarana dan prasarana');
         }
     }
 
@@ -116,11 +119,11 @@ class LandingControllers extends Controller
         return $barang;
     }
 
-    private function cariBarang($request)
+    private function cariBarang($cari_barang)
     {
         $cari_barang = Barang::orderByDesc('id')
-            ->when($request->cari, function ($model) use ($request) {
-                $model->where('nama_barang', 'like', "%{$request->cari}%");
+            ->when($cari_barang, function ($model) use ($cari_barang) {
+                $model->where('nama_barang', 'like', "%{$cari_barang}%");
             })->limit(10)->get();
         return $cari_barang;
     }
