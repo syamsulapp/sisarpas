@@ -78,8 +78,8 @@
                         <div class="modal-body">
                             <table>
                                 <tr>
-                                    <th><img src="{{ asset('sisarpas/assets/img/microphone.png') }}" width="152"
-                                            height="200" /></th>
+                                    <th><img src="{{ asset('sisarpas/assets/inventoriFile/' . $b->gambar_barang) }}"
+                                            width="152" height="200" /></th>
                                     <th>
                                         <div class="mb-3">
                                             <p style="font-size: small">ID Barang Persediaan : {{ $b->id }}</p>
@@ -95,11 +95,11 @@
                                         </div>
                                         <div class="mb-3">
                                             <p style="font-size: small">Status Barang : @if ($b->status_barang == 'ready')
-                                                    <span class="badge bg-label-success me-1"> {{ $b->status_barang }}
+                                                    <span class="badge text-bg-success"> {{ $b->status_barang }}
                                                     @elseif($b->status_barang == 'not-ready')
-                                                        <span class="badge bg-label-warning me-1"> {{ $b->status_barang }}
+                                                        <span class="badge text-bg-warning"> {{ $b->status_barang }}
                                                         @elseif($b->status_barang == 'maintenance')
-                                                            <span class="badge bg-label-danger me-1">
+                                                            <span class="badge text-bg-danger">
                                                                 {{ $b->status_barang }}
                                                 @endif
                                                 </span></p>
