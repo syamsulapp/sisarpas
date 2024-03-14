@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
-    data-assets-path="../../assets/admin/assets/" data-template="vertical-menu-template-free">
+    data-assets-path="{{ asset('sisarpas/assets/admin/assets') }}" data-template="vertical-menu-template-free">
 
 <head>
     <meta charset="utf-8" />
