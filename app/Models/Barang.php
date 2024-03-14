@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     protected $fillable = [
-        'id_barang',
+        'id',
         'nama_barang', 'jumlah_barang',
         'kondisi_barang', 'kategori_barang',
         'detail_barang', 'spesifikasi_barang',
@@ -17,6 +17,7 @@ class Barang extends Model
     ];
 
     protected $casts = [
+        'id' => 'string',
         'created_at' => 'date:Y-m-d H:i:s',
         'updated_at' => 'date:Y-m-d H:i:s',
     ];
