@@ -293,7 +293,7 @@ class DashboardController extends DashboardRepositories
     public function doCreateBarang(Request $request)
     {
         try {
-            $this->createBarangRepositories($this->submitRequestBarang($request));
+            $this->createBarangRepositories($this->submitRequestCreateBarang($request));
             $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori barang'));
             $this->dataLogSuccess('telah menambahkan inventori barang');
             return $this->redirectSuccess('admin.dashboard_inventori_barang', 'Berhasil Menambahkan Inventori Barang');
@@ -303,10 +303,29 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doUpdateBarang(Request $request)
+    public function doUpdateBarang(Request $request): RedirectResponse
     {
         try {
+            if (!$this->checkIdUpdateBarang($request->id)) {
+                $this->logError($this->dataLogError('id update barang inventori salah'));
+                return $this->redirectError('admin.dashboard_inventori_barang', 'Id barang salah');
+            }
+
+            if ($this->checkIdUpdateBarang($request->id)) {
+                if (!empty($request->file('gambar_barang'))) {
+                    $this->updateBarangRepositories($this->submitRequestUpdateBarangWithImg($request));
+                }
+
+                if (empty($request->file('gambar_barang'))) {
+                    $this->updateBarangRepositories($this->submitRequestUpdateBarangNoImg($request));
+                }
+
+                $this->logSuccess($this->dataLogSuccessByID(Barang::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori Barang'));
+                return $this->redirectSuccess('admin.dashboard_inventori_barang', 'Berhasil Update Barang Inventori');
+            }
         } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_barang', 'Maaf ada kesalahan dibagian inventori update barang');
         }
     }
 
@@ -328,6 +347,13 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    private function checkIdUpdateBarang($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
 
     private function checkIdDeleteBarang($id): bool
     {
@@ -347,12 +373,7 @@ class DashboardController extends DashboardRepositories
         return Barang::orderByDesc('id')->get();
     }
 
-    private function requestCreateBarang($request)
-    {
-        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
-    }
-
-    private function createImageBarang($request)
+    private function imageBarang($request)
     {
         $image = $request->file('gambar_barang');
         $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
@@ -361,11 +382,39 @@ class DashboardController extends DashboardRepositories
         return $namaFile;
     }
 
-    private function submitRequestBarang($request)
+    private function requestCreateBarang($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function requestUpdateBarangNoImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'status_barang');
+    }
+
+    private function requestUpdateBarangWithImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function submitRequestCreateBarang($request)
     {
         $req = $this->requestCreateBarang($request);
-        $req['gambar_barang'] = $this->createImageBarang($request);
+        $req['gambar_barang'] = $this->imageBarang($request);
         $req['id'] = uniqid();
+        $req['kategori_barang'] = 'barang';
+        return $req;
+    }
+    private function submitRequestUpdateBarangWithImg($request)
+    {
+        $req = $this->requestUpdateBarangWithImg($request);
+        $req['gambar_barang'] = $this->imageBarang($request);
+        $req['kategori_barang'] = 'barang';
+        return $req;
+    }
+    private function submitRequestUpdateBarangNoImg($request)
+    {
+        $req = $this->requestUpdateBarangNoImg($request);
         $req['kategori_barang'] = 'barang';
         return $req;
     }

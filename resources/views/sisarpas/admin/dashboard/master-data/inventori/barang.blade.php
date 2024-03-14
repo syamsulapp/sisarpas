@@ -191,7 +191,7 @@
                             <div class="modal-body table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <input type="number" name="id" value="{{ $b->id }}" hidden>
+                                        <input type="text" name="id" value="{{ $b->id }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"

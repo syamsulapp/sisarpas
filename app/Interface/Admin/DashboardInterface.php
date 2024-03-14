@@ -13,5 +13,6 @@ interface DashboardInterface
     public function deleteContactsRepositories($model): void;
     //inventori_barang
     public function createBarangRepositories($request): void;
+    public function updateBarangRepositories($request): void;
     public function deleteBarangRepositories($id): void;
 }

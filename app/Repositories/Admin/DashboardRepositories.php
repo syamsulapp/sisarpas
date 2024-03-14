@@ -2,18 +2,10 @@
 
 namespace App\Repositories\Admin;
 
-use Carbon\Carbon;
-use App\Models\Admin;
-use App\Models\Errorlog;
-use App\Models\Successlog;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Interface\Admin\DashboardInterface;
 use App\Models\Barang;
-use App\Models\Contact;
 use App\Models\Landing;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Redirect;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
 {
@@ -38,7 +30,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/barang/create')) {
             return [
-                'id_barang' => 'string',
+                'id' => 'string',
                 'nama_barang' => 'required|string',
                 'jumlah_barang' => 'required|integer',
                 'kondisi_barang' => 'required|string',
@@ -50,15 +42,15 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/barang/update')) {
             return [
-                'id_barang' => 'string',
-                'nama_barang' => 'required|string',
-                'jumlah_barang' => 'required|integer',
-                'kondisi_barang' => 'required|string',
+                'id' => 'string',
+                'nama_barang' => 'string',
+                'jumlah_barang' => 'integer',
+                'kondisi_barang' => 'string',
                 'kategori_barang' => 'in:barang,ruangan',
-                'detail_barang' => 'required|string',
+                'detail_barang' => 'string',
                 'spesifikasi_barang' => 'string',
                 'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
-                'status_barang' => 'required|in:ready,not-ready,maintenance',
+                'status_barang' => 'in:ready,not-ready,maintenance',
             ];
         } else {
             return [];
@@ -120,6 +112,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function createBarangRepositories($request): void
     {
         Barang::create($request);
+    }
+    public function updateBarangRepositories($request): void
+    {
+        Barang::where('id', $request['id'])->update($request);
     }
     public function deleteBarangRepositories($id): void
     {
