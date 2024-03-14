@@ -9,6 +9,7 @@ use App\Models\Successlog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\Barang;
 use App\Models\Contact;
 use App\Models\Landing;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,13 +17,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
 {
-
-    protected $admin;
-
-    public function __construct(Admin $admin)
-    {
-        $this->admin = $admin;
-    }
     public function rules(): array
     {
         if (request()->is('admin/dashboard/master_data/landing/create')) {
@@ -41,6 +35,18 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'email' => 'required|email',
                 'message' => 'required|string',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/barang/create')) {
+            return [
+                'id_barang' => 'string',
+                'nama_barang' => 'required|string',
+                'jumlah_barang' => 'required|integer',
+                'kondisi_barang' => 'required|string',
+                'kategori_barang' => 'in:barang,ruangan',
+                'detail_barang' => 'required|string',
+                'spesifikasi_barang' => 'string',
+                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg',
+                'status_barang' => 'required|in:ready,not-ready,maintenance',
             ];
         } else {
             return [];
@@ -94,5 +100,16 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     }
     /**
      * end::contacts
+     */
+
+    /**
+     * begin::inventori_barang
+     */
+    public function createBarangRepositories($request): void
+    {
+        Barang::create($request);
+    }
+    /**
+     * end::inventori_barang
      */
 }

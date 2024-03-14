@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('kondisi_barang');
             $table->enum('kategori_barang', ['barang', 'ruangan']);
             $table->string('detail_barang');
-            $table->string('spesifikasi_barang')->nullable();
+            $table->text('spesifikasi_barang')->nullable();
             $table->string('gambar_barang');
             $table->enum('status_barang', ['ready', 'not-ready', 'maintenance']);
             $table->timestamps();

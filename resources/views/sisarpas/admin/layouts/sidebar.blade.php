@@ -51,7 +51,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="data_barang.html" class="menu-link">
+                    <a href="{{ route('admin.dashboard_inventori_barang') }}" class="menu-link">
                         <div data-i18n="Landing">Data Barang</div>
                     </a>
                 </li>

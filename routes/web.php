@@ -105,6 +105,20 @@ Route::prefix('admin')->group(function () {
                     Route::put('update', [AdminDashboardController::class, 'doUpdateContacts'])->name('admin.dashboard_update_contacts');
                     Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteContacts'])->name('admin.dashboard_delete_contacts');
                 });
+                Route::prefix('inventori')->group(function () {
+                    Route::prefix('barang')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'barang'])->name('admin.dashboard_inventori_barang');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateBarang'])->name('admin.dashboard_inventori_create_barang');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateBarang'])->name('admin.dashboard_inventori_update_barang');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteBarang'])->name('admin.dashboard_inventori_delete_barang');
+                    });
+                    Route::prefix('ruangan')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'ruangan'])->name('admin.dashboard_inventori_ruangan');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateRuangan'])->name('admin.dashboard_inventori_create_ruangan');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateRuangan'])->name('admin.dashboard_inventori_update_ruangan');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
+                    });
+                });
             });
             /**
              * rekap peminjaman barang dan aula
