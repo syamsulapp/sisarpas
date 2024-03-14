@@ -112,7 +112,7 @@ class LandingControllers extends Controller
         $barang = Barang::orderByDesc('id')
             ->when($kategori, function ($model) use ($kategori) {
                 $model->where('kategori_barang', $kategori);
-            })->get();
+            })->limit(10)->get();
         return $barang;
     }
 
@@ -121,7 +121,7 @@ class LandingControllers extends Controller
         $cari_barang = Barang::orderByDesc('id')
             ->when($request->cari, function ($model) use ($request) {
                 $model->where('nama_barang', 'like', "%{$request->cari}%");
-            })->get();
+            })->limit(10)->get();
         return $cari_barang;
     }
 }
