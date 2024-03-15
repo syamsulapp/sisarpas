@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Barangpinjam;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Errorlog;

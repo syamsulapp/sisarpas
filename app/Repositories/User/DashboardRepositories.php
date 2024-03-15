@@ -3,8 +3,6 @@
 namespace App\Repositories\User;
 
 use App\Models\Barangpinjam;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Interface\User\DashboardInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
