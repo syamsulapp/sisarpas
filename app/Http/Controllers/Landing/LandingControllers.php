@@ -91,7 +91,7 @@ class LandingControllers extends LandingRepositories
 
     private function getLanding()
     {
-        return Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
+        return $this->landingRepositories();
     }
 
     private function viewLanding($landing_image): View
@@ -153,20 +153,12 @@ class LandingControllers extends LandingRepositories
 
     private function listBarang($kategori)
     {
-        $barang = Barang::orderByDesc('id')
-            ->when($kategori, function ($model) use ($kategori) {
-                $model->where('kategori_barang', $kategori);
-            })->limit(10)->get();
-        return $barang;
+        return $this->listBarangRepositories($kategori);
     }
 
     private function cariBarang($cari_barang)
     {
-        $cari_barang = Barang::orderByDesc('id')
-            ->when($cari_barang, function ($model) use ($cari_barang) {
-                $model->where('nama_barang', 'like', "%{$cari_barang}%");
-            })->limit(10)->get();
-        return $cari_barang;
+        return $this->cariBarangRepositories($cari_barang);
     }
     /**
      * end::page alat barang dan aula
@@ -219,15 +211,12 @@ class LandingControllers extends LandingRepositories
 
     private function checkIDBarang($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIDBarangRepositories($id);
     }
 
     private function getBarangBYID($id)
     {
-        return Barang::where('id', $id)->first();
+        return $this->getBarangBYIDRepositories($id);
     }
 
     private function viewTransactionPinjamBYID($id): View
