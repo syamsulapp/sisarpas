@@ -18,6 +18,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
             ];
         } else if (request()->is('user/transaction/pinjam')) {
             return [
+                'id' => 'string',
                 'barangs_id' => 'required|string',
                 'users_id' => 'required|integer',
                 'tanggal_pinjam' => 'required|date',

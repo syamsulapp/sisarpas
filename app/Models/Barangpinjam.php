@@ -10,6 +10,7 @@ class Barangpinjam extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'barangs_id',
         'users_id',
         'tanggal_pinjam',

@@ -205,9 +205,9 @@ class LandingControllers extends LandingRepositories
     {
         DB::beginTransaction();
         try {
-            $data = $this->doPinjamRepositories($this->requestSubmitTransactionPinjam($request));
+            $this->doPinjamRepositories($this->requestSubmitTransactionPinjam($request));
             DB::commit();
-            $this->logSuccess($this->dataLogSuccessByID($data, 'Berhasil melakukan transaction pinjam barang dengan'));
+            $this->logSuccess($this->dataLogSuccess('telah berhasil melakukan transaction pinjam barang'));
             return $this->redirectSuccess('user.dashboard', 'Berhasil Melakukan Transaction Barang');
         } catch (\Exception $errors) {
             DB::rollBack();
@@ -246,13 +246,14 @@ class LandingControllers extends LandingRepositories
 
     private function requestTransactionPinjam($request)
     {
-        return $request->only('barangs_id', 'users_id', 'tanggal_pinjam', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
+        return $request->only('id', 'barangs_id', 'users_id', 'tanggal_pinjam', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
     }
 
     private function requestSubmitTransactionPinjam($request)
     {
         $req = $this->requestTransactionPinjam($request);
         $req['dokumen_pendukung'] = $this->requestTransactionFilePendukung($request);
+        $req['id'] = uniqid();
         return $req;
     }
 
