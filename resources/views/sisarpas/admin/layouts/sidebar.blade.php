@@ -75,8 +75,8 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
-            <a href="peminjaman.html" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/dashboard/peminjaman') ? 'active open' : '' }}">
+            <a href="{{ route('admin.dashboard_peminjaman') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-file-export"></i>
                 <div data-i18n="Tables">Data Peminjaman</div>
             </a>

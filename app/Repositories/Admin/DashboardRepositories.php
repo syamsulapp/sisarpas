@@ -5,6 +5,7 @@ namespace App\Repositories\Admin;
 use App\Models\Barang;
 use App\Models\Contact;
 use App\Models\Landing;
+use App\Models\Barangpinjam;
 use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
 use Illuminate\Foundation\Http\FormRequest;
@@ -254,6 +255,20 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         Ruangan::where('id', $id)->delete();
     }
     /**
-     * end::inventori_barang
+     * end::inventori_ruangan
+     */
+
+    /**
+     * begin::transaction(verif peminjaman users)
+     */
+    public function getVerifikasiPeminjamanRepositories()
+    {
+        return Barangpinjam::orderByDesc('id')
+            ->with(['users', 'barangs'])
+            ->get();
+    }
+
+    /**
+     * end::transaction(verif peminjaman users)
      */
 }

@@ -120,6 +120,10 @@ Route::prefix('admin')->group(function () {
                     });
                 });
             });
+            Route::prefix('peminjaman')->group(function () {
+                Route::get('/', [AdminDashboardController::class, 'verifikasiPeminjaman'])->name('admin.dashboard_peminjaman');
+                Route::post('{id}/verifikasi', [AdminDashboardController::class, 'doverifikasiPeminjaman'])->name('admin.dashboard_verifikasi_peminjaman');
+            });
             /**
              * rekap peminjaman barang dan aula
              */

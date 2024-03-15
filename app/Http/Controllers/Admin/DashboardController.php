@@ -549,7 +549,26 @@ class DashboardController extends DashboardRepositories
     /**
      * begin::transaction(verif peminjaman users)
      */
+    public function verifikasiPeminjaman()
+    {
+        try {
+            return $this->viewVerifikasiPeminjaman($this->getVerifikasiPeminjaman());
+            $this->logSuccess($this->dataLogSuccess('admin berhasil membuka module verifikasi peminjaman barang user'));
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard', 'Mohon maaf ada kesalahan dibagian module verifikasi peminjaman users');
+        }
+    }
 
+    public function viewVerifikasiPeminjaman($peminjaman): View
+    {
+        return view('sisarpas.admin.dashboard.peminjaman.verifikasi', compact('peminjaman'));
+    }
+
+    public function getVerifikasiPeminjaman()
+    {
+        return $this->getVerifikasiPeminjamanRepositories();
+    }
 
     /**
      * begin::transaction(verif of peminjaman users)
