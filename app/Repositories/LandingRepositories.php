@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Contact;
 use App\Interface\LandingInterface;
+use App\Models\Barangpinjam;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LandingRepositories extends FormRequest implements LandingInterface
@@ -48,8 +49,9 @@ class LandingRepositories extends FormRequest implements LandingInterface
     /**
      * begin::transaction pinjam
      */
-    public function doPinjamRepositories(): void
+    public function doPinjamRepositories($request): void
     {
+        Barangpinjam::create($request);
     }
     /**
      * end::transaction pinjam

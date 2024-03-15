@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\LandingRepositories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LandingControllers extends LandingRepositories
 {
@@ -193,9 +194,14 @@ class LandingControllers extends LandingRepositories
 
     public function doPinjam(Request $request)
     {
+        DB::beginTransaction();
         try {
-            dd($request->all());
+            $data = $this->doPinjamRepositories($this->requestSubmitTransactionPinjam($request));
+            DB::commit();
+            $this->logSuccess($this->dataLogSuccessByID($data, 'Berhasil melakukan transaction pinjam barang dengan'));
+            return $this->redirectSuccess('user.dashboard', 'Berhasil Melakukan Transaction Barang');
         } catch (\Exception $errors) {
+            DB::rollBack();
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian transaction peminjaman barang/aula');
         }
@@ -218,6 +224,27 @@ class LandingControllers extends LandingRepositories
     private function viewTransactionPinjamBYID($id): View
     {
         return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', compact('id'));
+    }
+
+    private function requestTransactionFilePendukung($request)
+    {
+        $file_pendukung = $request->file('dokumen_pendukung');
+        $namaFile = date('Y-m-d H:i:s') . "_" . $file_pendukung->getClientOriginalName();
+        $destination_upload = "sisarpas/assets/file_pendukung";
+        $file_pendukung->move($destination_upload, $namaFile);
+        return $namaFile;
+    }
+
+    private function requestTransactionPinjam($request)
+    {
+        return $request->only('barangs_id', 'users_id', 'tanggal_pinjam', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
+    }
+
+    private function requestSubmitTransactionPinjam($request)
+    {
+        $req = $this->requestTransactionPinjam($request);
+        $req['dokumen_pendukung'] = $this->requestTransactionFilePendukung($request);
+        return $req;
     }
 
     /**
