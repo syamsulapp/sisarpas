@@ -93,11 +93,19 @@ class LandingControllers extends LandingRepositories
         return Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
     }
 
-    public function viewLanding($landing_image): View
+    private function viewLanding($landing_image): View
     {
         return view('sisarpas.landing.index', compact('landing_image'));
     }
 
+    /**
+     * end::landing
+     */
+
+
+    /**
+     * begin::page alat barang dan aula
+     */
     public function alat_barang($kategori)
     {
         try {
@@ -160,7 +168,7 @@ class LandingControllers extends LandingRepositories
         return $cari_barang;
     }
     /**
-     * end::landing
+     * end::page alat barang dan aula
      */
 
 
