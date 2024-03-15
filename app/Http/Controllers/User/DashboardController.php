@@ -96,6 +96,6 @@ class DashboardController extends DashboardRepositories
 
     public function listPeminjaman()
     {
-        return Barangpinjam::where('users_id', $this->user->authUser()->id)->orderByDesc('id')->with('users_id')->get();
+        return $this->listPeminjamanRepositories();
     }
 }

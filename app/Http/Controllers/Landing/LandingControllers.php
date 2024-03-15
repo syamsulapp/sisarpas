@@ -198,7 +198,7 @@ class LandingControllers extends LandingRepositories
             $this->doTransactionPinjamRepositories($this->requestSubmitTransactionPinjam($request));
             DB::commit();
             $this->logSuccess($this->dataLogSuccess('telah berhasil melakukan transaction pinjam barang'));
-            return $this->redirectSuccess('user.dashboard', 'Berhasil Melakukan Transaction Barang');
+            return $this->redirectSuccess('user.dashboard-peminjaman', 'Berhasil Melakukan Transaction Barang');
         } catch (\Exception $errors) {
             DB::rollBack();
             $this->logError($this->dataLogError($errors->getMessage()));

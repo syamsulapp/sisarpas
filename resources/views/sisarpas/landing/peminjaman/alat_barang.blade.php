@@ -16,7 +16,7 @@
                     <ul>
                         <!-- <li></li> -->
                         <div class="button">
-                            <a href="{{ route('user.dashboard') }}" class="btn-login">Daftar Peminjaman</a>
+                            <a href="{{ route('user.dashboard-peminjaman') }}" class="btn-login">Daftar Peminjaman</a>
                         </div>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
