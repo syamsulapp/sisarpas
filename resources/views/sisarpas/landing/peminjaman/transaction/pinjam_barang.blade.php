@@ -32,7 +32,7 @@
                         <div class="warna">
                             <b>Form Peminjaman</b>
                         </div>
-                        <form method="POST" action="{{ route('transaction.pinjam.barang') }}"
+                        <form method="POST" action="{{ route('transaction.submit.pinjam.barang') }}"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="warna-form">
@@ -53,7 +53,7 @@
                                         Barang</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="barangs_id"
-                                            placeholder="Masukan tujuan pinjam" value="{{ $id->id }}" disabled>
+                                            placeholder="Masukan tujuan pinjam" value="{{ $id->id }}" readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -63,7 +63,7 @@
                                     <div class="col-sm-7">
                                         <input type="text" name="users_id" class="form-control"
                                             placeholder="Masukan tujuan pinjam"
-                                            value="{{ Auth::guard('user')->user()->id }}" disabled>
+                                            value="{{ Auth::guard('user')->user()->id }}" readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -80,7 +80,7 @@
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="kategori_pinjam"
                                             placeholder="Masukan kategori pinjam" value="{{ $id->kategori_barang }}"
-                                            disabled>
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -104,7 +104,8 @@
                                     <label for="inputPassword3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Dokumen Pendukung</label>
                                     <div class="col-sm-7">
-                                        <input class="form-control" type="file" id="formFile" />
+                                        <input class="form-control" type="file" name="dokumen_pendukung"
+                                            id="formFile" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -112,7 +113,7 @@
                                         Pinjam</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="status_pinjam"
-                                            placeholder="Masukan tujuan pinjam" value="diajukan" disabled>
+                                            placeholder="Masukan tujuan pinjam" value="diajukan" readonly>
                                     </div>
                                 </div>
                             </div>

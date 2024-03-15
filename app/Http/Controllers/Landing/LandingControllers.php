@@ -191,9 +191,10 @@ class LandingControllers extends LandingRepositories
         }
     }
 
-    public function doPinjam(LandingRepositories $landingRepositories)
+    public function doPinjam(Request $request)
     {
         try {
+            dd($request->all());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian transaction peminjaman barang/aula');
