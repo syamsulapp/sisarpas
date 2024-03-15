@@ -184,7 +184,16 @@ class LandingControllers extends LandingRepositories
             }
 
             if ($this->checkIDBarang($id)) {
-                return $this->viewTransactionPinjamBYID($this->getBarangBYID($id));
+                if ($this->getBarangBYID($id)['status_barang'] == 'maintenance') {
+                    return $this->redirectError('peminjaman.barang', 'barang', 'barang tidak boleh dipinjam dikarenakan sedang maintenance');
+                }
+                if ($this->getBarangBYID($id)['status_barang'] == 'not-ready') {
+                    return $this->redirectError('peminjaman.barang', 'barang', 'barang belum siap untuk di pinjam');
+                }
+
+                if ($this->getBarangBYID($id)['status_barang'] != 'not-ready' &&  $this->getBarangBYID($id)['status_barang'] != 'maintenance') {
+                    return $this->viewTransactionPinjamBYID($this->getBarangBYID($id));
+                }
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
