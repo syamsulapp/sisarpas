@@ -29,6 +29,15 @@
             <div class="container" data-aos="fade-up">
                 <div class="row" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-lg-6">
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                @foreach ($errors->all() as $errors)
+                                    <ul>
+                                        <li> {{ $errors }}</li>
+                                    </ul>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="warna">
                             <b>Form Peminjaman</b>
                         </div>

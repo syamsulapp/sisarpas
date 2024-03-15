@@ -15,6 +15,17 @@ class LandingRepositories extends FormRequest implements LandingInterface
                 'email' => 'required|email',
                 'message' => 'required|string'
             ];
+        } else if (request()->is('user/transaction/pinjam')) {
+            return [
+                'barangs_id' => 'required|string',
+                'users_id' => 'required|integer',
+                'tanggal_pinjam' => 'required|date',
+                'kategori_pinjam' => 'required|string',
+                'tujuan_pinjam' => 'required|string',
+                'keterangan_pinjam' => 'required|string',
+                'dokumen_pendukung' => 'required|file|mimes:pdf',
+                'status_pinjam' => 'required|string',
+            ];
         } else {
             return [];
         }

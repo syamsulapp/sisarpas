@@ -10,6 +10,7 @@ class Barangpinjam extends Model
     use HasFactory;
 
     protected $fillable = [
+        'barangs_id',
         'users_id',
         'tanggal_pinjam',
         'tanggal_pengembalian',
