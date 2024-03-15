@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Landing;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Barang;
-use App\Models\Landing;
 use App\Models\Errorlog;
 use App\Models\Successlog;
 use Illuminate\Contracts\View\View;
