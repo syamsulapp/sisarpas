@@ -79,8 +79,8 @@
                                     <label for="inputPassword3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Tanggal Peminjaman</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" name="tanggal_pinjam"
-                                            id="inputPassword3" />
+                                        <input type="date" class="form-control" name="tanggal_pinjam" id="inputPassword3"
+                                            value="{{ old('tanggal_pinjam') }}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -97,7 +97,7 @@
                                         Pinjam</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="tujuan_pinjam"
-                                            placeholder="Masukan tujuan pinjam">
+                                            placeholder="Masukan tujuan pinjam" value="{{ old('tujuan_pinjam') }}">
                                     </div>
                                 </div>
 
@@ -105,7 +105,7 @@
                                     <label for="inputPassword3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Keterangan Pinjam</label>
                                     <div class="col-sm-7">
-                                        <textarea class="form-control" name="keterangan_pinjam" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea class="form-control" name="keterangan_pinjam" id="exampleFormControlTextarea1" rows="3">{{ old('keterangan_pinjam') }}</textarea>
                                     </div>
                                 </div>
 
@@ -118,7 +118,8 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-5 col-form-label" style="font-weight: 600">Status
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label"
+                                        style="font-weight: 600">Status
                                         Pinjam</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="status_pinjam"
