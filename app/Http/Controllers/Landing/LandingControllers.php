@@ -172,7 +172,7 @@ class LandingControllers extends Controller
 
     private function viewTransactionPinjamBYID($id): View
     {
-        return view('', $id);
+        return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', $id);
     }
 
 
