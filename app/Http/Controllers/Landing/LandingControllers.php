@@ -69,6 +69,11 @@ class LandingControllers extends Controller
     /**
      * end::logging and redirect response
      */
+
+    /**
+     * begin::landing
+     */
+
     public function index(LandingRepositories $landingRepositories)
     {
         $landing = Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
@@ -127,4 +132,18 @@ class LandingControllers extends Controller
             })->limit(10)->get();
         return $cari_barang;
     }
+    /**
+     * end::landing
+     */
+
+
+    /**
+     * begin::transaction pinjam
+     */
+
+
+
+    /**
+     * end::transaction pinjam
+     */
 }
