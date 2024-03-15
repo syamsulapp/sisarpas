@@ -6,6 +6,6 @@ use Illuminate\Contracts\View\View;
 
 interface LandingInterface
 {
-    public function indexRepositories($data): View;
-    public function contactRepositories(): void;
+    public function contactRepositories($request): void;
+    public function doPinjamRepositories(): void;
 }

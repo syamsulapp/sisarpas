@@ -9,14 +9,13 @@ use App\Models\Landing;
 use App\Models\Errorlog;
 use App\Models\Successlog;
 use Illuminate\Contracts\View\View;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\LandingRepositories;
 use Illuminate\Http\Request;
 
-class LandingControllers extends Controller
+class LandingControllers extends LandingRepositories
 {
     protected $user, $successLog, $errorlog;
     public function __construct(User $user, Successlog $successLog, Errorlog $errorlog)
@@ -66,6 +65,12 @@ class LandingControllers extends Controller
         return Redirect::route($route, ['kategori' => $parameter]);
     }
 
+    private function redirectErrorNoParams($route, $message): RedirectResponse
+    {
+        Session::flash("error", $message);
+        return Redirect::route($route);
+    }
+
     /**
      * end::logging and redirect response
      */
@@ -74,10 +79,23 @@ class LandingControllers extends Controller
      * begin::landing
      */
 
-    public function index(LandingRepositories $landingRepositories)
+    public function index(): View
     {
-        $landing = Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
-        return $landingRepositories->indexRepositories($landing);
+        try {
+            return $this->viewLanding($this->getLanding());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+        }
+    }
+
+    private function getLanding()
+    {
+        return Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
+    }
+
+    public function viewLanding($landing_image): View
+    {
+        return view('sisarpas.landing.index', compact('landing_image'));
     }
 
     public function alat_barang($kategori)
@@ -103,11 +121,20 @@ class LandingControllers extends Controller
         }
     }
 
-    public function contact(LandingRepositories $landingRepositories): RedirectResponse
+    public function contact(Request $request): RedirectResponse
     {
-        $landingRepositories->contactRepositories();
-        Session::flash('success', 'Berhasil Kirim Kontak');
-        return Redirect::route('sisarpas.landing');
+        try {
+            $this->contactRepositories($this->requestContact($request));
+            return $this->redirectSuccess('sisarpas.landing', 'Berhasil Kirim Kontak');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectErrorNoParams('sisarpas.landing', 'Maaf ada kesalahan dibagian kirim kontak');
+        }
+    }
+
+    private function requestContact($request)
+    {
+        return $request->only('email', 'message');
     }
 
     private function viewBarang($barang)
@@ -156,6 +183,15 @@ class LandingControllers extends Controller
         }
     }
 
+    public function doPinjam(LandingRepositories $landingRepositories)
+    {
+        try {
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian transaction peminjaman barang/aula');
+        }
+    }
+
 
     private function checkIDBarang($id): bool
     {
@@ -172,15 +208,8 @@ class LandingControllers extends Controller
 
     private function viewTransactionPinjamBYID($id): View
     {
-        return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', $id);
+        return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', compact('id'));
     }
-
-
-    private function submitTransactionPinjamBYID($id)
-    {
-    }
-
-
 
     /**
      * end::transaction pinjam

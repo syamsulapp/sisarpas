@@ -32,9 +32,11 @@
                         <div class="warna">
                             <b>Form Peminjaman</b>
                         </div>
-                        <form>
+                        <form method="POST" action="{{ route('transaction.pinjam.barang') }}"
+                            enctype="multipart/form-data">
+                            @csrf
                             <div class="warna-form">
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Tujuan</label>
                                     <div class="col-sm-7">
@@ -45,21 +47,59 @@
                                             <option value="3">Three</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label" style="font-weight: 600">ID
+                                        Barang</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="barangs_id"
+                                            placeholder="Masukan tujuan pinjam" value="{{ $id->id }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label" style="font-weight: 600">User
+                                        ID
+                                    </label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="users_id" class="form-control"
+                                            placeholder="Masukan tujuan pinjam"
+                                            value="{{ Auth::guard('user')->user()->id }}" disabled>
+                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputPassword3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Tanggal Peminjaman</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" id="inputPassword3" />
+                                        <input type="date" class="form-control" name="tanggal_pinjam"
+                                            id="inputPassword3" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-5 col-form-label"
-                                        style="font-weight: 600">Tanggal Pengembalian</label>
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label"
+                                        style="font-weight: 600">Kategori</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" id="inputPassword3" />
+                                        <input type="text" class="form-control" name="kategori_pinjam"
+                                            placeholder="Masukan kategori pinjam" value="{{ $id->kategori_barang }}"
+                                            disabled>
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label" style="font-weight: 600">Tujuan
+                                        Pinjam</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="tujuan_pinjam"
+                                            placeholder="Masukan tujuan pinjam">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inputPassword3" class="col-sm-5 col-form-label"
+                                        style="font-weight: 600">Keterangan Pinjam</label>
+                                    <div class="col-sm-7">
+                                        <textarea class="form-control" name="keterangan_pinjam" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <label for="inputPassword3" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Dokumen Pendukung</label>
@@ -68,10 +108,11 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-5 col-form-label"
-                                        style="font-weight: 600">Keterangan</label>
+                                    <label for="inputEmail3" class="col-sm-5 col-form-label" style="font-weight: 600">Status
+                                        Pinjam</label>
                                     <div class="col-sm-7">
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <input type="text" class="form-control" name="status_pinjam"
+                                            placeholder="Masukan tujuan pinjam" value="diajukan" disabled>
                                     </div>
                                 </div>
                             </div>

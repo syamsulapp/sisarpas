@@ -64,6 +64,7 @@ Route::prefix('user')->group(function () {
          */
         Route::prefix('transaction')->group(function () {
             Route::get('{id}/pinjam', [LandingControllers::class, 'pinjam'])->name('transaction.pinjam.barang');
+            Route::post('pinjam', [LandingControllers::class, 'doPinjam'])->name('transaction.pinjam.barang');
         });
     });
 });

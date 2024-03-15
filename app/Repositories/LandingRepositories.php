@@ -2,12 +2,8 @@
 
 namespace App\Repositories;
 
-use Carbon\Carbon;
 use App\Models\Contact;
-use App\Models\Errorlog;
-use App\Models\Successlog;
 use App\Interface\LandingInterface;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LandingRepositories extends FormRequest implements LandingInterface
@@ -33,21 +29,18 @@ class LandingRepositories extends FormRequest implements LandingInterface
         ];
     }
 
-    public function indexRepositories($data): View
+    public function contactRepositories($request): void
     {
-        $landing_image = $data;
-        return view('sisarpas.landing.index', compact('landing_image'));
+        Contact::create($request);
     }
 
-    public function contactRepositories(): void
+    /**
+     * begin::transaction pinjam
+     */
+    public function doPinjamRepositories(): void
     {
-        try {
-            $contact = Contact::create(['email' => request()->input('email'), 'message' => request()->input('message')]);
-            $mapSuccessLog = array('message' => "email: {$contact->email} telah mengirim contact ke admin", 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Successlog::create($mapSuccessLog);
-        } catch (\Exception $errors) {
-            $mapErrorLogs = array('message' => $errors->getMessage(), 'route' => request()->route()->getName(), 'created_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')), 'updated_at' =>  Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')));
-            Errorlog::create($mapErrorLogs);
-        }
     }
+    /**
+     * end::transaction pinjam
+     */
 }
