@@ -148,7 +148,7 @@ class LandingControllers extends Controller
             }
 
             if ($this->checkIDBarang($id)) {
-                return $this->getBarangBYID($id);
+                return $this->viewTransactionPinjamBYID($this->getBarangBYID($id));
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
@@ -169,6 +169,12 @@ class LandingControllers extends Controller
     {
         return Barang::where('id', $id)->first();
     }
+
+    private function viewTransactionPinjamBYID($id): View
+    {
+        return view('', $id);
+    }
+
 
     private function submitTransactionPinjamBYID($id)
     {
