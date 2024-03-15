@@ -30,7 +30,7 @@
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status</th>
-                            <th>Tanggal Dibuat</th>
+                            <th>Tanggal Diajukan</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Barangpinjam extends Model
 {
@@ -30,4 +31,9 @@ class Barangpinjam extends Model
         'created_at' => 'date:Y-m-d',
         'updated_at' => 'date:Y-m-d',
     ];
+
+    public function users_id(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'users_id');
+    }
 }

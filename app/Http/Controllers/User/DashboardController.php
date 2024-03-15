@@ -79,7 +79,7 @@ class DashboardController extends DashboardRepositories
         return view('sisarpas.user.dashboard.index');
     }
 
-    public function peminjaman(): View
+    public function peminjaman()
     {
         try {
             return $this->viewPeminjaman($this->listPeminjaman());
@@ -96,6 +96,6 @@ class DashboardController extends DashboardRepositories
 
     public function listPeminjaman()
     {
-        return Barangpinjam::where('users_id', $this->user->authUser()->id)->orderByDesc('id')->get();
+        return Barangpinjam::where('users_id', $this->user->authUser()->id)->orderByDesc('id')->with('users_id')->get();
     }
 }
