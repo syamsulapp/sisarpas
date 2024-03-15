@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('tujuan_pinjam');
             $table->string('keterangan_pinjam');
             $table->string('dokumen_pendukung');
-            $table->enum('status_pinjam', ['diajkukan', 'ditolak', 'dipinjam', 'dikembalikan']);
+            $table->enum('status_pinjam', ['diajukan', 'ditolak', 'dipinjam', 'dikembalikan']);
             $table->timestamps();
         });
     }
