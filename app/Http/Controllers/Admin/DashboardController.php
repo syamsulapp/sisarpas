@@ -353,7 +353,7 @@ class DashboardController extends DashboardRepositories
 
     private function listBarang()
     {
-        return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
+        return $this->listBarangRepositories();
     }
 
     private function imageBarang($request)

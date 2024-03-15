@@ -173,6 +173,12 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::inventori_barang
      */
+
+    public function listBarangRepositories()
+    {
+        return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
+    }
+
     public function createBarangRepositories($request): void
     {
         Barang::create($request);
