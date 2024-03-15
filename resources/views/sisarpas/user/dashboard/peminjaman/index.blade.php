@@ -26,7 +26,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
+                            <th>Nama Peminjam</th>
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status</th>
@@ -64,7 +64,7 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
+                            <th>Nama Peminjam</th>
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status</th>
@@ -105,7 +105,7 @@
                                         <td>{{ $p->barangs->nama_barang }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
-                                        <td>Nama:</td>
+                                        <td>Nama Peminjam:</td>
                                         <td>{{ $p->users->name }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
