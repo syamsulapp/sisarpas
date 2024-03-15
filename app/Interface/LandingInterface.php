@@ -7,5 +7,5 @@ use Illuminate\Contracts\View\View;
 interface LandingInterface
 {
     public function contactRepositories($request): void;
-    public function doPinjamRepositories($request): void;
+    public function doTransactionPinjamRepositories($request): void;
 }

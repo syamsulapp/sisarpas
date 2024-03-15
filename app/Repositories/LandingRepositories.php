@@ -50,7 +50,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
     /**
      * begin::transaction pinjam
      */
-    public function doPinjamRepositories($request): void
+    public function doTransactionPinjamRepositories($request): void
     {
         Barangpinjam::create($request);
     }

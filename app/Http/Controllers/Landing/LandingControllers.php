@@ -201,11 +201,11 @@ class LandingControllers extends LandingRepositories
         }
     }
 
-    public function doPinjam(Request $request)
+    public function doTransactionPinjam(Request $request)
     {
         DB::beginTransaction();
         try {
-            $this->doPinjamRepositories($this->requestSubmitTransactionPinjam($request));
+            $this->doTransactionPinjamRepositories($this->requestSubmitTransactionPinjam($request));
             DB::commit();
             $this->logSuccess($this->dataLogSuccess('telah berhasil melakukan transaction pinjam barang'));
             return $this->redirectSuccess('user.dashboard', 'Berhasil Melakukan Transaction Barang');
