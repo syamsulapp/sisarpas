@@ -140,6 +140,39 @@ class LandingControllers extends Controller
     /**
      * begin::transaction pinjam
      */
+    public function pinjam($id)
+    {
+        try {
+            if (!$this->checkIDBarang($id)) {
+                return $this->redirectError('peminjaman.barang', 'barang', 'id transaction barang tidak ditemukan');
+            }
+
+            if ($this->checkIDBarang($id)) {
+                return $this->getBarangBYID($id);
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('peminjaman.barang', 'barang', 'Mohon maaf ada kesalahan dibagian transaction peminjaman barang/aula');
+        }
+    }
+
+
+    private function checkIDBarang($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function getBarangBYID($id)
+    {
+        return Barang::where('id', $id)->first();
+    }
+
+    private function submitTransactionPinjamBYID($id)
+    {
+    }
 
 
 

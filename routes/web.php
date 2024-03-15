@@ -62,13 +62,8 @@ Route::prefix('user')->group(function () {
         /**
          * pinjam barang dan aula setelah login (booking)
          */
-        Route::prefix('pinjam')->group(function () {
-            Route::get('{id_barang}/barang', function ($id_barang) {
-                return $id_barang;
-            })->name('pinjam.barang');
-            Route::get('{id_barang}/aula', function ($id_barang) {
-                return $id_barang;
-            })->name('pinjam.aula');
+        Route::prefix('transaction')->group(function () {
+            Route::get('{id}/pinjam', [LandingControllers::class, 'pinjam'])->name('transaction.pinjam.barang');
         });
     });
 });

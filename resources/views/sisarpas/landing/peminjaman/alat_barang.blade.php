@@ -69,8 +69,7 @@
                                 <div class="btn-wrap">
                                     <a type="button" data-toggle="modal"
                                         data-target="#modalDetailbarang--{{ $b->id }}" class="btn-buy">Detail</a>
-                                    <a href="{{ route('pinjam.barang', ['id_barang' => 1129321]) }}"
-                                        class="btn-buy">Pinjam</a>
+                                    <a href="{{ route('transaction.pinjam.barang', $b->id) }}" class="btn-buy">Pinjam</a>
                                 </div>
                             </div>
                         </div>
