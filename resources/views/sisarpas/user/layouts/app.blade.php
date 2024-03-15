@@ -41,6 +41,8 @@
     <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
+    <script defer src="{{ asset('sisarpas/assets/admin/assets/vendor/js/script.js') }}"></script>
+
     <!-- Helpers -->
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->

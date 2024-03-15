@@ -90,7 +90,7 @@
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>File Pendukung:</td>
                                         <td><a href="{{ asset('sisarpas/file_pendukung/' . $p->dokumen_pendukung) }}"
-                                                target="_blank"></a></td>
+                                                target="_blank">Lihat File</a></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>ID:</td>
