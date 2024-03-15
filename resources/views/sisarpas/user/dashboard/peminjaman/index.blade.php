@@ -44,7 +44,7 @@
                                     </button>
                                     {{ $p->id }}
                                 </td>
-                                <td>{{ $p->users_id }}</td>
+                                <td>{{ $p->users->name }}</td>
                                 <td>{{ $p->tanggal_pinjam }}</td>
                                 <td>{{ $p->tanggal_pengembalian }}</td>
                                 <td>
@@ -93,7 +93,7 @@
                                                 target="_blank">Lihat File</a></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
-                                        <td>ID:</td>
+                                        <td>ID Transaction:</td>
                                         <td>{{ $p->id }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
@@ -101,8 +101,12 @@
                                         <td>{{ $p->barangs_id }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
+                                        <td>Nama Barang:</td>
+                                        <td>{{ $p->barangs->nama_barang }}</td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="3">
                                         <td>Nama:</td>
-                                        <td>{{ $p->users_id }}</td>
+                                        <td>{{ $p->users->name }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Tanggal Pinjam:</td>

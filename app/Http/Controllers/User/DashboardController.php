@@ -95,6 +95,6 @@ class DashboardController extends DashboardRepositories
 
     public function listPeminjaman()
     {
-        return $this->listPeminjamanRepositories();
+        return $this->listPeminjamanRepositories($this->user->authUser()->id);
     }
 }

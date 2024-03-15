@@ -32,8 +32,13 @@ class Barangpinjam extends Model
         'updated_at' => 'date:Y-m-d',
     ];
 
-    public function users_id(): HasOne
+    public function users(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'users_id');
+    }
+
+    public function barangs(): HasOne
+    {
+        return $this->hasOne(Barang::class, 'id', 'barangs_id');
     }
 }
