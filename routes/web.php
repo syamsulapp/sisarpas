@@ -58,6 +58,9 @@ Route::prefix('user')->group(function () {
          */
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('user.dashboard');
+            Route::prefix('peminjaman')->group(function () {
+                Route::get('/', [DashboardController::class, 'peminjaman'])->name('user.dashboard-peminjaman');
+            });
         });
         /**
          * pinjam barang dan aula setelah login (booking)
