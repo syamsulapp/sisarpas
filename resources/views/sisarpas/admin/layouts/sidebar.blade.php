@@ -75,6 +75,12 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item">
+            <a href="peminjaman.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-file-export"></i>
+                <div data-i18n="Tables">Data Peminjaman</div>
+            </a>
+        </li>
     </ul>
 </aside>
 <!-- / Menu -->

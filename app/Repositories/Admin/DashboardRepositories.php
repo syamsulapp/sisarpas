@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Admin;
 
-use App\Interface\Admin\DashboardInterface;
 use App\Models\Barang;
-use App\Models\Barang as Ruangan;
+use App\Models\Contact;
 use App\Models\Landing;
+use App\Models\Barang as Ruangan;
+use App\Interface\Admin\DashboardInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
@@ -96,6 +97,28 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::landing
      */
+
+    public function checkIdByUpdateLandingRepositories($request): bool
+    {
+        if (Landing::where('id', $request->id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkIdByDeleteLandingRepositories($id): bool
+    {
+        if (Landing::where('id', $id->id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getListLandingRepositories()
+    {
+        return Landing::orderBy('id', 'desc')->get();
+    }
+
     public function createLandingRepositories($request): void
     {
         Landing::create($request);
@@ -118,9 +141,25 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::contacts
      */
 
+    public function checkIdUpdateContactRepositories($request): bool
+    {
+        if (Contact::where('id', $request->id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function updateContactsRepositories($model, $request): void
     {
         $model->update(['email' => $request->email, 'message' => $request->message]);
+    }
+
+    public function checkIdDeleteContactRepositories($id): bool
+    {
+        if (Contact::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
     }
 
     public function deleteContactsRepositories($model): void
@@ -138,10 +177,28 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         Barang::create($request);
     }
+
+    public function checkIdUpdateBarangRepositories($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function updateBarangRepositories($request): void
     {
         Barang::where('id', $request['id'])->update($request);
     }
+
+    public function checkIdDeleteBarangRepositories($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function deleteBarangRepositories($id): void
     {
         Barang::where('id', $id)->delete();
@@ -154,14 +211,38 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::inventori_ruangan
      */
+
+    public function listRuanganRepositories()
+    {
+        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
+    }
+
     public function createRuanganRepositories($request): void
     {
         Ruangan::create($request);
     }
+
+    public function checkIdUpdateRuanganRepositories($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function updateRuanganRepositories($request): void
     {
         Ruangan::where('id', $request['id'])->update($request);
     }
+
+    public function checkIdDeleteRuanganRepositories($id): bool
+    {
+        if (Barang::where('id', $id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
     public function deleteRuanganRepositories($id): void
     {
         Ruangan::where('id', $id)->delete();

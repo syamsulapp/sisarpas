@@ -148,18 +148,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdByUpdateLanding($request): bool
     {
-        if (Landing::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdByUpdateLandingRepositories($request);
     }
 
     private function checkIdByDeleteLanding($id): bool
     {
-        if (Landing::where('id', $id->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdByDeleteLandingRepositories($id);
     }
 
     private function viewForListLanding($landing)
@@ -169,7 +163,7 @@ class DashboardController extends DashboardRepositories
 
     private function getListLanding()
     {
-        return Landing::orderBy('id', 'desc')->get();
+        return $this->getListLandingRepositories();
     }
 
     private function landingRequest($request)
@@ -243,10 +237,7 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateContact($request): bool
     {
-        if (Contact::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateContactRepositories($request);
     }
 
 
@@ -267,10 +258,7 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdDeleteContact($id): bool
     {
-        if (Contact::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteContactRepositories($id);
     }
 
     /**
@@ -350,18 +338,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateBarang($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateBarangRepositories($id);
     }
 
     private function checkIdDeleteBarang($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteBarangRepositories($id);
     }
 
     private function viewBarang($barang): View
@@ -497,18 +479,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateRuangan($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateRuanganRepositories($id);
     }
 
     private function checkIdDeleteRuangan($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteRuanganRepositories($id);
     }
 
     private function viewRuangan($ruangan): View
@@ -518,7 +494,7 @@ class DashboardController extends DashboardRepositories
 
     private function listRuangan()
     {
-        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
+        return $this->listRuanganRepositories();
     }
 
     private function imageRuangan($request)
@@ -568,5 +544,14 @@ class DashboardController extends DashboardRepositories
     }
     /**
      * end::inventori(ruangan)
+     */
+
+    /**
+     * begin::transaction(verif peminjaman users)
+     */
+
+
+    /**
+     * begin::transaction(verif of peminjaman users)
      */
 }
