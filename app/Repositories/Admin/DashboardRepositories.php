@@ -262,13 +262,6 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         Barangpinjam::whereId($id)->firstOrFail()->update($request);
     }
-
-    protected function checkEventNotApproveButFieldTanggalRepositories($request)
-    {
-        // memasukan tanggal pengembalian pada saat status pinjam usernya di approve
-        return isset($request->tanggal_pengembalian) && $request->status_pinjam == 'dipinjam' ? true : false;
-    }
-
     /**
      * end::transaction(verif peminjaman users)
      */

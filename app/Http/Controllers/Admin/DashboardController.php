@@ -618,7 +618,8 @@ class DashboardController extends DashboardRepositories
 
     private function checkEventNotApproveButFieldTanggal($request): bool
     {
-        return $this->checkEventNotApproveButFieldTanggalRepositories($request);
+        // memasukan tanggal pengembalian pada saat status pinjam usernya di approve
+        return isset($request->tanggal_pengembalian) && $request->status_pinjam == 'dipinjam' ? true : false;
     }
 
     /**
