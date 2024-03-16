@@ -656,7 +656,7 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    private function checkPasswordIfUpdateWithImage($request)
+    private function checkPasswordIfUpdateWithImage($request): array
     {
         $requestPass = $this->requestCreatePasswordOfUsers($request);
         if (!empty($request->password)) {
@@ -667,7 +667,7 @@ class DashboardController extends DashboardRepositories
         return $updateWithImage;
     }
 
-    private function checkPasswordIfUpdateNoImage($request)
+    private function checkPasswordIfUpdateNoImage($request): array
     {
         $requestPass = $this->requestCreatePasswordOfUsers($request);
         if (!empty($request->password)) {
