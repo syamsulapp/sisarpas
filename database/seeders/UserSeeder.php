@@ -17,12 +17,14 @@ class UserSeeder extends Seeder
     {
         $nama_user = ['user_umum', 'user_peminjaman'];
         $email_user = ['userumum@gmail.com', 'userpeminjaman@gmail.com'];
+        $nim_user = ['ASE2212', 'ASE2212'];
         for ($x = 0; $x <= 1; $x++) {
             DB::table('users')->insert([
                 'name' => $nama_user[$x],
                 'email' => $email_user[$x],
+                'nim' => $nim_user[$x],
                 'password' => Hash::make('12345'),
-                'roles_id' => 1,
+                'roles_id' => 2,
                 'created_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')),
                 'updated_at' => Carbon::now()->timezone(env('APP_TIMEZONE', 'Asia/Makassar')),
             ]);
