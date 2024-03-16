@@ -90,8 +90,8 @@
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>File Pendukung:</td>
-                                        <td><a href="{{ asset('sisarpas/file_pendukung/' . $p->dokumen_pendukung) }}"
-                                                target="_blank">Lihat File</a></td>
+                                        <td><a href="{{ asset('sisarpas/file_pendukung/' . $p->dokumen_pendukung) }}">Lihat
+                                                File</a></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>ID Transaction:</td>
@@ -138,6 +138,17 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <tr data-dt-row="99" data-dt-column="8">
+                                        <td>Aksi:</td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning"
+                                                data-bs-target="#modalVerifikasiPeminjamanUser--{{ $p->id }}"
+                                                data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                <i class="bx bx-edit-alt" style="margin-right: 5px"></i>
+                                                Verifikasi
+                                            </button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -146,6 +157,118 @@
             </div>
             <!-- modal detail-->
         @endforeach
+
+        @foreach ($peminjaman as $p)
+            <!-- modal edit -->
+            <div class="modal fade" id="modalVerifikasiPeminjamanUser--{{ $p->id }}" tabindex="-1"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalToggleLabel2">Verifikasi Peminjaman</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('admin.dashboard_verifikasi_peminjaman') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <input type="text" name="id" value="{{ $p->id }}" hidden>
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>File:</td>
+                                            <td><a id="preview"
+                                                    href="{{ asset('/sisarpas/assets/file_pendukung/' . $p->dokumen_pendukung) }}">Lihat
+                                                    File</a>
+                                            </td>
+                                            <td>ID Transaction:</td>
+                                            <td>
+                                                <input type="text" id="id" class="form-control"
+                                                    aria-describedby="defaultFormControlHelp" value="{{ $p->id }}"
+                                                    disabled />
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
+
+                                            <td>ID Barang:</td>
+                                            <td>
+                                                <input type="text" id="barangs_id" class="form-control"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $p->barangs_id }}" disabled />
+                                            </td>
+                                            <td>Tanggal Peminjaman:</td>
+                                            <td>
+                                                <input type="date" id="tanggal_pinjam " class="form-control "
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $p->tanggal_pinjam }}" disabled />
+                                            </td>
+
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Barang Yang Di Pinjam:</td>
+                                            <td>
+                                                <input type="text" id="barangs_id" class="form-control"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $p->barangs->nama_barang }}" disabled />
+                                            </td>
+                                            <td>Nama Peminjam:</td>
+                                            <td>
+                                                <input type="text" id="barangs_id" class="form-control"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $p->users->name }}" disabled />
+                                            </td>
+
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Tanggal Pengembalian:</td>
+                                            <td>
+                                                <input type="date" id="tanggal_pengembalian"
+                                                    class="form-control @error('tanggal_pengembalian') is-invalid @enderror"
+                                                    placeholder="Masukan tanggal pengembalian" name="tanggal_pengembalian"
+                                                    aria-describedby="defaultFormControlHelp"
+                                                    value="{{ $p->tanggal_pengembalian }}" />
+                                                @error('tanggal_pengembalian')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td>Status:</td>
+                                            <td>
+                                                <div class="form-check form-check-inline mt-3">
+                                                    <input
+                                                        class="form-check-input @error('status_pinjam') is-invalid @enderror"
+                                                        type="radio" name="status_pinjam" id="inlineRadio1"
+                                                        value="dipinjam" />
+                                                    <label class="form-check-label" for="inlineRadio1">Disetujui</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input
+                                                        class="form-check-input  @error('status_pinjam') is-invalid @enderror"
+                                                        type="radio" name="status_pinjam" id="inlineRadio2"
+                                                        value="ditolak" />
+                                                    <label class="form-check-label" for="inlineRadio2">Ditolak</label>
+                                                </div>
+                                                @error('status_pinjam')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ya,
+                                    Batal</button>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bx bx-save" style="color: #ffffff; margin-right: 5px"></i>
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </div>
     <!-- / Content -->
 @endsection

@@ -560,14 +560,27 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function viewVerifikasiPeminjaman($peminjaman): View
+    public function doverifikasiPeminjaman()
+    {
+    }
+
+    private function viewVerifikasiPeminjaman($peminjaman): View
     {
         return view('sisarpas.admin.dashboard.peminjaman.verifikasi', compact('peminjaman'));
     }
 
-    public function getVerifikasiPeminjaman()
+    private function getVerifikasiPeminjaman()
     {
         return $this->getVerifikasiPeminjamanRepositories();
+    }
+
+    private function requestVerificationPeminjaman($request)
+    {
+        return $request->only('status_pinjam', 'tanggal_pengembalian');
+    }
+
+    private function getVerificationBYID()
+    {
     }
 
     /**

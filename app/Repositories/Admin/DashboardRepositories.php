@@ -99,7 +99,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::landing
      */
 
-    public function checkIdByUpdateLandingRepositories($request): bool
+    protected function checkIdByUpdateLandingRepositories($request): bool
     {
         if (Landing::where('id', $request->id)->first()) {
             return true;
@@ -107,7 +107,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return false;
     }
 
-    public function checkIdByDeleteLandingRepositories($id): bool
+    protected function checkIdByDeleteLandingRepositories($id): bool
     {
         if (Landing::where('id', $id->id)->first()) {
             return true;
@@ -115,7 +115,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return false;
     }
 
-    public function getListLandingRepositories()
+    protected function getListLandingRepositories()
     {
         return Landing::orderBy('id', 'desc')->get();
     }
@@ -142,7 +142,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::contacts
      */
 
-    public function checkIdUpdateContactRepositories($request): bool
+    protected function checkIdUpdateContactRepositories($request): bool
     {
         if (Contact::where('id', $request->id)->first()) {
             return true;
@@ -155,7 +155,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         $model->update(['email' => $request->email, 'message' => $request->message]);
     }
 
-    public function checkIdDeleteContactRepositories($id): bool
+    protected function checkIdDeleteContactRepositories($id): bool
     {
         if (Contact::where('id', $id)->first()) {
             return true;
@@ -175,7 +175,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::inventori_barang
      */
 
-    public function listBarangRepositories()
+    protected function listBarangRepositories()
     {
         return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
     }
@@ -185,7 +185,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         Barang::create($request);
     }
 
-    public function checkIdUpdateBarangRepositories($id): bool
+    protected function checkIdUpdateBarangRepositories($id): bool
     {
         if (Barang::where('id', $id)->first()) {
             return true;
@@ -219,7 +219,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::inventori_ruangan
      */
 
-    public function listRuanganRepositories()
+    protected function listRuanganRepositories()
     {
         return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
     }
@@ -261,7 +261,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::transaction(verif peminjaman users)
      */
-    public function getVerifikasiPeminjamanRepositories()
+    protected function getVerifikasiPeminjamanRepositories()
     {
         return Barangpinjam::orderByDesc('id')
             ->with(['users', 'barangs'])
