@@ -45,11 +45,6 @@
                             <th>Type</th>
                             <th>Status</th>
                             <th>Tanggal Dibuat</th>
-                            <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tujuan</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Keterangan</th> -->
-                            <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -84,12 +79,6 @@
                             <th>Type</th>
                             <th>Status</th>
                             <th>Tanggal Dibuat</th>
-
-                            <!-- <th>Tanggal Pinjam</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tanggal Kembali</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Tujuan</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <th>Keterangan</th> -->
-                            <!-- <th>Aksi</th> -->
                         </tr>
                     </tfoot>
                 </table>
@@ -268,11 +257,11 @@
                         <div class="modal-body table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr data-dt-row="99" data-dt-column="10">
+                                    {{-- <tr data-dt-row="99" data-dt-column="10">
                                         <td>Preview Image:</td>
                                         <td><img id="preview" src="#" width="50%" style="display: none" />
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>File:</td>
                                         <td>
