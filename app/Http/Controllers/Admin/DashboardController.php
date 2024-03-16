@@ -623,6 +623,147 @@ class DashboardController extends DashboardRepositories
     }
 
     /**
-     * begin::transaction(verif of peminjaman users)
+     * end::transaction(verif of peminjaman users)
+     */
+
+
+    /**
+     * begin::user inventori(master data user)
+     */
+
+    public function userinventori()
+    {
+        try {
+            return $this->viewUser($this->listUser());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori user');
+        }
+    }
+
+    public function doCreateUser(Request $request)
+    {
+        try {
+            $this->createUserRepositories($this->submitRequestCreateUser($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori ruangan'));
+            $this->dataLogSuccess('telah menambahkan inventori user');
+            return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menambahkan Inventori User');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori create user');
+        }
+    }
+
+    public function doUpdateUser(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdUpdateUser($request->id)) {
+                $this->logError($this->dataLogError('id update ruangan inventori salah'));
+                return $this->redirectError('admin.dashboard_inventori_barang', 'Id ruangan salah');
+            }
+
+            if ($this->checkIdUpdateUser($request->id)) {
+                if (!empty($request->file('gambar_barang'))) {
+                    $this->updateUserRepositories($this->submitRequestUpdateUserWithImg($request));
+                }
+
+                if (empty($request->file('gambar_barang'))) {
+                    $this->updateUserRepositories($this->submitRequestUpdateUserNoImg($request));
+                }
+
+                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
+                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Update User Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Maaf ada kesalahan dibagian inventori update user');
+        }
+    }
+
+    public function doDeleteUser(Ruangan $id)
+    {
+        try {
+            if (!$this->checkIdDeleteUser($id->id)) {
+                return $this->redirectError('admin.dashboard_inventori_ruangan', 'Id ruangan salah');
+            }
+
+            if ($this->checkIdDeleteUser($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $id->id)->first(), 'Berhasil Menghapus User Inventori'));
+                $this->deleteUserRepositories($id->id);
+                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menghapus User Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Mohon maaf ada kesalahan dibagian delete inventori user');
+        }
+    }
+
+    private function checkIdUpdateUser($id): bool
+    {
+        return $this->checkIdUpdateUserRepositories($id);
+    }
+
+    private function checkIdDeleteUser($id): bool
+    {
+        return $this->checkIdDeleteUserRepositories($id);
+    }
+
+    private function viewUser($ruangan): View
+    {
+        return view('sisarpas.admin.dashboard.master-data.inventori.user', compact('users'));
+    }
+
+    private function listUser()
+    {
+        return $this->listUserRepositories();
+    }
+
+    private function imageUser($request)
+    {
+        $image = $request->file('image');
+        $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
+        $destination_upload = "sisarpas/assets/userImage";
+        $image->move($destination_upload, $namaFile);
+        return $namaFile;
+    }
+
+    private function requestCreateUser($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function requestUpdateUserNoImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'status_barang');
+    }
+
+    private function requestUpdateUserWithImg($request)
+    {
+        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+    }
+
+    private function submitRequestCreateUser($request)
+    {
+        $req = $this->requestCreateUser($request);
+        $req['gambar_barang'] = $this->imageUser($request);
+        $req['id'] = uniqid();
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    private function submitRequestUpdateUserWithImg($request)
+    {
+        $req = $this->requestUpdateUserWithImg($request);
+        $req['gambar_barang'] = $this->imageUser($request);
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    private function submitRequestUpdateUserNoImg($request)
+    {
+        $req = $this->requestUpdateUserNoImg($request);
+        $req['kategori_barang'] = 'ruangan';
+        return $req;
+    }
+    /**
+     * end::user inventori(master data user)
      */
 }

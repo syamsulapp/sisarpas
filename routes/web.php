@@ -118,6 +118,12 @@ Route::prefix('admin')->group(function () {
                         Route::put('update', [AdminDashboardController::class, 'doUpdateRuangan'])->name('admin.dashboard_inventori_update_ruangan');
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
                     });
+                    Route::prefix('user')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'userinventori'])->name('admin.dashboard_inventori_user');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateUser'])->name('admin.dashboard_inventori_create_user');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateUser'])->name('admin.dashboard_inventori_update_user');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteUser'])->name('admin.dashboard_inventori_delete_user');
+                    });
                 });
             });
             Route::prefix('peminjaman')->group(function () {
