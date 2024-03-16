@@ -569,11 +569,15 @@ class DashboardController extends DashboardRepositories
                 return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
             }
 
-            if ($this->checkVerificationBYID($request->id)) {
-                $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
-                DB::commit();
-                $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
-                return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
+            if (!$this->checkEventNotApproveButFieldTanggal($request)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Anda tidak bisa melakukan transaction jika memasukan tanggal pengembalikan akan tetapi tidak di approve, sistem hanya mengizinkan memasukan tanggal pengembalian jika statusnya approve');
+            } else {
+                if ($this->checkVerificationBYID($request->id)) {
+                    $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
+                    DB::commit();
+                    $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
+                    return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
+                }
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
@@ -610,6 +614,11 @@ class DashboardController extends DashboardRepositories
     private function submitRequestVerificationBYID($id, $request)
     {
         return $this->submitRequestVerificationBYIDRepositories($id, $request);
+    }
+
+    private function checkEventNotApproveButFieldTanggal($request): bool
+    {
+        return $this->checkEventNotApproveButFieldTanggalRepositories($request);
     }
 
     /**

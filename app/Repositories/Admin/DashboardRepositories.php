@@ -105,18 +105,12 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function checkIdByUpdateLandingRepositories($request): bool
     {
-        if (Landing::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return Landing::where('id', $request->id)->first() ? true : false;
     }
 
     protected function checkIdByDeleteLandingRepositories($id): bool
     {
-        if (Landing::where('id', $id->id)->first()) {
-            return true;
-        }
-        return false;
+        return Landing::where('id', $id->id)->first() ? true : false;
     }
 
     protected function getListLandingRepositories()
@@ -148,10 +142,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function checkIdUpdateContactRepositories($request): bool
     {
-        if (Contact::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return Contact::where('id', $request->id)->first() ? true : false;
     }
 
     public function updateContactsRepositories($model, $request): void
@@ -161,10 +152,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function checkIdDeleteContactRepositories($id): bool
     {
-        if (Contact::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Contact::where('id', $id)->first() ? true : false;
     }
 
     public function deleteContactsRepositories($model): void
@@ -191,10 +179,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function checkIdUpdateBarangRepositories($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Barang::where('id', $id)->first() ? true : false;
     }
 
     public function updateBarangRepositories($request): void
@@ -235,10 +220,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     public function checkIdUpdateRuanganRepositories($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Barang::where('id', $id)->first() ? true : false;
     }
 
     public function updateRuanganRepositories($request): void
@@ -248,10 +230,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     public function checkIdDeleteRuanganRepositories($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Barang::where('id', $id)->first() ? true : false;
     }
 
     public function deleteRuanganRepositories($id): void
@@ -274,10 +253,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function checkVerificationBYIDRepositories($id): bool
     {
-        if (Barangpinjam::whereId($id)->first()) {
-            return true;
-        }
-        return false;
+        return Barangpinjam::whereId($id)->first() ? true : false;
     }
 
     protected function getVerificationBYIDRepositories($id)
@@ -288,6 +264,12 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function submitRequestVerificationBYIDRepositories($id, $request): void
     {
         Barangpinjam::whereId($id)->firstOrFail()->update($request);
+    }
+
+    protected function checkEventNotApproveButFieldTanggalRepositories($request)
+    {
+        // memasukan tanggal pengembalian pada saat status pinjam usernya di approve
+        return isset($request->tanggal_pengembalian) && $request->status_pinjam == 'dipinjam' ? true : false;
     }
 
     /**
