@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Landing;
 use App\Models\Errorlog;
 use App\Models\Successlog;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -663,15 +664,15 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdUpdateUser($request->id)) {
-                if (!empty($request->file('gambar_barang'))) {
+                if (!empty($request->file('image'))) {
                     $this->updateUserRepositories($this->submitRequestUpdateUserWithImg($request));
                 }
 
-                if (empty($request->file('gambar_barang'))) {
+                if (empty($request->file('image'))) {
                     $this->updateUserRepositories($this->submitRequestUpdateUserNoImg($request));
                 }
 
-                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
+                $this->logSuccess($this->dataLogSuccessByID(User::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
                 return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Update User Inventori');
             }
         } catch (\Exception $errors) {
@@ -680,7 +681,7 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doDeleteUser(Ruangan $id)
+    public function doDeleteUser(User $id)
     {
         try {
             if (!$this->checkIdDeleteUser($id->id)) {
@@ -688,7 +689,7 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdDeleteUser($id->id)) {
-                $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $id->id)->first(), 'Berhasil Menghapus User Inventori'));
+                $this->logSuccess($this->dataLogSuccessByID(User::where('id', $id->id)->first(), 'Berhasil Menghapus User Inventori'));
                 $this->deleteUserRepositories($id->id);
                 return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menghapus User Inventori');
             }
@@ -708,7 +709,7 @@ class DashboardController extends DashboardRepositories
         return $this->checkIdDeleteUserRepositories($id);
     }
 
-    private function viewUser($ruangan): View
+    private function viewUser($users): View
     {
         return view('sisarpas.admin.dashboard.master-data.inventori.user', compact('users'));
     }
@@ -729,38 +730,37 @@ class DashboardController extends DashboardRepositories
 
     private function requestCreateUser($request)
     {
-        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+        return $request->only('name', 'email', 'password', 'roles', 'image');
     }
 
     private function requestUpdateUserNoImg($request)
     {
-        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'status_barang');
+        return $request->only('name', 'email', 'password', 'roles');
     }
 
     private function requestUpdateUserWithImg($request)
     {
-        return $request->only('id', 'nama_barang', 'jumlah_barang', 'kondisi_barang', 'kategori_barang', 'detail_barang', 'spesifikasi_barang', 'gambar_barang', 'status_barang');
+        return $request->only('name', 'email', 'password', 'roles', 'image');
     }
 
     private function submitRequestCreateUser($request)
     {
         $req = $this->requestCreateUser($request);
-        $req['gambar_barang'] = $this->imageUser($request);
-        $req['id'] = uniqid();
-        $req['kategori_barang'] = 'ruangan';
+        $req['image'] = $this->imageUser($request);
+        $req['roles'] = 2;
         return $req;
     }
     private function submitRequestUpdateUserWithImg($request)
     {
         $req = $this->requestUpdateUserWithImg($request);
-        $req['gambar_barang'] = $this->imageUser($request);
-        $req['kategori_barang'] = 'ruangan';
+        $req['image'] = $this->imageUser($request);
+        $req['roles'] = 2;
         return $req;
     }
     private function submitRequestUpdateUserNoImg($request)
     {
         $req = $this->requestUpdateUserNoImg($request);
-        $req['kategori_barang'] = 'ruangan';
+        $req['roles'] = 2;
         return $req;
     }
     /**

@@ -8,6 +8,7 @@ use App\Models\Landing;
 use App\Models\Barangpinjam;
 use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
@@ -217,7 +218,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     public function checkIdUpdateRuanganRepositories($id): bool
     {
-        return Barang::where('id', $id)->first() ? true : false;
+        return Ruangan::where('id', $id)->first() ? true : false;
     }
 
     public function updateRuanganRepositories($request): void
@@ -227,7 +228,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     public function checkIdDeleteRuanganRepositories($id): bool
     {
-        return Barang::where('id', $id)->first() ? true : false;
+        return Ruangan::where('id', $id)->first() ? true : false;
     }
 
     public function deleteRuanganRepositories($id): void
@@ -264,5 +265,43 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     }
     /**
      * end::transaction(verif peminjaman users)
+     */
+
+    /**
+     * begin::inventori(user)
+     */
+
+    protected function listUserRepositories()
+    {
+        return User::orderByDesc('id')->get();
+    }
+
+    public function createUserRepositories($request): void
+    {
+        User::create($request);
+    }
+
+    public function checkIdUpdateUserRepositories($id): bool
+    {
+        return User::where('id', $id)->first() ? true : false;
+    }
+
+    public function updateUserRepositories($request): void
+    {
+        User::where('id', $request['id'])->update($request);
+    }
+
+    public function checkIdDeleteUserRepositories($id): bool
+    {
+        return User::where('id', $id)->first() ? true : false;
+    }
+
+    public function deleteUserRepositories($id): void
+    {
+        User::where('id', $id)->delete();
+    }
+
+    /**
+     * end::inventori(user)
      */
 }

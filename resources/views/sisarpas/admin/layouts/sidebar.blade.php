@@ -63,8 +63,9 @@
                         <div data-i18n="Pricing">Data Ruangan</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/user') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_inventori_user') }}" class="menu-link">
                         <div data-i18n="Pricing">Data Pengguna</div>
                     </a>
                 </li>
