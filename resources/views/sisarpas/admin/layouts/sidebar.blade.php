@@ -45,7 +45,11 @@
         </li>
 
         <li
-            class="menu-item  {{ request()->is('admin/dashboard/master_data/inventori/barang') || request()->is('admin/dashboard/master_data/inventori/ruangan') ? 'active open' : '' }}">
+            class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/barang') ||
+            request()->is('admin/dashboard/master_data/inventori/ruangan') ||
+            request()->is('admin/dashboard/master_data/inventori/user')
+                ? 'active open'
+                : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-data"></i>
                 <div data-i18n="Tables">Data Inventori</div>

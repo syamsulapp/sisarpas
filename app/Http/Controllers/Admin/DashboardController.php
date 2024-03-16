@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Repositories\Admin\DashboardRepositories;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends DashboardRepositories
 {
@@ -646,9 +647,9 @@ class DashboardController extends DashboardRepositories
     {
         try {
             $this->createUserRepositories($this->submitRequestCreateUser($request));
-            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori ruangan'));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori users'));
             $this->dataLogSuccess('telah menambahkan inventori user');
-            return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menambahkan Inventori User');
+            return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Menambahkan Inventori User');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori create user');
@@ -660,7 +661,7 @@ class DashboardController extends DashboardRepositories
         try {
             if (!$this->checkIdUpdateUser($request->id)) {
                 $this->logError($this->dataLogError('id update ruangan inventori salah'));
-                return $this->redirectError('admin.dashboard_inventori_barang', 'Id ruangan salah');
+                return $this->redirectError('admin.dashboard_inventori_user', 'Id ruangan salah');
             }
 
             if ($this->checkIdUpdateUser($request->id)) {
@@ -673,11 +674,11 @@ class DashboardController extends DashboardRepositories
                 }
 
                 $this->logSuccess($this->dataLogSuccessByID(User::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
-                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Update User Inventori');
+                return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Update User Inventori');
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Maaf ada kesalahan dibagian inventori update user');
+            return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori update user');
         }
     }
 
@@ -685,17 +686,17 @@ class DashboardController extends DashboardRepositories
     {
         try {
             if (!$this->checkIdDeleteUser($id->id)) {
-                return $this->redirectError('admin.dashboard_inventori_ruangan', 'Id ruangan salah');
+                return $this->redirectError('admin.dashboard_inventori_user', 'Id ruangan salah');
             }
 
             if ($this->checkIdDeleteUser($id->id)) {
                 $this->logSuccess($this->dataLogSuccessByID(User::where('id', $id->id)->first(), 'Berhasil Menghapus User Inventori'));
                 $this->deleteUserRepositories($id->id);
-                return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menghapus User Inventori');
+                return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Menghapus User Inventori');
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_inventori_ruangan', 'Mohon maaf ada kesalahan dibagian delete inventori user');
+            return $this->redirectError('admin.dashboard_inventori_user', 'Mohon maaf ada kesalahan dibagian delete inventori user');
         }
     }
 
@@ -730,37 +731,40 @@ class DashboardController extends DashboardRepositories
 
     private function requestCreateUser($request)
     {
-        return $request->only('name', 'email', 'password', 'roles', 'image');
+        return $request->only('name', 'nim', 'email', 'password', 'roles_id', 'image');
     }
 
     private function requestUpdateUserNoImg($request)
     {
-        return $request->only('name', 'email', 'password', 'roles');
+        return $request->only('name', 'nim', 'email', 'password', 'roles_id');
     }
 
     private function requestUpdateUserWithImg($request)
     {
-        return $request->only('name', 'email', 'password', 'roles', 'image');
+        return $request->only('name', 'nim', 'email', 'password', 'roles_id', 'image');
     }
 
     private function submitRequestCreateUser($request)
     {
         $req = $this->requestCreateUser($request);
         $req['image'] = $this->imageUser($request);
-        $req['roles'] = 2;
+        $req['roles_id'] = 2;
+        $req['password'] = Hash::make($request->password);
         return $req;
     }
     private function submitRequestUpdateUserWithImg($request)
     {
         $req = $this->requestUpdateUserWithImg($request);
         $req['image'] = $this->imageUser($request);
-        $req['roles'] = 2;
+        $req['password'] = Hash::make($request->password);
+        $req['roles_id'] = 2;
         return $req;
     }
     private function submitRequestUpdateUserNoImg($request)
     {
         $req = $this->requestUpdateUserNoImg($request);
-        $req['roles'] = 2;
+        $req['password'] = Hash::make($request->password);
+        $req['roles_id'] = 2;
         return $req;
     }
     /**

@@ -84,6 +84,22 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'status_pinjam' => 'required|in:dipinjam,ditolak'
             ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/user/create')) {
+            return [
+                'name' => 'required|string',
+                'nim' => 'required|string',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string',
+                'image' => 'required|file|image|mimes:jpg,png,jpeg',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/user/update')) {
+            return [
+                'name' => 'string',
+                'nim' => 'string',
+                'email' => 'email|unique:users,email',
+                'password' => 'string',
+                'image' => 'file|image|mimes:jpg,png,jpeg',
+            ];
         } else {
             return [];
         }

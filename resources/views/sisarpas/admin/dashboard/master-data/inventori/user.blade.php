@@ -289,7 +289,7 @@
                                         <td>
                                             <input type="text" id="nim"
                                                 class="form-control @error('nim') is-invalid @enderror"
-                                                placeholder="masukan jumlah barang" name="nim"
+                                                placeholder="Masukan Nim" name="nim"
                                                 aria-describedby="defaultFormControlHelp" value="{{ old('nim') }}" />
                                             @error('nim')
                                                 <span class="text-danger">{{ $message }}</span>
