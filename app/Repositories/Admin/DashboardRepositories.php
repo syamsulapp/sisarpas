@@ -94,10 +94,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/user/update')) {
             return [
+                'id' => 'integer',
                 'name' => 'string',
                 'nim' => 'string',
-                'email' => 'email|unique:users,email',
-                'password' => 'string',
+                'email' => 'email',
                 'image' => 'file|image|mimes:jpg,png,jpeg',
             ];
         } else {

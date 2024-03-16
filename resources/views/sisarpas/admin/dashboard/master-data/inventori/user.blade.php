@@ -183,11 +183,11 @@
                                             <td>Nama:</td>
                                             <td>
                                                 <input type="text" id="selectImage"
-                                                    class="form-control @error('nama_barang') is-invalid @enderror"
-                                                    placeholder="masukan nama lengkap" name="nama_barang"
+                                                    class="form-control @error('name') is-invalid @enderror"
+                                                    placeholder="masukan nama lengkap" name="name"
                                                     aria-describedby="defaultFormControlHelp"
                                                     value="{{ $u->name }}" />
-                                                @error('nama_barang')
+                                                @error('name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
@@ -217,7 +217,7 @@
                                             </td>
                                             <td>Password:</td>
                                             <td>
-                                                <input type="text" id="password"
+                                                <input type="password" id="password"
                                                     class="form-control @error('password') is-invalid @enderror"
                                                     placeholder="masukan password" name="password"
                                                     aria-describedby="defaultFormControlHelp" />

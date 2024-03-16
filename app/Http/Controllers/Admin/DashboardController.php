@@ -646,7 +646,7 @@ class DashboardController extends DashboardRepositories
     public function doCreateUser(Request $request)
     {
         try {
-            $this->createUserRepositories($this->submitRequestCreateUser($request));
+            $this->createUserRepositories(array_merge($this->submitRequestCreateUser($request), $this->requestCreatePasswordOfUsers($request)));
             $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori users'));
             $this->dataLogSuccess('telah menambahkan inventori user');
             return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Menambahkan Inventori User');
@@ -654,6 +654,28 @@ class DashboardController extends DashboardRepositories
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori create user');
         }
+    }
+
+    private function checkPasswordIfUpdateWithImage($request)
+    {
+        $requestPass = $this->requestCreatePasswordOfUsers($request);
+        if (!empty($request->password)) {
+            $updateWithImage = array_merge($this->submitRequestUpdateUserWithImg($request), $requestPass);
+        } else {
+            $updateWithImage = $this->submitRequestUpdateUserWithImg($request);
+        }
+        return $updateWithImage;
+    }
+
+    private function checkPasswordIfUpdateNoImage($request)
+    {
+        $requestPass = $this->requestCreatePasswordOfUsers($request);
+        if (!empty($request->password)) {
+            $updateWithImage = array_merge($this->submitRequestUpdateUserNoImg($request), $requestPass);
+        } else {
+            $updateWithImage = $this->submitRequestUpdateUserNoImg($request);
+        }
+        return $updateWithImage;
     }
 
     public function doUpdateUser(Request $request): RedirectResponse
@@ -665,12 +687,13 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdUpdateUser($request->id)) {
+
                 if (!empty($request->file('image'))) {
-                    $this->updateUserRepositories($this->submitRequestUpdateUserWithImg($request));
+                    $this->checkPasswordIfUpdateWithImage($request);
                 }
 
                 if (empty($request->file('image'))) {
-                    $this->updateUserRepositories($this->submitRequestUpdateUserNoImg($request));
+                    $this->checkPasswordIfUpdateNoImage($request);
                 }
 
                 $this->logSuccess($this->dataLogSuccessByID(User::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
@@ -729,19 +752,26 @@ class DashboardController extends DashboardRepositories
         return $namaFile;
     }
 
+    private function requestCreatePasswordOfUsers($request)
+    {
+        $req = $request->only('password');
+        $req['password'] = Hash::make($request->password);
+        return $req;
+    }
+
     private function requestCreateUser($request)
     {
-        return $request->only('name', 'nim', 'email', 'password', 'roles_id', 'image');
+        return $request->only('name', 'nim', 'email', 'roles_id', 'image');
     }
 
     private function requestUpdateUserNoImg($request)
     {
-        return $request->only('name', 'nim', 'email', 'password', 'roles_id');
+        return $request->only('name', 'nim', 'email', 'roles_id');
     }
 
     private function requestUpdateUserWithImg($request)
     {
-        return $request->only('name', 'nim', 'email', 'password', 'roles_id', 'image');
+        return $request->only('name', 'nim', 'email', 'roles_id', 'image');
     }
 
     private function submitRequestCreateUser($request)
@@ -749,21 +779,18 @@ class DashboardController extends DashboardRepositories
         $req = $this->requestCreateUser($request);
         $req['image'] = $this->imageUser($request);
         $req['roles_id'] = 2;
-        $req['password'] = Hash::make($request->password);
         return $req;
     }
     private function submitRequestUpdateUserWithImg($request)
     {
         $req = $this->requestUpdateUserWithImg($request);
         $req['image'] = $this->imageUser($request);
-        $req['password'] = Hash::make($request->password);
         $req['roles_id'] = 2;
         return $req;
     }
     private function submitRequestUpdateUserNoImg($request)
     {
         $req = $this->requestUpdateUserNoImg($request);
-        $req['password'] = Hash::make($request->password);
         $req['roles_id'] = 2;
         return $req;
     }
