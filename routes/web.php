@@ -21,8 +21,9 @@ Route::get('/', [LandingControllers::class, 'index'])->name('sisarpas.landing');
 Route::post('contact', [LandingControllers::class, 'contact'])->name('sisarpas.contact');
 
 Route::prefix('peminjaman')->group(function () {
-    Route::get('alat_barang', [LandingControllers::class, 'alat_barang'])->name('peminjaman.alat_barang');
-    Route::get('aula_barang', [LandingControllers::class, 'aula_barang'])->name('peminjaman.aula_barang');
+    Route::get('/alat/{kategori}', [LandingControllers::class, 'alat_barang'])->name('peminjaman.barang');
+    Route::get('{kategori}/aula', [LandingControllers::class, 'alat_barang'])->name('peminjaman.ruangan');
+    Route::post('cari/barang', [LandingControllers::class, 'cari_barang'])->name('peminjaman.cari.barang');
 });
 
 Route::prefix('user')->group(function () {
@@ -104,6 +105,20 @@ Route::prefix('admin')->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');
                     Route::put('update', [AdminDashboardController::class, 'doUpdateContacts'])->name('admin.dashboard_update_contacts');
                     Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteContacts'])->name('admin.dashboard_delete_contacts');
+                });
+                Route::prefix('inventori')->group(function () {
+                    Route::prefix('barang')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'barang'])->name('admin.dashboard_inventori_barang');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateBarang'])->name('admin.dashboard_inventori_create_barang');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateBarang'])->name('admin.dashboard_inventori_update_barang');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteBarang'])->name('admin.dashboard_inventori_delete_barang');
+                    });
+                    Route::prefix('ruangan')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'ruangan'])->name('admin.dashboard_inventori_ruangan');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateRuangan'])->name('admin.dashboard_inventori_create_ruangan');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateRuangan'])->name('admin.dashboard_inventori_update_ruangan');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
+                    });
                 });
             });
             /**

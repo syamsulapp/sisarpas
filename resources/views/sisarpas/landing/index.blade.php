@@ -18,7 +18,9 @@
                     prasarana di Institut Teknologi Sumatera
                 </h2>
                 <div class="d-flex">
-                    <a href="{{ route('peminjaman.alat_barang') }}" class="btn-get-started scrollto">Lihat Fasilitas</a>
+                    <a href="{{ route('peminjaman.barang', ['kategori' => 'barang']) }}"
+                        class="btn-get-started scrollto">Lihat
+                        Fasilitas</a>
                 </div>
             </div>
         </section>
@@ -44,7 +46,7 @@
                                     height="100" />
                             </div>
                             <h4>
-                                <a href="{{ route('peminjaman.alat_barang') }}">Peralatan</a>
+                                <a href="{{ route('peminjaman.barang', ['kategori' => 'barang']) }}">Peralatan</a>
                             </h4>
                             <p>SARPRAS menyediakan layanan peminjaman peralatan yang efisien untuk mendukung kegiatan dengan
                                 kualitas terbaik.</p>
@@ -61,7 +63,7 @@
                                     height="100" />
                             </div>
                             <h4>
-                                <a href="{{ route('peminjaman.aula_barang') }}">Ruang Aula</a>
+                                <a href="{{ route('peminjaman.ruangan', ['kategori' => 'ruangan']) }}">Ruang Aula</a>
                             </h4>
                             <p>SARPRAS menyediakan layanan peminjaman ruang aula dengan fasilitas yang lengkap, memberikan
                                 dukungan optimal untuk beragam kegiatan.</p>

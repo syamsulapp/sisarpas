@@ -43,6 +43,38 @@
                 <div data-i18n="Tables">Contact</div>
             </a>
         </li>
+
+        <li
+            class="menu-item  {{ request()->is('admin/dashboard/master_data/inventori/barang') || request()->is('admin/dashboard/master_data/inventori/ruangan') ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-data"></i>
+                <div data-i18n="Tables">Data Inventori</div>
+            </a>
+            <ul class="menu-sub">
+                <li
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/barang') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_inventori_barang') }}" class="menu-link">
+                        <div data-i18n="Landing">Data Barang</div>
+                    </a>
+                </li>
+                <li
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/ruangan') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_inventori_ruangan') }}" class="menu-link">
+                        <div data-i18n="Pricing">Data Ruangan</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                        <div data-i18n="Pricing">Data Pengguna</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                        <div data-i18n="Pricing">Data Penjadwalan</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </aside>
 <!-- / Menu -->
