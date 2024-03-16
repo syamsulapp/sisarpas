@@ -18,7 +18,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return [];
     }
 
-    public function listPeminjamanRepositories($id)
+    protected function listPeminjamanRepositories($id)
     {
         return Barangpinjam::where('users_id', $id)
             ->orderByDesc('id')

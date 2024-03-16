@@ -44,7 +44,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
         ];
     }
 
-    public function landingRepositories()
+    protected function landingRepositories()
     {
         return Landing::where([['status', '=', 'unhide'], ['type', '=', 'image']])->orderByDesc('id')->limit(1)->get();
     }
@@ -53,7 +53,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
      * begin::barang dan aula
      */
 
-    public function listBarangRepositories($kategori)
+    protected function listBarangRepositories($kategori)
     {
         $barang = Barang::orderByDesc('id')
             ->when($kategori, function ($model) use ($kategori) {
@@ -62,7 +62,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
         return $barang;
     }
 
-    public function cariBarangRepositories($cari_barang)
+    protected function cariBarangRepositories($cari_barang)
     {
         $cari_barang = Barang::orderByDesc('id')
             ->when($cari_barang, function ($model) use ($cari_barang) {
@@ -91,7 +91,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
     /**
      * begin::transaction pinjam
      */
-    public function checkIDBarangRepositories($id): bool
+    protected function checkIDBarangRepositories($id): bool
     {
         if (Barang::where('id', $id)->first()) {
             return true;
@@ -99,7 +99,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
         return false;
     }
 
-    public function getBarangBYIDRepositories($id)
+    protected function getBarangBYIDRepositories($id)
     {
         return Barang::where('id', $id)->first();
     }
