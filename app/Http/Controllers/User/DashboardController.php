@@ -81,6 +81,7 @@ class DashboardController extends DashboardRepositories
     public function peminjaman()
     {
         try {
+            $this->logSuccess($this->dataLogSuccess('Berhasil melihat daftar pengajuan pinjaman'));
             return $this->viewPeminjaman($this->listPeminjaman());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
