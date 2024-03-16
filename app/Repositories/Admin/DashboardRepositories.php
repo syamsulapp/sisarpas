@@ -189,10 +189,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     public function checkIdDeleteBarangRepositories($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Barang::where('id', $id)->first() ? true : false;
     }
 
     public function deleteBarangRepositories($id): void
