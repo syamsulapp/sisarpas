@@ -689,11 +689,11 @@ class DashboardController extends DashboardRepositories
             if ($this->checkIdUpdateUser($request->id)) {
 
                 if (!empty($request->file('image'))) {
-                    $this->checkPasswordIfUpdateWithImage($request);
+                    $this->updateUserRepositories($this->checkPasswordIfUpdateWithImage($request));
                 }
 
                 if (empty($request->file('image'))) {
-                    $this->checkPasswordIfUpdateNoImage($request);
+                    $this->updateUserRepositories($this->checkPasswordIfUpdateNoImage($request));
                 }
 
                 $this->logSuccess($this->dataLogSuccessByID(User::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
@@ -766,12 +766,12 @@ class DashboardController extends DashboardRepositories
 
     private function requestUpdateUserNoImg($request)
     {
-        return $request->only('name', 'nim', 'email', 'roles_id');
+        return $request->only('id', 'name', 'nim', 'email', 'roles_id');
     }
 
     private function requestUpdateUserWithImg($request)
     {
-        return $request->only('name', 'nim', 'email', 'roles_id', 'image');
+        return $request->only('id', 'name', 'nim', 'email', 'roles_id', 'image');
     }
 
     private function submitRequestCreateUser($request)
