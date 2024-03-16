@@ -58,17 +58,16 @@ Route::prefix('user')->group(function () {
          */
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('user.dashboard');
+            Route::prefix('peminjaman')->group(function () {
+                Route::get('/', [DashboardController::class, 'peminjaman'])->name('user.dashboard-peminjaman');
+            });
         });
         /**
          * pinjam barang dan aula setelah login (booking)
          */
-        Route::prefix('pinjam')->group(function () {
-            Route::get('{id_barang}/barang', function ($id_barang) {
-                return $id_barang;
-            })->name('pinjam.barang');
-            Route::get('{id_barang}/aula', function ($id_barang) {
-                return $id_barang;
-            })->name('pinjam.aula');
+        Route::prefix('transaction')->group(function () {
+            Route::get('{id}/pinjam', [LandingControllers::class, 'pinjam'])->name('transaction.pinjam.barang');
+            Route::post('pinjam', [LandingControllers::class, 'doTransactionPinjam'])->name('transaction.submit.pinjam.barang');
         });
     });
 });
@@ -120,6 +119,10 @@ Route::prefix('admin')->group(function () {
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
                     });
                 });
+            });
+            Route::prefix('peminjaman')->group(function () {
+                Route::get('/', [AdminDashboardController::class, 'verifikasiPeminjaman'])->name('admin.dashboard_peminjaman');
+                Route::post('verifikasi', [AdminDashboardController::class, 'doverifikasiPeminjaman'])->name('admin.dashboard_verifikasi_peminjaman');
             });
             /**
              * rekap peminjaman barang dan aula

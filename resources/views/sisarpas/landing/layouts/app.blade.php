@@ -32,15 +32,7 @@
 <body>
 
     <!-- header with condition -->
-    @if (Request::is('peminjaman/alat/barang') ||
-            Request::is('peminjaman/ruangan/aula') ||
-            Request::is('peminjaman/cari/barang'))
-        <!-- header peminjaman -->
-        @include('sisarpas.landing.layouts.peminjaman.header')
-    @else
-        <!-- header landing -->
-        @include('sisarpas.landing.layouts.header')
-    @endif
+    @stack('header')
     <!-- content-->
     @yield('content-landing')
     <!-- footer-->

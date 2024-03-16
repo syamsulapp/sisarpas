@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Admin;
 
-use App\Interface\Admin\DashboardInterface;
 use App\Models\Barang;
-use App\Models\Barang as Ruangan;
+use App\Models\Contact;
 use App\Models\Landing;
+use App\Models\Barangpinjam;
+use App\Models\Barang as Ruangan;
+use App\Interface\Admin\DashboardInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
@@ -77,6 +79,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
                 'status_barang' => 'in:ready,not-ready,maintenance',
             ];
+        } else if (request()->is('admin/dashboard/peminjaman/verifikasi')) {
+            return [
+                'status_pinjam' => 'required|in:dipinjam,ditolak'
+            ];
         } else {
             return [];
         }
@@ -96,6 +102,22 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::landing
      */
+
+    protected function checkIdByUpdateLandingRepositories($request): bool
+    {
+        return Landing::where('id', $request->id)->first() ? true : false;
+    }
+
+    protected function checkIdByDeleteLandingRepositories($id): bool
+    {
+        return Landing::where('id', $id->id)->first() ? true : false;
+    }
+
+    protected function getListLandingRepositories()
+    {
+        return Landing::orderBy('id', 'desc')->get();
+    }
+
     public function createLandingRepositories($request): void
     {
         Landing::create($request);
@@ -118,9 +140,19 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      * begin::contacts
      */
 
+    protected function checkIdUpdateContactRepositories($request): bool
+    {
+        return Contact::where('id', $request->id)->first() ? true : false;
+    }
+
     public function updateContactsRepositories($model, $request): void
     {
         $model->update(['email' => $request->email, 'message' => $request->message]);
+    }
+
+    protected function checkIdDeleteContactRepositories($id): bool
+    {
+        return Contact::where('id', $id)->first() ? true : false;
     }
 
     public function deleteContactsRepositories($model): void
@@ -134,14 +166,32 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::inventori_barang
      */
+
+    protected function listBarangRepositories()
+    {
+        return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
+    }
+
     public function createBarangRepositories($request): void
     {
         Barang::create($request);
     }
+
+    protected function checkIdUpdateBarangRepositories($id): bool
+    {
+        return Barang::where('id', $id)->first() ? true : false;
+    }
+
     public function updateBarangRepositories($request): void
     {
         Barang::where('id', $request['id'])->update($request);
     }
+
+    public function checkIdDeleteBarangRepositories($id): bool
+    {
+        return Barang::where('id', $id)->first() ? true : false;
+    }
+
     public function deleteBarangRepositories($id): void
     {
         Barang::where('id', $id)->delete();
@@ -154,19 +204,72 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     /**
      * begin::inventori_ruangan
      */
+
+    protected function listRuanganRepositories()
+    {
+        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
+    }
+
     public function createRuanganRepositories($request): void
     {
         Ruangan::create($request);
     }
+
+    public function checkIdUpdateRuanganRepositories($id): bool
+    {
+        return Barang::where('id', $id)->first() ? true : false;
+    }
+
     public function updateRuanganRepositories($request): void
     {
         Ruangan::where('id', $request['id'])->update($request);
     }
+
+    public function checkIdDeleteRuanganRepositories($id): bool
+    {
+        return Barang::where('id', $id)->first() ? true : false;
+    }
+
     public function deleteRuanganRepositories($id): void
     {
         Ruangan::where('id', $id)->delete();
     }
     /**
-     * end::inventori_barang
+     * end::inventori_ruangan
+     */
+
+    /**
+     * begin::transaction(verif peminjaman users)
+     */
+    protected function getVerifikasiPeminjamanRepositories()
+    {
+        return Barangpinjam::orderByDesc('id')
+            ->with(['users', 'barangs'])
+            ->get();
+    }
+
+    protected function checkVerificationBYIDRepositories($id): bool
+    {
+        return Barangpinjam::whereId($id)->first() ? true : false;
+    }
+
+    protected function getVerificationBYIDRepositories($id)
+    {
+        return Barangpinjam::whereId($id)->first();
+    }
+
+    public function submitRequestVerificationBYIDRepositories($id, $request): void
+    {
+        Barangpinjam::whereId($id)->firstOrFail()->update($request);
+    }
+
+    protected function checkEventNotApproveButFieldTanggalRepositories($request)
+    {
+        // memasukan tanggal pengembalian pada saat status pinjam usernya di approve
+        return isset($request->tanggal_pengembalian) && $request->status_pinjam == 'dipinjam' ? true : false;
+    }
+
+    /**
+     * end::transaction(verif peminjaman users)
      */
 }

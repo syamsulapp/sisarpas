@@ -19,4 +19,6 @@ interface DashboardInterface
     public function createRuanganRepositories($request): void;
     public function updateRuanganRepositories($request): void;
     public function deleteRuanganRepositories($id): void;
+    //begin transaction verification peminjaman
+    public function submitRequestVerificationBYIDRepositories($id, $request): void;
 }

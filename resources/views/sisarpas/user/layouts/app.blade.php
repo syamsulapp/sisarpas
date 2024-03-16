@@ -37,6 +37,11 @@
     <link rel="stylesheet" href="{{ asset('sisarpas/assets/admin/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" />
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
+    <script defer src="{{ asset('sisarpas/assets/admin/assets/vendor/js/script.js') }}"></script>
 
     <!-- Helpers -->
     <script src="{{ asset('sisarpas/assets/admin/assets/vendor/js/helpers.js') }}"></script>

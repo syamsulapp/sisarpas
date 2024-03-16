@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\Admin\DashboardRepositories;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends DashboardRepositories
 {
@@ -148,18 +149,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdByUpdateLanding($request): bool
     {
-        if (Landing::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdByUpdateLandingRepositories($request);
     }
 
     private function checkIdByDeleteLanding($id): bool
     {
-        if (Landing::where('id', $id->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdByDeleteLandingRepositories($id);
     }
 
     private function viewForListLanding($landing)
@@ -169,7 +164,7 @@ class DashboardController extends DashboardRepositories
 
     private function getListLanding()
     {
-        return Landing::orderBy('id', 'desc')->get();
+        return $this->getListLandingRepositories();
     }
 
     private function landingRequest($request)
@@ -243,10 +238,7 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateContact($request): bool
     {
-        if (Contact::where('id', $request->id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateContactRepositories($request);
     }
 
 
@@ -267,10 +259,7 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdDeleteContact($id): bool
     {
-        if (Contact::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteContactRepositories($id);
     }
 
     /**
@@ -350,18 +339,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateBarang($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateBarangRepositories($id);
     }
 
     private function checkIdDeleteBarang($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteBarangRepositories($id);
     }
 
     private function viewBarang($barang): View
@@ -371,7 +354,7 @@ class DashboardController extends DashboardRepositories
 
     private function listBarang()
     {
-        return Barang::where('kategori_barang', 'barang')->orderByDesc('id')->get();
+        return $this->listBarangRepositories();
     }
 
     private function imageBarang($request)
@@ -497,18 +480,12 @@ class DashboardController extends DashboardRepositories
 
     private function checkIdUpdateRuangan($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdUpdateRuanganRepositories($id);
     }
 
     private function checkIdDeleteRuangan($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return $this->checkIdDeleteRuanganRepositories($id);
     }
 
     private function viewRuangan($ruangan): View
@@ -518,7 +495,7 @@ class DashboardController extends DashboardRepositories
 
     private function listRuangan()
     {
-        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->get();
+        return $this->listRuanganRepositories();
     }
 
     private function imageRuangan($request)
@@ -568,5 +545,83 @@ class DashboardController extends DashboardRepositories
     }
     /**
      * end::inventori(ruangan)
+     */
+
+    /**
+     * begin::transaction(verif peminjaman users)
+     */
+    public function verifikasiPeminjaman()
+    {
+        try {
+            return $this->viewVerifikasiPeminjaman($this->getVerifikasiPeminjaman());
+            $this->logSuccess($this->dataLogSuccess('admin berhasil membuka module verifikasi peminjaman barang user'));
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard', 'Mohon maaf ada kesalahan dibagian module verifikasi peminjaman users');
+        }
+    }
+
+    public function doverifikasiPeminjaman(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!$this->checkVerificationBYID($request->id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
+            }
+
+            if (!$this->checkEventNotApproveButFieldTanggal($request)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Anda tidak bisa melakukan transaction jika memasukan tanggal pengembalikan akan tetapi tidak di approve, sistem hanya mengizinkan memasukan tanggal pengembalian jika statusnya approve');
+            } else {
+                if ($this->checkVerificationBYID($request->id)) {
+                    $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
+                    DB::commit();
+                    $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
+                    return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
+                }
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            DB::rollBack();
+            return $this->redirectError('admin.dashboard_peminjaman', 'Mohon maaf ada kesalahan dibagian melakukan verifikasi peminjaman users');
+        }
+    }
+
+    private function viewVerifikasiPeminjaman($peminjaman): View
+    {
+        return view('sisarpas.admin.dashboard.peminjaman.verifikasi', compact('peminjaman'));
+    }
+
+    private function getVerifikasiPeminjaman()
+    {
+        return $this->getVerifikasiPeminjamanRepositories();
+    }
+
+    private function requestVerificationPeminjaman($request)
+    {
+        return $request->only('status_pinjam', 'tanggal_pengembalian');
+    }
+
+    private function checkVerificationBYID($id): bool
+    {
+        return $this->checkVerificationBYIDRepositories($id);
+    }
+
+    private function getVerificationBYID($id)
+    {
+        return $this->getVerificationBYIDRepositories($id);
+    }
+
+    private function submitRequestVerificationBYID($id, $request)
+    {
+        return $this->submitRequestVerificationBYIDRepositories($id, $request);
+    }
+
+    private function checkEventNotApproveButFieldTanggal($request): bool
+    {
+        return $this->checkEventNotApproveButFieldTanggalRepositories($request);
+    }
+
+    /**
+     * begin::transaction(verif of peminjaman users)
      */
 }

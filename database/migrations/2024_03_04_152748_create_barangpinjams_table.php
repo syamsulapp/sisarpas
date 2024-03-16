@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('barangpinjams', function (Blueprint $table) {
-            $table->string('id_pinjams')->unique()->primary();
+            $table->string('id')->unique()->primary();
             $table->string('barangs_id')->references('id')->on('barangs');
             $table->foreignId('users_id')->references('id')->on('users');
             $table->date('tanggal_pinjam');
-            $table->date('tanggal_pengembalian');
+            $table->date('tanggal_pengembalian')->nullable(); //event verification by admin
             $table->string('kategori_pinjam');
             $table->string('tujuan_pinjam');
             $table->string('keterangan_pinjam');
-            $table->enum('status_pinjam', ['diajkukan', 'ditolak', 'dipinjam', 'dikembalikan']);
+            $table->string('dokumen_pendukung');
+            $table->enum('status_pinjam', ['diajukan', 'ditolak', 'dipinjam', 'dikembalikan']);
             $table->timestamps();
         });
     }
