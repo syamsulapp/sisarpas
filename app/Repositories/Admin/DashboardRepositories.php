@@ -79,6 +79,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
                 'status_barang' => 'in:ready,not-ready,maintenance',
             ];
+        } else if (request()->is('admin/dashboard/peminjaman/verifikasi')) {
+            return [
+                'status_pinjam' => 'required|in:dipinjam,ditolak'
+            ];
         } else {
             return [];
         }
@@ -266,6 +270,24 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Barangpinjam::orderByDesc('id')
             ->with(['users', 'barangs'])
             ->get();
+    }
+
+    protected function checkVerificationBYIDRepositories($id): bool
+    {
+        if (Barangpinjam::whereId($id)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function getVerificationBYIDRepositories($id)
+    {
+        return Barangpinjam::whereId($id)->first();
+    }
+
+    public function submitRequestVerificationBYIDRepositories($id, $request): void
+    {
+        Barangpinjam::whereId($id)->firstOrFail()->update($request);
     }
 
     /**

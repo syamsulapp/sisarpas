@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\Admin\DashboardRepositories;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends DashboardRepositories
 {
@@ -560,8 +561,25 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doverifikasiPeminjaman()
+    public function doverifikasiPeminjaman(Request $request)
     {
+        DB::beginTransaction();
+        try {
+            if (!$this->checkVerificationBYID($request->id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
+            }
+
+            if ($this->checkVerificationBYID($request->id)) {
+                $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
+                DB::commit();
+                $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
+                return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            DB::rollBack();
+            return $this->redirectError('admin.dashboard_peminjaman', 'Mohon maaf ada kesalahan dibagian melakukan verifikasi peminjaman users');
+        }
     }
 
     private function viewVerifikasiPeminjaman($peminjaman): View
@@ -579,8 +597,19 @@ class DashboardController extends DashboardRepositories
         return $request->only('status_pinjam', 'tanggal_pengembalian');
     }
 
-    private function getVerificationBYID()
+    private function checkVerificationBYID($id): bool
     {
+        return $this->checkVerificationBYIDRepositories($id);
+    }
+
+    private function getVerificationBYID($id)
+    {
+        return $this->getVerificationBYIDRepositories($id);
+    }
+
+    private function submitRequestVerificationBYID($id, $request)
+    {
+        return $this->submitRequestVerificationBYIDRepositories($id, $request);
     }
 
     /**
