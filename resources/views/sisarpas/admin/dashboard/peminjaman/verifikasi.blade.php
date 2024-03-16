@@ -176,7 +176,7 @@
                                     <tbody>
                                         <input type="text" name="id" value="{{ $p->id }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="2">
-                                            <td>File:</td>
+                                            <td>File Pendukung:</td>
                                             <td><a id="preview"
                                                     href="{{ asset('/sisarpas/assets/file_pendukung/' . $p->dokumen_pendukung) }}">Lihat
                                                     File</a>
