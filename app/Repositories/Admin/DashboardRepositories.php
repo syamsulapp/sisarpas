@@ -30,13 +30,13 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/create')) {
             return [
-                'file' => 'required|file|image|mimes:jpg,png,jpeg',
+                'file' => 'required|file|mimes:mp4|max:2048',
                 'type' => 'required|string|in:image,video',
                 'status' => 'required|string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/update')) {
             return [
-                'file' => 'file|image|mimes:jpg,png,jpeg',
+                'file' => 'file|mimes:mp4|max:2048',
                 'type' => 'string|in:image,video',
                 'status' => 'string|required|in:hide,unhide',
             ];
