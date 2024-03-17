@@ -99,8 +99,10 @@
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>File:</td>
-                                        <td><img src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
-                                                width="100%"></td>
+                                        <td><video width="100%" controls>
+                                                <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
+                                                    type="video/mp4" />
+                                                <video></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Tipe:</td>
