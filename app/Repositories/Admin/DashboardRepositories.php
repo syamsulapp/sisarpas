@@ -108,6 +108,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/penjadwalan/update')) {
             return [
+                'barangs_id' => 'required',
                 'start_at' => 'date',
                 'end_at' => 'date',
             ];

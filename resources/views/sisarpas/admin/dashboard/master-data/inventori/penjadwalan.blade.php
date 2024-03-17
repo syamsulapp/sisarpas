@@ -262,8 +262,14 @@
 
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
-
-
+                                        <td>Pilih Ruangan:</td>
+                                        <td>
+                                            <select name="barangs_id" id="barangs_id"
+                                                class="form-control  @error('end_at') is-invalid @enderror">
+                                                <option value="" selected>Pilih Ruangan</option>
+                                                <option value="">Ruangan A</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
