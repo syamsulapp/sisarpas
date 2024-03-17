@@ -805,7 +805,7 @@ class DashboardController extends DashboardRepositories
     public function penjadwalan_inventori()
     {
         try {
-            return $this->viewPenjadwalan($this->listPenjadwalan());
+            return $this->viewPenjadwalan($this->listPenjadwalan(), $this->viewRuanganList());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori ruangan');
@@ -872,9 +872,14 @@ class DashboardController extends DashboardRepositories
         return $this->checkIdDeletePenjadwalanRepositories($id);
     }
 
-    private function viewPenjadwalan($penjadwalan): View
+    private function viewPenjadwalan($penjadwalan, $ruangan): View
     {
-        return view('sisarpas.admin.dashboard.master-data.inventori.penjadwalan', compact('penjadwalan'));
+        return view('sisarpas.admin.dashboard.master-data.inventori.penjadwalan', compact('penjadwalan', 'ruangan'));
+    }
+
+    private function viewRuanganList()
+    {
+        return $this->viewRuanganListRepositories();
     }
 
     private function listPenjadwalan()

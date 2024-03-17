@@ -267,7 +267,12 @@
                                             <select name="barangs_id" id="barangs_id"
                                                 class="form-control  @error('end_at') is-invalid @enderror">
                                                 <option value="" selected>Pilih Ruangan</option>
-                                                <option value="">Ruangan A</option>
+                                                @foreach ($ruangan as $r)
+                                                    @if ($r->status_barang == 'ready')
+                                                        <option value="{{ $r->id }}">{{ $r->nama_barang }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                         </td>
                                     </tr>

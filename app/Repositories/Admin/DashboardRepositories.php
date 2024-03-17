@@ -351,6 +351,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return ScheduleRoom::with('barangs')->orderByDesc('id')->get();
     }
 
+    protected function viewRuanganListRepositories()
+    {
+        return Ruangan::where('kategori_barang', 'ruangan')->orderByDesc('id')->limit(10)->get();
+    }
+
     public function createPenjadwalanRepositories($request): void
     {
         ScheduleRoom::create($request);
