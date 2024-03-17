@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ScheduleRoom extends Model
 {
@@ -17,4 +18,9 @@ class ScheduleRoom extends Model
         'updated_at' => 'date',
     ];
     use HasFactory;
+
+    public function barangs(): HasOne
+    {
+        return $this->hasOne(Barang::class, 'id', 'barangs_id');
+    }
 }

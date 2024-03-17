@@ -347,7 +347,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     protected function listPenjadwalanRepositories()
     {
-        return ScheduleRoom::orderByDesc('id')->get();
+        return ScheduleRoom::with('barangs')->orderByDesc('id')->get();
     }
 
     public function createPenjadwalanRepositories($request): void
