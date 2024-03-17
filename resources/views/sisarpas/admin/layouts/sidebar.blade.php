@@ -30,11 +30,33 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Module ADMIN&amp;
                 SI SARPRAS</span></li>
 
-        <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing') ? 'active open' : '' }}">
-            <a href="{{ route('admin.dashboard_landing') }}" class="menu-link">
+        <li
+            class="menu-item {{ request()->is('admin/dashboard/master_data/landing/header') ||
+            request()->is('admin/dashboard/master_data/landing/video') ||
+            request()->is('admin/dashboard/master_data/landing/footer')
+                ? 'active open'
+                : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-world"></i>
                 <div data-i18n="Tables">Landing</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/header') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_landing_header') }}" class="menu-link">
+                        <div data-i18n="Landing">Header</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/video') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_landing_video') }}" class="menu-link">
+                        <div data-i18n="Pricing">Video</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/footer') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_update_landing_footer') }}" class="menu-link">
+                        <div data-i18n="Pricing">Footer</div>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="menu-item {{ request()->is('admin/dashboard/master_data/contacts') ? 'active open' : '' }}">

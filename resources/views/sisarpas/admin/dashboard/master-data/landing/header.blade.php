@@ -1,11 +1,11 @@
 @extends('sisarpas.admin.layouts.app')
 
-@section('title', 'Landing Master Data')
+@section('title', 'Header Landing Master Data')
 
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Landing /</span> Website Si Sarpras
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Header Landing /</span> Website Si Sarpras
         </h4>
         @session('success')
             <div class="alert alert-success" role="alert">
@@ -23,14 +23,14 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">Daftar Data Landing SARPRAS</h5>
+                        <h5 class="card-title mb-0">Daftar Data Header Landing SARPRAS</h5>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-primary" type="button" data-bs-target="#createDataLanding"
+                            <button class="btn btn-primary" type="button" data-bs-target="#createDataLandingHeader"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">
                                 <span class="tf-icons bx bxs-file-plus me-1"></span>
-                                Tambah Data
+                                Tambah Data Header Landing
                             </button>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 <td>
                                     <button type="button" data-item="{{ $l->file }}"
                                         class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal--{{ $l->id }}">
+                                        data-bs-target="#detailModalLandingHeader--{{ $l->id }}">
                                         <i class='bx bx-info-circle' style='color:#8f0d04'></i>
                                     </button>
                                     {{ $l->id }}
@@ -87,11 +87,11 @@
 
         @foreach ($landing as $l)
             <!-- modal detail -->
-            <div class="modal fade" id="detailModal--{{ $l->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="detailModalLandingHeader--{{ $l->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Landing</h5>
+                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Landing Header</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -120,7 +120,7 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form action="{{ route('admin.dashboard_delete_landing', $l->id) }}"
+                                            <form action="{{ route('admin.dashboard_delete_landing_header', $l->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
@@ -130,7 +130,7 @@
                                                 </button>
                                                 |
                                                 <button type="button" class="btn btn-warning"
-                                                    data-bs-target="#modalEditLanding--{{ $l->id }}"
+                                                    data-bs-target="#modalEditLandingHeader--{{ $l->id }}"
                                                     data-bs-toggle="modal" data-bs-dismiss="modal">
                                                     <i class="bx bx-edit-alt" style="margin-right: 5px"></i>
                                                     Edit
@@ -149,14 +149,14 @@
 
         @foreach ($landing as $l)
             <!-- modal edit -->
-            <div class="modal fade" id="modalEditLanding--{{ $l->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="modalEditLandingHeader--{{ $l->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing</h5>
+                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing Header</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{ route('admin.dashboard_update_landing') }}" method="POST"
+                        <form action="{{ route('admin.dashboard_update_landing_header') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
@@ -244,14 +244,14 @@
 
 
         <!-- modal create -->
-        <div class="modal fade" id="createDataLanding" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="createDataLandingHeader" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalToggleLabel2">Create Data Landing</h5>
+                        <h5 class="modal-title" id="modalToggleLabel2">Create Data Landing Header</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('admin.dashboard_create_landing') }}" method="POST"
+                    <form action="{{ route('admin.dashboard_create_landing_header') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body table-responsive">

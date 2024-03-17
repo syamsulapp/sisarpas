@@ -95,10 +95,21 @@ Route::prefix('admin')->group(function () {
              */
             Route::prefix('master_data')->group(function () {
                 Route::prefix('landing')->group(function () {
-                    Route::get('/', [AdminDashboardController::class, 'landing'])->name('admin.dashboard_landing');
-                    Route::post('create', [AdminDashboardController::class, 'doCreateLanding'])->name('admin.dashboard_create_landing');
-                    Route::put('update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
-                    Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLanding'])->name('admin.dashboard_delete_landing');
+                    Route::prefix('header')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingHeader'])->name('admin.dashboard_landing_header');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingHeader'])->name('admin.dashboard_create_landing_header');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingHeader'])->name('admin.dashboard_update_landing_header');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingHeader'])->name('admin.dashboard_delete_landing_header');
+                    });
+                    Route::prefix('video')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingVideo'])->name('admin.dashboard_landing_video');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingVideo'])->name('admin.dashboard_create_landing_video');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingVideo'])->name('admin.dashboard_update_landing_video');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingVideo'])->name('admin.dashboard_delete_landing_video');
+                    });
+                    Route::prefix('footer')->group(function () {
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingFooter'])->name('admin.dashboard_update_landing_footer');
+                    });
                 });
                 Route::prefix('contacts')->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');

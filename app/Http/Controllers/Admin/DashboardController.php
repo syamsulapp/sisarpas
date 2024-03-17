@@ -90,33 +90,55 @@ class DashboardController extends DashboardRepositories
     /**
      * begin::landing
      */
-    public function landing(): View
+    public function landingHeader(): View
     {
         try {
-            return $this->viewForListLanding($this->getListLanding());
+            return $this->viewForListLandingHeader($this->getListLandingHeader());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_landing', 'Mohon maaf ada kesalahan dibagian list landing');
+            return $this->redirectError('admin.dashboard_landing_header', 'Mohon maaf ada kesalahan dibagian list landing header');
         }
     }
 
-    public function doCreateLanding(Request $request): RedirectResponse
+    public function landingVideo(): View
+    {
+        try {
+            return $this->viewForListLandingVideo($this->getListLandingVideo());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_video', 'Mohon maaf ada kesalahan dibagian list landing video');
+        }
+    }
+
+    public function doCreateLandingHeader(Request $request): RedirectResponse
     {
         try {
             $this->createLandingRepositories($this->submitRequest($request));
             $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing'));
-            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Menambahkan Landing');
+            return $this->redirectSuccess('admin.dashboard_landing_header', 'Berhasil Menambahkan Landing header');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada create landing');
+            return $this->redirectError('admin.dashboard_landing_header', 'Maaf ada kesalahan sistem pada create landing header');
         }
     }
 
-    public function doUpdateLanding(Request $request): RedirectResponse
+    public function doCreateLandingVideo(Request $request): RedirectResponse
+    {
+        try {
+            $this->createLandingRepositories($this->submitRequest($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing'));
+            return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Menambahkan Landing video');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_video', 'Maaf ada kesalahan sistem pada create landing video');
+        }
+    }
+
+    public function doUpdateLandingHeader(Request $request): RedirectResponse
     {
         try {
             if (!$this->checkIdByUpdateLanding($request)) {
-                return $this->redirectError('admin.dashboard_landing', 'Maaf ID Tidak Di temukan');
+                return $this->redirectError('admin.dashboard_landing_header', 'Maaf ID Tidak Di temukan');
             }
 
             if (!isset($this->landingRequest($request)['file'])) {
@@ -127,26 +149,64 @@ class DashboardController extends DashboardRepositories
                 $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitRequest($request));
             }
 
-            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing'));
-            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Mengubah Landing');
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing header'));
+            return $this->redirectSuccess('admin.dashboard_landing_header', 'Berhasil Mengubah Landing');
         } catch (\Exception $errros) {
             $this->logError($this->dataLogError($errros->getMessage()));
-            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada update landing');
+            return $this->redirectError('admin.dashboard_landing_header', 'Maaf ada kesalahan sistem pada update landing header');
         }
     }
 
-    public function doDeleteLanding(Landing $id): RedirectResponse
+    public function doUpdateLandingVideo(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByUpdateLanding($request)) {
+                return $this->redirectError('admin.dashboard_landing_video', 'Maaf ID Tidak Di temukan');
+            }
+
+            if (!isset($this->landingRequest($request)['file'])) {
+                $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitLandingRequestUpdateNoFile($request));
+            }
+
+            if (isset($this->landingRequest($request)['file'])) {
+                $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitRequest($request));
+            }
+
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing video'));
+            return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Mengubah Landing video');
+        } catch (\Exception $errros) {
+            $this->logError($this->dataLogError($errros->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_video', 'Maaf ada kesalahan sistem pada update landing video');
+        }
+    }
+
+    public function doDeleteLandingHeader(Landing $id): RedirectResponse
     {
         try {
             if (!$this->checkIdByDeleteLanding($id)) {
                 $this->redirectError('admin.dashboard_landing', 'Maaf ID tidak di temukan');
             }
-            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing'));
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing header'));
             $this->deleteLandingRepositories(Landing::where('id', $id->id)->first());
-            return $this->redirectSuccess('admin.dashboard_landing', 'Berhasil Delete Landing');
+            return $this->redirectSuccess('admin.dashboard_landing_header', 'Berhasil Delete Landing header');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_landing', 'Maaf ada kesalahan sistem pada delete landing');
+            return $this->redirectError('admin.dashboard_landing_header', 'Maaf ada kesalahan sistem pada delete landing header');
+        }
+    }
+
+    public function doDeleteLandingVideo(Landing $id): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByDeleteLanding($id)) {
+                $this->redirectError('admin.dashboard_landing_video', 'Maaf ID tidak di temukan');
+            }
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing video'));
+            $this->deleteLandingRepositories(Landing::where('id', $id->id)->first());
+            return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Delete Landing video');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_video', 'Maaf ada kesalahan sistem pada delete landing video');
         }
     }
 
@@ -160,14 +220,24 @@ class DashboardController extends DashboardRepositories
         return $this->checkIdByDeleteLandingRepositories($id);
     }
 
-    private function viewForListLanding($landing)
+    private function viewForListLandingHeader($landing)
     {
-        return view('sisarpas.admin.dashboard.master-data.landing.index', compact('landing'));
+        return view('sisarpas.admin.dashboard.master-data.landing.header', compact('landing'));
     }
 
-    private function getListLanding()
+    private function viewForListLandingVideo($landing_video)
     {
-        return $this->getListLandingRepositories();
+        return view('sisarpas.admin.dashboard.master-data.landing.video', compact('landing_video'));
+    }
+
+    private function getListLandingHeader()
+    {
+        return $this->getListLandingHeaderRepositories();
+    }
+
+    private function getListLandingVideo()
+    {
+        return $this->getListLandingVideoRepositories();
     }
 
     private function landingRequest($request)

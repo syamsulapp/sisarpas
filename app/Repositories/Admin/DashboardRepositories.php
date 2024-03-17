@@ -16,13 +16,25 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 {
     public function rules(): array
     {
-        if (request()->is('admin/dashboard/master_data/landing/create')) {
+        if (request()->is('admin/dashboard/master_data/landing/header/create')) {
             return [
                 'file' => 'required|file|image|mimes:jpg,png,jpeg',
                 'type' => 'required|string|in:image,video',
                 'status' => 'required|string|in:hide,unhide',
             ];
-        } else if (request()->is('admin/dashboard/master_data/landing/update')) {
+        } else if (request()->is('admin/dashboard/master_data/landing/header/update')) {
+            return [
+                'file' => 'file|image|mimes:jpg,png,jpeg',
+                'type' => 'string|in:image,video',
+                'status' => 'string|required|in:hide,unhide',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/landing/video/create')) {
+            return [
+                'file' => 'required|file|image|mimes:jpg,png,jpeg',
+                'type' => 'required|string|in:image,video',
+                'status' => 'required|string|in:hide,unhide',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/landing/video/update')) {
             return [
                 'file' => 'file|image|mimes:jpg,png,jpeg',
                 'type' => 'string|in:image,video',
@@ -143,9 +155,13 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Landing::where('id', $id->id)->first() ? true : false;
     }
 
-    protected function getListLandingRepositories()
+    protected function getListLandingHeaderRepositories()
     {
-        return Landing::orderBy('id', 'desc')->get();
+        return Landing::where('type', 'image')->orderBy('id', 'desc')->get();
+    }
+    protected function getListLandingVideoRepositories()
+    {
+        return Landing::where('type', 'video')->orderBy('id', 'desc')->get();
     }
 
     public function createLandingRepositories($request): void
