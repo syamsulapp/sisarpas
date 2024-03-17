@@ -50,9 +50,9 @@
         <!-- End Header -->
     @endpush
     <!-- ======= beranda Section ======= -->
-    @foreach ($landing_image as $li)
+    @foreach ($landing_header as $lh)
         <section id="beranda" class="d-flex align-items-center"
-            style="background: url('{{ asset('/sisarpas/assets/landingFile/' . $li->file) }}') top left">
+            style="background: url('{{ asset('/sisarpas/assets/landingFile/' . $lh->file) }}') top left">
             <div class="container" data-aos="zoom-out" data-aos-delay="100">
                 <h1>Sistem Informasi</h1>
                 <h1>Sarana dan Prasarana</h1>
@@ -130,43 +130,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="icon-box">
-                            <div class="icon">
-                                <i class="bx bxl-dribbble"></i>
+                    @foreach ($landing_jadwal_ruangan as $ljr)
+                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="icon-box">
+                                <div class="icon">
+                                    <i class="bx bxl-dribbble"></i>
+                                </div>
+                                <h4>
+                                    <a href="{{ route('user.dashboard') }}">{{ $ljr->barangs->nama_barang }}</a>
+                                </h4>
+                                <p>Jadwal yang digunakan pada ruangan ini adalah: Waktu Mulai:{{ $ljr->start_at }}, Waktu
+                                    Berakhir: {{ $ljr->end_at }}</p>
                             </div>
-                            <h4>
-                                <a href="">Lorem Ipsum</a>
-                            </h4>
-                            <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
                         </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-                        data-aos-delay="200">
-                        <div class="icon-box">
-                            <div class="icon">
-                                <i class="bx bx-file"></i>
-                            </div>
-                            <h4>
-                                <a href="">Sed ut perspiciatis</a>
-                            </h4>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <div class="icon">
-                                <i class="bx bx-tachometer"></i>
-                            </div>
-                            <h4>
-                                <a href="">Magni Dolores</a>
-                            </h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -182,15 +159,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-                        <div class="member">
-                            <div class="member-img">
-                                <video width="410px" controls>
-                                    <source src="{{ asset('sisarpas/assets/img/tutorial.mp4') }}" type="video/mp4" />
-                                </video>
+                    @foreach ($landing_video as $lv)
+                        <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                            <div class="member">
+                                <div class="member-img">
+                                    <video width="410px" controls>
+                                        <source src="{{ asset('sisarpas/assets/landingFile/' . $lv->file) }}"
+                                            type="video/mp4" />
+                                    </video>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

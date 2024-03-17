@@ -81,20 +81,30 @@ class LandingControllers extends LandingRepositories
     public function index(): View
     {
         try {
-            return $this->viewLanding($this->getLanding());
+            return $this->viewLanding($this->getLandingHeader(), $this->getLandingVideo(), $this->getJadwalRuangan());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
         }
     }
 
-    private function getLanding()
+    private function getLandingHeader()
     {
-        return $this->landingRepositories();
+        return $this->landingHeaderRepositories();
     }
 
-    private function viewLanding($landing_image): View
+    private function getLandingVideo()
     {
-        return view('sisarpas.landing.index', compact('landing_image'));
+        return $this->landingVideoRepositories();
+    }
+
+    private function getJadwalRuangan()
+    {
+        return $this->landingJadwalRepositories();
+    }
+
+    private function viewLanding($landing_header, $landing_video, $landing_jadwal_ruangan): View
+    {
+        return view('sisarpas.landing.index', compact('landing_header', 'landing_video', 'landing_jadwal_ruangan'));
     }
 
     /**
@@ -243,8 +253,4 @@ class LandingControllers extends LandingRepositories
         $req['id'] = uniqid();
         return $req;
     }
-
-    /**
-     * end::transaction pinjam
-     */
 }
