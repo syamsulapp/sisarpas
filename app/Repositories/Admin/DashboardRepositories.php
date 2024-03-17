@@ -8,6 +8,7 @@ use App\Models\Landing;
 use App\Models\Barangpinjam;
 use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\Footer;
 use App\Models\ScheduleRoom;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,6 +40,28 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'file' => 'file|mimes:mp4|max:2048',
                 'type' => 'string|in:video',
                 'status' => 'string|required|in:hide,unhide',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/landing/footer/create')) {
+            return [
+                'alamat_gedung' => 'required|string|unique:footers,alamat_gedung',
+                'nomor_telpon' => 'required|string',
+                'email' => 'required|string|unique:footers,email',
+                'nama_gedung' => 'required|string',
+                'facebook' => 'required|string',
+                'instagram' => 'required|string',
+                'youtube' => 'required|string',
+                'status' => 'required|in:hide,unhide',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
+            return [
+                'alamat_gedung' => 'string|unique:footers,alamat_gedung',
+                'nomor_telpon' => 'string',
+                'email' => 'string',
+                'nama_gedung' => 'string',
+                'facebook' => 'string',
+                'instagram' => 'string',
+                'youtube' => 'string',
+                'status' => 'in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/contacts/update')) {
             return [
@@ -158,6 +181,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     protected function getListLandingVideoRepositories()
     {
         return Landing::where('type', 'video')->orderBy('id', 'desc')->get();
+    }
+
+    protected function getListLandingFooterRepositories()
+    {
+        return Footer::orderByDesc('id')->get();
     }
 
     public function createLandingRepositories($request): void

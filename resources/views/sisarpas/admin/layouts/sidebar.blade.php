@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/footer') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard_update_landing_footer') }}" class="menu-link">
+                    <a href="{{ route('admin.dashboard_landing_footer') }}" class="menu-link">
                         <div data-i18n="Pricing">Footer</div>
                     </a>
                 </li>

@@ -9,6 +9,7 @@ use App\Models\Barang as Ruangan;
 use App\Models\Contact;
 use App\Models\Landing;
 use App\Models\Errorlog;
+use App\Models\Footer;
 use App\Models\ScheduleRoom;
 use App\Models\Successlog;
 use App\Models\User;
@@ -109,6 +110,15 @@ class DashboardController extends DashboardRepositories
             return $this->redirectError('admin.dashboard_landing_video', 'Mohon maaf ada kesalahan dibagian list landing video');
         }
     }
+    public function landingFooter(): View
+    {
+        try {
+            return $this->viewForListLandingFooter($this->getListLandingFooter());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_footer', 'Mohon maaf ada kesalahan dibagian list landing footer');
+        }
+    }
 
     public function doCreateLandingHeader(Request $request): RedirectResponse
     {
@@ -131,6 +141,18 @@ class DashboardController extends DashboardRepositories
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard_landing_video', 'Maaf ada kesalahan sistem pada create landing video');
+        }
+    }
+
+    public function doCreateLandingFooter(Request $request): RedirectResponse
+    {
+        try {
+            $this->createFooterRepositories($this->submitRequestFooter($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing footer'));
+            return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Menambahkan Landing footer');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada create landing footer');
         }
     }
 
@@ -180,6 +202,25 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doUpdateLandingFooter(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByUpdateFooter($request)) {
+                return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ID Tidak Di temukan');
+            }
+
+            if ($this->checkIdByUpdateFooter($request)) {
+                $this->updateFooterRepositories(Footer::where('id', $request->id)->first(), $this->submitLandingRequestUpdateFooter($request));
+            }
+
+            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing footer'));
+            return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Mengubah Landing footer');
+        } catch (\Exception $errros) {
+            $this->logError($this->dataLogError($errros->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada update landing footer');
+        }
+    }
+
     public function doDeleteLandingHeader(Landing $id): RedirectResponse
     {
         try {
@@ -210,6 +251,21 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doDeleteLandingFooter(Footer $id): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByDeleteFooter($id)) {
+                $this->redirectError('admin.dashboard_landing_footer', 'Maaf ID tidak di temukan');
+            }
+            $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing footer'));
+            $this->deleteFooterRepositories(Footer::where('id', $id->id)->first());
+            return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Delete Landing footer');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada delete landing footer');
+        }
+    }
+
     private function checkIdByUpdateLanding($request): bool
     {
         return $this->checkIdByUpdateLandingRepositories($request);
@@ -230,6 +286,11 @@ class DashboardController extends DashboardRepositories
         return view('sisarpas.admin.dashboard.master-data.landing.video', compact('landing_video'));
     }
 
+    private function viewForListLandingFooter($landing_footer)
+    {
+        return view('sisarpas.admin.dashboard.master-data.landing.footer', compact('landing_footer'));
+    }
+
     private function getListLandingHeader()
     {
         return $this->getListLandingHeaderRepositories();
@@ -238,6 +299,11 @@ class DashboardController extends DashboardRepositories
     private function getListLandingVideo()
     {
         return $this->getListLandingVideoRepositories();
+    }
+
+    private function getListLandingFooter()
+    {
+        return $this->getListLandingFooterRepositories();
     }
 
     private function landingRequest($request)

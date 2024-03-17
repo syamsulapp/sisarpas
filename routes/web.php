@@ -108,7 +108,10 @@ Route::prefix('admin')->group(function () {
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingVideo'])->name('admin.dashboard_delete_landing_video');
                     });
                     Route::prefix('footer')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingFooter'])->name('admin.dashboard_landing_footer');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingFooter'])->name('admin.dashboard_create_landing_footer');
                         Route::put('update', [AdminDashboardController::class, 'doUpdateLandingFooter'])->name('admin.dashboard_update_landing_footer');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingFooter'])->name('admin.dashboard_delete_landing_footer');
                     });
                 });
                 Route::prefix('contacts')->group(function () {
