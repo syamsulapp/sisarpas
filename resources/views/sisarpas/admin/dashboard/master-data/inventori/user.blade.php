@@ -5,7 +5,7 @@
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data User /</span> Website Si Sarpras
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Pengguna /</span> Website Si Sarpras
         </h4>
         @session('success')
             <div class="alert alert-success" role="alert">
@@ -23,14 +23,14 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">Daftar Data User SARPRAS</h5>
+                        <h5 class="card-title mb-0">Daftar Data Pengguna SARPRAS</h5>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
                             <button class="btn btn-primary" type="button" data-bs-target="#createUsers"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">
                                 <span class="tf-icons bx bxs-file-plus me-1"></span>
-                                Tambah Data
+                                Tambah Data Pengguna
                             </button>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Users</h5>
+                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Pengguna</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -151,7 +151,7 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Users</h5>
+                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Pengguna</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{ route('admin.dashboard_inventori_update_user') }}" method="POST"
@@ -251,7 +251,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Users</h5>
+                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Pengguna</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{ route('admin.dashboard_inventori_create_user') }}" method="POST"
