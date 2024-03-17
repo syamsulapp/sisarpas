@@ -265,7 +265,7 @@
                                         <td>Pilih Ruangan:</td>
                                         <td>
                                             <select name="barangs_id" id="barangs_id"
-                                                class="form-control  @error('end_at') is-invalid @enderror">
+                                                class="form-control  @error('barangs_id') is-invalid @enderror">
                                                 <option value="" selected>Pilih Ruangan</option>
                                                 @foreach ($ruangan as $r)
                                                     @if ($r->status_barang == 'ready')
@@ -274,6 +274,9 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            @error('barangs_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </td>
                                     </tr>
                                 </tbody>
