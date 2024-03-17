@@ -14,8 +14,8 @@ class ScheduleRoom extends Model
 
     protected $casts = [
         'barangs_id' => 'string',
-        'created_at' => 'date',
-        'updated_at' => 'date',
+        'created_at' => 'date:Y-m-d H:i:s',
+        'updated_at' => 'date:Y-m-d H:i:s',
     ];
     use HasFactory;
 
