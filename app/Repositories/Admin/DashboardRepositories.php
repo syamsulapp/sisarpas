@@ -8,6 +8,7 @@ use App\Models\Landing;
 use App\Models\Barangpinjam;
 use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\ScheduleRoom;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -99,6 +100,16 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'nim' => 'string',
                 'email' => 'email',
                 'image' => 'file|image|mimes:jpg,png,jpeg',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/penjadwalan/create')) {
+            return [
+                'start_at' => 'required|date',
+                'end_at' => 'required|date',
+            ];
+        } else if (request()->is('admin/dashboard/master_data/inventori/penjadwalan/update')) {
+            return [
+                'start_at' => 'date',
+                'end_at' => 'date',
             ];
         } else {
             return [];
@@ -297,7 +308,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         User::create($request);
     }
 
-    public function checkIdUpdateUserRepositories($id): bool
+    protected function checkIdUpdateUserRepositories($id): bool
     {
         return User::where('id', $id)->first() ? true : false;
     }
@@ -307,7 +318,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         User::where('id', $request['id'])->update($request);
     }
 
-    public function checkIdDeleteUserRepositories($id): bool
+    protected function checkIdDeleteUserRepositories($id): bool
     {
         return User::where('id', $id)->first() ? true : false;
     }
@@ -319,5 +330,42 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
 
     /**
      * end::inventori(user)
+     */
+
+    /**
+     * begin::penjadwalan inventori
+     */
+    protected function checkIdUpdatePenjadwalanRepositories($id): bool
+    {
+        return ScheduleRoom::where('id', $id)->first() ? true : false;
+    }
+
+    protected function checkIdDeletePenjadwalanRepositories($id): bool
+    {
+        return ScheduleRoom::where('id', $id)->first() ? true : false;
+    }
+
+    protected function listPenjadwalanRepositories()
+    {
+        return ScheduleRoom::orderByDesc('id')->get();
+    }
+
+    public function createPenjadwalanRepositories($request): void
+    {
+        ScheduleRoom::create($request);
+    }
+
+    public function updatePenjadwalanRepositories($request): void
+    {
+        ScheduleRoom::where('barangs_id', $request['barangs_id'])->update($request);
+    }
+
+    public function deletePenjadwalanRepositories($id): void
+    {
+        ScheduleRoom::where('id', $id)->delete();
+    }
+
+    /**
+     * end::penjadwalan inventori
      */
 }

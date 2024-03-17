@@ -124,6 +124,12 @@ Route::prefix('admin')->group(function () {
                         Route::put('update', [AdminDashboardController::class, 'doUpdateUser'])->name('admin.dashboard_inventori_update_user');
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteUser'])->name('admin.dashboard_inventori_delete_user');
                     });
+                    Route::prefix('penjadwalan')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'penjadwalan_inventori'])->name('admin.dashboard_inventori_penjadwalan');
+                        Route::post('create', [AdminDashboardController::class, 'doCreatePenjadwalan'])->name('admin.dashboard_inventori_create_penjadwalan');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdatePenjadwalan'])->name('admin.dashboard_inventori_update_penjadwalan');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeletePenjadwalan'])->name('admin.dashboard_inventori_delete_penjadwalan');
+                    });
                 });
             });
             Route::prefix('peminjaman')->group(function () {

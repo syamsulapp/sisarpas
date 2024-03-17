@@ -21,4 +21,12 @@ interface DashboardInterface
     public function deleteRuanganRepositories($id): void;
     //begin transaction verification peminjaman
     public function submitRequestVerificationBYIDRepositories($id, $request): void;
+    //user inventori
+    public function createUserRepositories($request): void;
+    public function updateUserRepositories($request): void;
+    public function deleteUserRepositories($id): void;
+    //penjadwalan inventori
+    public function updatePenjadwalanRepositories($request): void;
+    public function createPenjadwalanRepositories($request): void;
+    public function deletePenjadwalanRepositories($id): void;
 }

@@ -9,6 +9,7 @@ use App\Models\Barang as Ruangan;
 use App\Models\Contact;
 use App\Models\Landing;
 use App\Models\Errorlog;
+use App\Models\ScheduleRoom;
 use App\Models\Successlog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -441,7 +442,7 @@ class DashboardController extends DashboardRepositories
         try {
             if (!$this->checkIdUpdateRuangan($request->id)) {
                 $this->logError($this->dataLogError('id update ruangan inventori salah'));
-                return $this->redirectError('admin.dashboard_inventori_barang', 'Id ruangan salah');
+                return $this->redirectError('admin.dashboard_inventori_ruangan', 'Id ruangan salah');
             }
 
             if ($this->checkIdUpdateRuangan($request->id)) {
@@ -535,7 +536,7 @@ class DashboardController extends DashboardRepositories
     private function submitRequestUpdateRuanganWithImg($request)
     {
         $req = $this->requestUpdateRuanganWithImg($request);
-        $req['gambar_barang'] = $this->imageBarang($request);
+        $req['gambar_barang'] = $this->imageRuangan($request);
         $req['kategori_barang'] = 'ruangan';
         return $req;
     }
@@ -796,5 +797,112 @@ class DashboardController extends DashboardRepositories
     }
     /**
      * end::user inventori(master data user)
+     */
+
+    /**
+     * begin::penjadwalan inventori
+     */
+    public function penjadwalan_inventori()
+    {
+        try {
+            return $this->viewPenjadwalan($this->listPenjadwalan());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori ruangan');
+        }
+    }
+
+    public function doCreatePenjadwalan(Request $request)
+    {
+        try {
+            $this->createPenjadwalanRepositories($this->submitRequestCreatePenjadwalan($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori penjadwalan'));
+            $this->dataLogSuccess('telah menambahkan inventori penjadwalan');
+            return $this->redirectSuccess('admin.dashboard_inventori_penjadwalan', 'Berhasil Menambahkan Inventori Penjadwalan');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Maaf ada kesalahan dibagian inventori create penjadwalan');
+        }
+    }
+
+    public function doUpdatePenjadwalan(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdUpdatePenjadwalan($request->id)) {
+                $this->logError($this->dataLogError('id update penjadwalan inventori salah'));
+                return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Id penjadwalan salah');
+            }
+
+            if ($this->checkIdUpdatePenjadwalan($request->id)) {
+                $this->updatePenjadwalanRepositories($this->submitRequestUpdatePenjadwalan($request));
+                $this->logSuccess($this->dataLogSuccessByID(ScheduleRoom::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori Penjadwalan'));
+                return $this->redirectSuccess('admin.dashboard_inventori_penjadwalan', 'Berhasil Update Penjadwalan Inventori');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Maaf ada kesalahan dibagian inventori update penjadwalan');
+        }
+    }
+
+    public function doDeletePenjadwalan(ScheduleRoom $id)
+    {
+        try {
+            if (!$this->checkIdDeletePenjadwalan($id->id)) {
+                return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Id penjadwalan salah');
+            }
+
+            if ($this->checkIdDeletePenjadwalan($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(ScheduleRoom::where('id', $id->id)->first(), 'Berhasil Menghapus Ruangan Penjadwalan'));
+                $this->deletePenjadwalanRepositories($id->id);
+                return $this->redirectSuccess('admin.dashboard_inventori_penjadwalan', 'Berhasil Menghapus Inventori Penjadwalan');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Mohon maaf ada kesalahan dibagian delete inventori penjadwalan');
+        }
+    }
+
+    private function checkIdUpdatePenjadwalan($id): bool
+    {
+        return $this->checkIdUpdatePenjadwalanRepositories($id);
+    }
+
+    private function checkIdDeletePenjadwalan($id): bool
+    {
+        return $this->checkIdDeletePenjadwalanRepositories($id);
+    }
+
+    private function viewPenjadwalan($penjadwalan): View
+    {
+        return view('sisarpas.admin.dashboard.master-data.inventori.penjadwalan', compact('penjadwalan'));
+    }
+
+    private function listPenjadwalan()
+    {
+        return $this->listPenjadwalanRepositories();
+    }
+
+    private function requestCreatePenjadwalan($request)
+    {
+        return $request->only('barangs_id', 'start_at', 'end_at');
+    }
+
+    private function requestUpdatePenjadwalan($request)
+    {
+        return $request->only('barangs_id', 'start_at', 'end_at');
+    }
+
+    private function submitRequestCreatePenjadwalan($request)
+    {
+        return $this->requestCreatePenjadwalan($request);
+    }
+
+    private function submitRequestUpdatePenjadwalan($request)
+    {
+        return $this->requestUpdatePenjadwalan($request);
+    }
+
+    /**
+     * end::penjadwalan inventori
      */
 }
