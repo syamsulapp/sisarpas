@@ -19,25 +19,25 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         if (request()->is('admin/dashboard/master_data/landing/header/create')) {
             return [
                 'file' => 'required|file|image|mimes:jpg,png,jpeg',
-                'type' => 'required|string|in:image,video',
+                'type' => 'required|string|in:image',
                 'status' => 'required|string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/header/update')) {
             return [
                 'file' => 'file|image|mimes:jpg,png,jpeg',
-                'type' => 'string|in:image,video',
+                'type' => 'string|in:image',
                 'status' => 'string|required|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/create')) {
             return [
                 'file' => 'required|file|mimes:mp4|max:2048',
-                'type' => 'required|string|in:image,video',
+                'type' => 'required|string|in:video',
                 'status' => 'required|string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/update')) {
             return [
                 'file' => 'file|mimes:mp4|max:2048',
-                'type' => 'string|in:image,video',
+                'type' => 'string|in:video',
                 'status' => 'string|required|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/contacts/update')) {
@@ -134,10 +134,6 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         return [
             'required' => ':attribute wajib di isi',
-            'file' => ':attribute harus file',
-            'mimes' => ':attribute yang diupload harus jenis jpg,png,jpeg',
-            'in' => ':attribute hanya 2 jenis yaitu image dan video',
-            'image' => ':attribute harus gambar',
         ];
     }
 

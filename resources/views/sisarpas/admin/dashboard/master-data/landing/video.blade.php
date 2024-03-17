@@ -98,7 +98,7 @@
                             <table class="table">
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>File:</td>
+                                        <td>Video:</td>
                                         <td><video width="100%" controls>
                                                 <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
                                                     type="video/mp4" />
@@ -167,11 +167,11 @@
                                     <tbody>
                                         <input type="number" name="id" value="{{ $l->id }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="10">
-                                            <td>Preview Image:</td>
-                                            <td><img id="preview"
-                                                    src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
-                                                    width="50%" />
-                                            </td>
+                                            <td>Video:</td>
+                                            <td><video width="100%" controls>
+                                                    <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
+                                                        type="video/mp4" />
+                                                    <video></td>
                                         </tr>
                                         <tr data-dt-row="99" data-dt-column="9">
                                             <td>File:</td>
