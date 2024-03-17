@@ -134,7 +134,8 @@
                         <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
                             <div class="icon-box">
                                 <div class="icon">
-                                    <i class="bx bxl-dribbble"></i>
+                                    <img src="{{ asset('/sisarpas/assets/inventoriFile/' . $ljr->barangs->gambar_barang) }}"
+                                        width="100%">
                                 </div>
                                 <h4>
                                     <a href="{{ route('user.dashboard') }}">{{ $ljr->barangs->nama_barang }}</a>
