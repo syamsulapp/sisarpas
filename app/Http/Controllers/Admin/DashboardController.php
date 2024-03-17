@@ -828,14 +828,14 @@ class DashboardController extends DashboardRepositories
     public function doUpdatePenjadwalan(Request $request): RedirectResponse
     {
         try {
-            if (!$this->checkIdUpdatePenjadwalan($request->id)) {
+            if (!$this->checkIdUpdatePenjadwalan($request->barangs_id)) {
                 $this->logError($this->dataLogError('id update penjadwalan inventori salah'));
                 return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Id penjadwalan salah');
             }
 
-            if ($this->checkIdUpdatePenjadwalan($request->id)) {
+            if ($this->checkIdUpdatePenjadwalan($request->barangs_id)) {
                 $this->updatePenjadwalanRepositories($this->submitRequestUpdatePenjadwalan($request));
-                $this->logSuccess($this->dataLogSuccessByID(ScheduleRoom::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori Penjadwalan'));
+                $this->logSuccess($this->dataLogSuccessByID(ScheduleRoom::where('barangs_id', $request->barangs_id)->first(), 'Berhasil Mengubah Inventori Penjadwalan'));
                 return $this->redirectSuccess('admin.dashboard_inventori_penjadwalan', 'Berhasil Update Penjadwalan Inventori');
             }
         } catch (\Exception $errors) {
@@ -847,11 +847,11 @@ class DashboardController extends DashboardRepositories
     public function doDeletePenjadwalan(ScheduleRoom $id)
     {
         try {
-            if (!$this->checkIdDeletePenjadwalan($id->id)) {
+            if (!$this->checkIdDeletePenjadwalan($id->barangs_id)) {
                 return $this->redirectError('admin.dashboard_inventori_penjadwalan', 'Id penjadwalan salah');
             }
 
-            if ($this->checkIdDeletePenjadwalan($id->id)) {
+            if ($this->checkIdDeletePenjadwalan($id->barangs_id)) {
                 $this->logSuccess($this->dataLogSuccessByID(ScheduleRoom::where('id', $id->id)->first(), 'Berhasil Menghapus Ruangan Penjadwalan'));
                 $this->deletePenjadwalanRepositories($id->id);
                 return $this->redirectSuccess('admin.dashboard_inventori_penjadwalan', 'Berhasil Menghapus Inventori Penjadwalan');

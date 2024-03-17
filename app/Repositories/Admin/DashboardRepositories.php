@@ -103,7 +103,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/penjadwalan/create')) {
             return [
-                'barangs_id' => 'required|string',
+                'barangs_id' => 'required|string|unique:schedule_room,barangs_id',
                 'start_at' => 'required|date',
                 'end_at' => 'required|date',
             ];
@@ -339,12 +339,12 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      */
     protected function checkIdUpdatePenjadwalanRepositories($id): bool
     {
-        return ScheduleRoom::where('id', $id)->first() ? true : false;
+        return ScheduleRoom::where('barangs_id', $id)->first() ? true : false;
     }
 
     protected function checkIdDeletePenjadwalanRepositories($id): bool
     {
-        return ScheduleRoom::where('id', $id)->first() ? true : false;
+        return ScheduleRoom::where('barangs_id', $id)->first() ? true : false;
     }
 
     protected function listPenjadwalanRepositories()

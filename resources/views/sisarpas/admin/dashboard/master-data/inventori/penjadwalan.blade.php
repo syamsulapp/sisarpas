@@ -169,22 +169,22 @@
 
                                             <td>ID Ruangan:</td>
                                             <td>
-                                                <input type="text" id="jumlah_barang" class="form-control "
+                                                <input type="text" id="barangs_id" class="form-control "
                                                     aria-describedby="defaultFormControlHelp"
                                                     value="{{ $p->barangs_id }}" disabled />
                                             </td>
                                             <td>Nama Ruangan:</td>
                                             <td>
-                                                <input type="text" id="nama_ruangan" class="form-control"
+                                                <input type="text" id="nama_barang" class="form-control"
                                                     aria-describedby="defaultFormControlHelp"
-                                                    value="{{ $p->barangs->nama_barang }}" disable />
+                                                    value="{{ $p->barangs->nama_barang }}" disabled />
 
                                             </td>
                                         </tr>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Start At:</td>
                                             <td>
-                                                <input type="text" id="start_at"
+                                                <input type="date" id="start_at"
                                                     class="form-control @error('start_at') is-invalid @enderror"
                                                     name="start_at" aria-describedby="defaultFormControlHelp"
                                                     value="{{ $p->start_at }}" />
@@ -194,7 +194,7 @@
                                             </td>
                                             <td>End At:</td>
                                             <td>
-                                                <input type="text" id="end_at"
+                                                <input type="date" id="end_at"
                                                     class="form-control @error('end_at') is-invalid @enderror"
                                                     name="end_at" aria-describedby="defaultFormControlHelp"
                                                     value="{{ $p->end_at }}" />
