@@ -30,7 +30,7 @@
                             <button class="btn btn-primary" type="button" data-bs-target="#createBarangLanding"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">
                                 <span class="tf-icons bx bxs-file-plus me-1"></span>
-                                Tambah Data
+                                Tambah Barang
                             </button>
                         </div>
                     </div>
