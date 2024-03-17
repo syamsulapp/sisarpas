@@ -5,7 +5,7 @@
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Ruangan /</span> Website Si Sarpras
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Penjadwalan /</span> Website Si Sarpras
         </h4>
         @session('success')
             <div class="alert alert-success" role="alert">
@@ -23,7 +23,7 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">Daftar Data Ruangan SARPRAS</h5>
+                        <h5 class="card-title mb-0">Daftar Data Penjadwalan SARPRAS</h5>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
@@ -231,31 +231,31 @@
                         <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Ruangan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('admin.dashboard_inventori_create_ruangan') }}" method="POST"
+                    <form action="{{ route('admin.dashboard_inventori_create_penjadwalan') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body table-responsive">
                             <table class="table">
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Image:</td>
+                                        <td>Start At:</td>
                                         <td>
-                                            <input type="file" id="gambar_barang"
-                                                class="form-control @error('gambar_barang') is-invalid @enderror"
-                                                placeholder="Please Drop File Here" name="gambar_barang"
-                                                aria-describedby="defaultFormControlHelp" />
-                                            @error('gambar_barang')
+                                            <input type="date" id="start_at"
+                                                class="form-control @error('start_at') is-invalid @enderror"
+                                                placeholder="Masukan tanggal mulai" name="start_at"
+                                                aria-describedby="defaultFormControlHelp"
+                                                value="{{ old('start_at') }}" />
+                                            @error('start_at')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
-                                        <td>Nama:</td>
+                                        <td>End At:</td>
                                         <td>
-                                            <input type="text" id="selectImage"
-                                                class="form-control @error('nama_barang') is-invalid @enderror"
-                                                placeholder="masukan nama barang" name="nama_barang"
-                                                aria-describedby="defaultFormControlHelp"
-                                                value="{{ old('nama_barang') }}" />
-                                            @error('nama_barang')
+                                            <input type="date" id="end_at"
+                                                class="form-control @error('end_at') is-invalid @enderror"
+                                                placeholder="Masukan tanggal mulai" name="end_at"
+                                                aria-describedby="defaultFormControlHelp" value="{{ old('end_at') }}" />
+                                            @error('end_at')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
@@ -263,80 +263,7 @@
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
 
-                                        <td>Jumlah:</td>
-                                        <td>
-                                            <input type="text" id="jumlah_barang"
-                                                class="form-control @error('jumlah_barang') is-invalid @enderror"
-                                                placeholder="masukan jumlah barang" name="jumlah_barang"
-                                                aria-describedby="defaultFormControlHelp"
-                                                value="{{ old('jumlah_barang') }}" />
-                                            @error('jumlah_barang')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                        <td>Kondisi:</td>
-                                        <td>
-                                            <input type="text" id="kondisi_barang"
-                                                class="form-control @error('kondisi_barang') is-invalid @enderror"
-                                                placeholder="masukan kondisi barang" name="kondisi_barang"
-                                                aria-describedby="defaultFormControlHelp"
-                                                value="{{ old('kondisi_barang') }}" />
-                                            @error('kondisi_barang')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Informasi Detail:</td>
-                                        <td>
-                                            <input type="text" id="detailBarang"
-                                                class="form-control @error('detail_barang') is-invalid @enderror"
-                                                placeholder="masukan informasi detail barang" name="detail_barang"
-                                                aria-describedby="defaultFormControlHelp"
-                                                value="{{ old('detail_barang') }}" />
-                                            @error('detail_barang')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Spesifikasi Barang:</td>
-                                        <td>
-                                            <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
-                                                aria-describedby="defaultFormControlHelp">{{ old('spesifikasi_barang') }}</textarea>
-                                            @error('spesifikasi_barang')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="8">
-                                        <td>Status:</td>
-                                        <td>
-                                            <div class="form-check form-check-inline mt-3">
-                                                <input
-                                                    class="form-check-input @error('status_barang') is-invalid @enderror"
-                                                    type="radio" name="status_barang" id="inlineRadio1"
-                                                    value="ready" />
-                                                <label class="form-check-label" for="inlineRadio1">ready</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input
-                                                    class="form-check-input  @error('status_barang') is-invalid @enderror"
-                                                    type="radio" name="status_barang" id="inlineRadio2"
-                                                    value="not-ready" />
-                                                <label class="form-check-label" for="inlineRadio2">not-ready</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input
-                                                    class="form-check-input  @error('status_barang') is-invalid @enderror"
-                                                    type="radio" name="status_barang" id="inlineRadio2"
-                                                    value="maintenance" />
-                                                <label class="form-check-label" for="inlineRadio2">maintenance</label>
-                                            </div>
-                                            @error('status_barang')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>
