@@ -5,7 +5,7 @@
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Penjadwalan /</span> Website Si Sarpras
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Penjadwalan Ruangan /</span> Website Si Sarpras
         </h4>
         @session('success')
             <div class="alert alert-success" role="alert">
@@ -23,7 +23,7 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">Daftar Data Penjadwalan SARPRAS</h5>
+                        <h5 class="card-title mb-0">Daftar Data Penjadwalan Ruangan SARPRAS</h5>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
@@ -87,7 +87,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Penjadwalan</h5>
+                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Penjadwalan Ruangan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -154,7 +154,7 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Penjadwalan</h5>
+                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Penjadwalan Ruangan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{ route('admin.dashboard_inventori_update_penjadwalan') }}" method="POST"
@@ -228,7 +228,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Ruangan</h5>
+                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Penjadwalan Ruangan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{ route('admin.dashboard_inventori_create_penjadwalan') }}" method="POST"
