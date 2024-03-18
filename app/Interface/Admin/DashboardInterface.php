@@ -25,9 +25,9 @@ interface DashboardInterface
     //begin transaction verification peminjaman
     public function submitRequestVerificationBYIDRepositories($id, $request): void;
     //user inventori
-    public function createUserRepositories($request): void;
-    public function updateUserRepositories($request): void;
-    public function deleteUserRepositories($id): void;
+    public function createAdminRepositories($request): void;
+    public function updateAdminRepositories($request): void;
+    public function deleteAdminRepositories($id): void;
     //penjadwalan inventori
     public function updatePenjadwalanRepositories($request): void;
     public function createPenjadwalanRepositories($request): void;

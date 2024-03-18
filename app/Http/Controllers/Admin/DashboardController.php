@@ -794,172 +794,171 @@ class DashboardController extends DashboardRepositories
 
 
     /**
-     * begin::user inventori(master data user)
+     * begin::user inventori(master data admin)
      */
 
-    public function userinventori()
+    public function admininventori()
     {
         try {
-            return $this->viewUser($this->listUser());
+            return $this->viewAdmin($this->listAdmin());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori user');
+            return $this->redirectError('admin.dashboard', 'Maaf ada kesalahan dibagian inventori admin');
         }
     }
 
-    public function doCreateUser(Request $request)
+    public function doCreateAdmin(Request $request)
     {
         try {
-            $this->createUserRepositories(array_merge($this->submitRequestCreateUser($request), $this->requestCreatePasswordOfUsers($request)));
-            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori users'));
-            $this->dataLogSuccess('telah menambahkan inventori user');
-            return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Menambahkan Inventori User');
+            $this->createAdminRepositories(array_merge($this->submitRequestCreateAdmin($request), $this->requestCreatePasswordOfAdmin($request)));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan inventori admin'));
+            return $this->redirectSuccess('admin.dashboard_inventori_admin', 'Berhasil Menambahkan Inventori admin');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori create user');
+            return $this->redirectError('admin.dashboard_inventori_admin', 'Maaf ada kesalahan dibagian inventori create admin');
         }
     }
 
     private function checkPasswordIfUpdateWithImage($request): array
     {
-        $requestPass = $this->requestCreatePasswordOfUsers($request);
+        $requestPass = $this->requestCreatePasswordOfAdmin($request);
         if (!empty($request->password)) {
-            $updateWithImage = array_merge($this->submitRequestUpdateUserWithImg($request), $requestPass);
+            $updateWithImage = array_merge($this->submitRequestUpdateAdminWithImg($request), $requestPass);
         } else {
-            $updateWithImage = $this->submitRequestUpdateUserWithImg($request);
+            $updateWithImage = $this->submitRequestUpdateAdminWithImg($request);
         }
         return $updateWithImage;
     }
 
     private function checkPasswordIfUpdateNoImage($request): array
     {
-        $requestPass = $this->requestCreatePasswordOfUsers($request);
+        $requestPass = $this->requestCreatePasswordOfAdmin($request);
         if (!empty($request->password)) {
-            $updateWithImage = array_merge($this->submitRequestUpdateUserNoImg($request), $requestPass);
+            $updateWithImage = array_merge($this->submitRequestUpdateAdminNoImg($request), $requestPass);
         } else {
-            $updateWithImage = $this->submitRequestUpdateUserNoImg($request);
+            $updateWithImage = $this->submitRequestUpdateAdminNoImg($request);
         }
         return $updateWithImage;
     }
 
-    public function doUpdateUser(Request $request): RedirectResponse
+    public function doUpdateAdmin(Request $request): RedirectResponse
     {
         try {
-            if (!$this->checkIdUpdateUser($request->id)) {
-                $this->logError($this->dataLogError('id update ruangan inventori salah'));
-                return $this->redirectError('admin.dashboard_inventori_user', 'Id ruangan salah');
+            if (!$this->checkIdUpdateAdmin($request->id)) {
+                $this->logError($this->dataLogError('id update admin inventori salah'));
+                return $this->redirectError('admin.dashboard_inventori_admin', 'Id admin salah');
             }
 
-            if ($this->checkIdUpdateUser($request->id)) {
+            if ($this->checkIdUpdateAdmin($request->id)) {
 
                 if (!empty($request->file('image'))) {
-                    $this->updateUserRepositories($this->checkPasswordIfUpdateWithImage($request));
+                    $this->updateAdminRepositories($this->checkPasswordIfUpdateWithImage($request));
                 }
 
                 if (empty($request->file('image'))) {
-                    $this->updateUserRepositories($this->checkPasswordIfUpdateNoImage($request));
+                    $this->updateAdminRepositories($this->checkPasswordIfUpdateNoImage($request));
                 }
 
-                $this->logSuccess($this->dataLogSuccessByID(User::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori User'));
-                return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Update User Inventori');
+                $this->logSuccess($this->dataLogSuccessByID(Admin::where('id', $request->id)->first(), 'Berhasil Mengubah Inventori Admin'));
+                return $this->redirectSuccess('admin.dashboard_inventori_admin', 'Berhasil Update Admin Inventori');
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_inventori_user', 'Maaf ada kesalahan dibagian inventori update user');
+            return $this->redirectError('admin.dashboard_inventori_admin', 'Maaf ada kesalahan dibagian inventori update admin');
         }
     }
 
-    public function doDeleteUser(User $id)
+    public function doDeleteAdmin(Admin $id)
     {
         try {
-            if (!$this->checkIdDeleteUser($id->id)) {
-                return $this->redirectError('admin.dashboard_inventori_user', 'Id ruangan salah');
+            if (!$this->checkIdDeleteAdmin($id->id)) {
+                return $this->redirectError('admin.dashboard_inventori_admin', 'Id admin salah');
             }
 
-            if ($this->checkIdDeleteUser($id->id)) {
-                $this->logSuccess($this->dataLogSuccessByID(User::where('id', $id->id)->first(), 'Berhasil Menghapus User Inventori'));
+            if ($this->checkIdDeleteAdmin($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Admin::where('id', $id->id)->first(), 'Berhasil Menghapus admin Inventori'));
                 $this->deleteUserRepositories($id->id);
-                return $this->redirectSuccess('admin.dashboard_inventori_user', 'Berhasil Menghapus User Inventori');
+                return $this->redirectSuccess('admin.dashboard_inventori_admin', 'Berhasil Menghapus admin Inventori');
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_inventori_user', 'Mohon maaf ada kesalahan dibagian delete inventori user');
+            return $this->redirectError('admin.dashboard_inventori_admin', 'Mohon maaf ada kesalahan dibagian delete inventori admin');
         }
     }
 
-    private function checkIdUpdateUser($id): bool
+    private function checkIdUpdateAdmin($id): bool
     {
-        return $this->checkIdUpdateUserRepositories($id);
+        return $this->checkIdUpdateAdminRepositories($id);
     }
 
-    private function checkIdDeleteUser($id): bool
+    private function checkIdDeleteAdmin($id): bool
     {
-        return $this->checkIdDeleteUserRepositories($id);
+        return $this->checkIdDeleteAdminRepositories($id);
     }
 
-    private function viewUser($users): View
+    private function viewAdmin($admin): View
     {
-        return view('sisarpas.admin.dashboard.master-data.inventori.user', compact('users'));
+        return view('sisarpas.admin.dashboard.master-data.inventori.admin', compact('admin'));
     }
 
-    private function listUser()
+    private function listAdmin()
     {
-        return $this->listUserRepositories();
+        return $this->listAdminRepositories();
     }
 
-    private function imageUser($request)
+    private function imageAdmin($request)
     {
         $image = $request->file('image');
         $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
-        $destination_upload = "sisarpas/assets/userImage";
+        $destination_upload = "sisarpas/assets/adminImage";
         $image->move($destination_upload, $namaFile);
         return $namaFile;
     }
 
-    private function requestCreatePasswordOfUsers($request)
+    private function requestCreatePasswordOfAdmin($request)
     {
         $req = $request->only('password');
         $req['password'] = Hash::make($request->password);
         return $req;
     }
 
-    private function requestCreateUser($request)
+    private function requestCreateAdmin($request)
     {
-        return $request->only('name', 'nim', 'email', 'roles_id', 'image');
+        return $request->only('name', 'email', 'roles_id', 'image');
     }
 
-    private function requestUpdateUserNoImg($request)
+    private function requestUpdateAdminNoImg($request)
     {
-        return $request->only('id', 'name', 'nim', 'email', 'roles_id');
+        return $request->only('id', 'name', 'email', 'roles_id');
     }
 
-    private function requestUpdateUserWithImg($request)
+    private function requestUpdateAdminWithImg($request)
     {
-        return $request->only('id', 'name', 'nim', 'email', 'roles_id', 'image');
+        return $request->only('id', 'name', 'email', 'roles_id', 'image');
     }
 
-    private function submitRequestCreateUser($request)
+    private function submitRequestCreateAdmin($request)
     {
-        $req = $this->requestCreateUser($request);
-        $req['image'] = $this->imageUser($request);
+        $req = $this->requestCreateAdmin($request);
+        $req['image'] = $this->imageAdmin($request);
         $req['roles_id'] = 2;
         return $req;
     }
-    private function submitRequestUpdateUserWithImg($request)
+    private function submitRequestUpdateAdminWithImg($request)
     {
-        $req = $this->requestUpdateUserWithImg($request);
-        $req['image'] = $this->imageUser($request);
+        $req = $this->requestUpdateAdminWithImg($request);
+        $req['image'] = $this->imageAdmin($request);
         $req['roles_id'] = 2;
         return $req;
     }
-    private function submitRequestUpdateUserNoImg($request)
+    private function submitRequestUpdateAdminNoImg($request)
     {
-        $req = $this->requestUpdateUserNoImg($request);
+        $req = $this->requestUpdateAdminNoImg($request);
         $req['roles_id'] = 2;
         return $req;
     }
     /**
-     * end::user inventori(master data user)
+     * end::user inventori(master data admin)
      */
 
     /**

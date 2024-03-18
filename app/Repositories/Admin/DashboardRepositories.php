@@ -8,6 +8,7 @@ use App\Models\Landing;
 use App\Models\Barangpinjam;
 use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
+use App\Models\Admin;
 use App\Models\Footer;
 use App\Models\ScheduleRoom;
 use App\Models\User;
@@ -113,19 +114,17 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'status_pinjam' => 'required|in:dipinjam,ditolak'
             ];
-        } else if (request()->is('admin/dashboard/master_data/inventori/user/create')) {
+        } else if (request()->is('admin/dashboard/master_data/inventori/admin/create')) {
             return [
                 'name' => 'required|string',
-                'nim' => 'required|string',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email|unique:admins,email',
                 'password' => 'required|string',
                 'image' => 'required|file|image|mimes:jpg,png,jpeg',
             ];
-        } else if (request()->is('admin/dashboard/master_data/inventori/user/update')) {
+        } else if (request()->is('admin/dashboard/master_data/inventori/admin/update')) {
             return [
                 'id' => 'integer',
                 'name' => 'string',
-                'nim' => 'string',
                 'email' => 'email',
                 'image' => 'file|image|mimes:jpg,png,jpeg',
             ];
@@ -355,41 +354,41 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
      */
 
     /**
-     * begin::inventori(user)
+     * begin::inventori(admin)
      */
 
-    protected function listUserRepositories()
+    protected function listAdminRepositories()
     {
-        return User::orderByDesc('id')->get();
+        return Admin::orderByDesc('id')->get();
     }
 
-    public function createUserRepositories($request): void
+    public function createAdminRepositories($request): void
     {
-        User::create($request);
+        Admin::create($request);
     }
 
-    protected function checkIdUpdateUserRepositories($id): bool
+    protected function checkIdUpdateAdminRepositories($id): bool
     {
-        return User::where('id', $id)->first() ? true : false;
+        return Admin::where('id', $id)->first() ? true : false;
     }
 
-    public function updateUserRepositories($request): void
+    public function updateAdminRepositories($request): void
     {
-        User::where('id', $request['id'])->update($request);
+        Admin::where('id', $request['id'])->update($request);
     }
 
-    protected function checkIdDeleteUserRepositories($id): bool
+    protected function checkIdDeleteAdminRepositories($id): bool
     {
-        return User::where('id', $id)->first() ? true : false;
+        return Admin::where('id', $id)->first() ? true : false;
     }
 
-    public function deleteUserRepositories($id): void
+    public function deleteAdminRepositories($id): void
     {
-        User::where('id', $id)->delete();
+        Admin::where('id', $id)->delete();
     }
 
     /**
-     * end::inventori(user)
+     * end::inventori(admin)
      */
 
     /**

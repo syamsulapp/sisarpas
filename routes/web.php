@@ -132,11 +132,11 @@ Route::prefix('admin')->group(function () {
                         Route::put('update', [AdminDashboardController::class, 'doUpdateRuangan'])->name('admin.dashboard_inventori_update_ruangan');
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
                     });
-                    Route::prefix('user')->group(function () {
-                        Route::get('/', [AdminDashboardController::class, 'userinventori'])->name('admin.dashboard_inventori_user');
-                        Route::post('create', [AdminDashboardController::class, 'doCreateUser'])->name('admin.dashboard_inventori_create_user');
-                        Route::put('update', [AdminDashboardController::class, 'doUpdateUser'])->name('admin.dashboard_inventori_update_user');
-                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteUser'])->name('admin.dashboard_inventori_delete_user');
+                    Route::prefix('admin')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'admininventori'])->name('admin.dashboard_inventori_admin');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateAdmin'])->name('admin.dashboard_inventori_create_admin');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateAdmin'])->name('admin.dashboard_inventori_update_admin');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteAdmin'])->name('admin.dashboard_inventori_delete_admin');
                     });
                     Route::prefix('penjadwalan')->group(function () {
                         Route::get('/', [AdminDashboardController::class, 'penjadwalan_inventori'])->name('admin.dashboard_inventori_penjadwalan');

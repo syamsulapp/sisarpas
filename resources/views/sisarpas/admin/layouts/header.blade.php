@@ -24,8 +24,13 @@
              <li class="nav-item navbar-dropdown dropdown-user dropdown">
                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                      <div class="avatar avatar-online">
-                         <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}" alt
-                             class="w-px-40 h-auto rounded-circle" />
+                         @isset(Auth::guard('admin')->user()->image)
+                             <img src="{{ asset('sisarpas/assets/adminImage/' . Auth::guard('admin')->user()->image) }}" alt
+                                 class="w-px-40 h-auto rounded-circle" width="512px" height="512px" />
+                         @else
+                             <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}" alt
+                                 class="w-px-40 h-auto rounded-circle" />
+                         @endisset
                      </div>
                  </a>
                  <ul class="dropdown-menu dropdown-menu-end">

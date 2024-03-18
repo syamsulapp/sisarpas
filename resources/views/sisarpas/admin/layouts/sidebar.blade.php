@@ -69,7 +69,7 @@
         <li
             class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/barang') ||
             request()->is('admin/dashboard/master_data/inventori/ruangan') ||
-            request()->is('admin/dashboard/master_data/inventori/user') ||
+            request()->is('admin/dashboard/master_data/inventori/admin') ||
             request()->is('admin/dashboard/master_data/inventori/penjadwalan')
                 ? 'active open'
                 : '' }}">
@@ -91,8 +91,8 @@
                     </a>
                 </li>
                 <li
-                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/user') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard_inventori_user') }}" class="menu-link">
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/inventori/admin') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_inventori_admin') }}" class="menu-link">
                         <div data-i18n="Pricing">Data Pengguna</div>
                     </a>
                 </li>

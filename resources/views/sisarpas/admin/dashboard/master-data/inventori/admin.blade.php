@@ -1,11 +1,11 @@
 @extends('sisarpas.admin.layouts.app')
 
-@section('title', 'User Inventori Data')
+@section('title', 'Admin Inventori Data')
 
 @section('content-admin-dashboard')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Pengguna /</span> Website Si Sarpras
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Data Pengguna (admin) /</span> Website Si Sarpras
         </h4>
         @session('success')
             <div class="alert alert-success" role="alert">
@@ -23,14 +23,14 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                 <div class="card-header flex-column flex-md-row">
                     <div class="head-label text-center">
-                        <h5 class="card-title mb-0">Daftar Data Pengguna SARPRAS</h5>
+                        <h5 class="card-title mb-0">Daftar Data Pengguna (admin) SARPRAS</h5>
                     </div>
                     <div class="dt-action-buttons text-end pt-3 pt-md-0">
                         <div class="dt-buttons btn-group flex-wrap">
                             <button class="btn btn-primary" type="button" data-bs-target="#createUsers"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">
                                 <span class="tf-icons bx bxs-file-plus me-1"></span>
-                                Tambah Data Pengguna
+                                Tambah Data Pengguna (admin)
                             </button>
                         </div>
                     </div>
@@ -42,13 +42,12 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Nim</th>
                             <th>Email</th>
                             <th>Tanggal Dibuat</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $u)
+                        @foreach ($admin as $u)
                             <tr>
                                 <td>
                                     <button type="button" data-item="{{ $u->id }}"
@@ -59,7 +58,6 @@
                                     {{ $u->id }}
                                 </td>
                                 <td>{{ $u->name }}</td>
-                                <td>{{ $u->nim }}</td>
                                 <td>{{ $u->email }}</td>
                                 <td>{{ $u->created_at }}</td>
                             </tr>
@@ -69,7 +67,6 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Nim</th>
                             <th>Email</th>
                             <th>Tanggal Dibuat</th>
                         </tr>
@@ -78,13 +75,13 @@
             </div>
         </div>
 
-        @foreach ($users as $u)
+        @foreach ($admin as $u)
             <!-- modal detail -->
             <div class="modal fade" id="detailModalUsers--{{ $u->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Pengguna</h5>
+                            <h5 class="modal-title" id="exampleModalLabel1">Detail Data Pengguna (admin)</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -92,8 +89,8 @@
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>Photo Profile:</td>
-                                        <td><img src="{{ asset('/sisarpas/assets/userImage/' . $u->image) }}"
-                                                width="100%"></td>
+                                        <td><img src="{{ asset('/sisarpas/assets/adminImage/' . $u->image) }}"
+                                                width="20%"></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>ID:</td>
@@ -102,10 +99,6 @@
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Nama:</td>
                                         <td>{{ $u->name }}</td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="3">
-                                        <td>Nim:</td>
-                                        <td>{{ $u->nim }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Email:</td>
@@ -118,7 +111,7 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form action="{{ route('admin.dashboard_inventori_delete_user', $u->id) }}"
+                                            <form action="{{ route('admin.dashboard_inventori_delete_admin', $u->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
@@ -145,16 +138,16 @@
             <!-- modal detail-->
         @endforeach
 
-        @foreach ($users as $u)
+        @foreach ($admin as $u)
             <!-- modal edit -->
             <div class="modal fade" id="modalEditUsers--{{ $u->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Pengguna</h5>
+                            <h5 class="modal-title" id="modalToggleLabel2">Edit Data Pengguna (admin)</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{ route('admin.dashboard_inventori_update_user') }}" method="POST"
+                        <form action="{{ route('admin.dashboard_inventori_update_admin') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
@@ -165,9 +158,11 @@
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"
-                                                    src="{{ asset('/sisarpas/assets/userImage/' . $u->image) }}"
-                                                    width="50%" />
+                                                    src="{{ asset('/sisarpas/assets/adminImage/' . $u->image) }}"
+                                                    width="20%" />
                                             </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
                                             <td>Image:</td>
                                             <td>
                                                 <input type="file" id="image"
@@ -191,17 +186,6 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
-                                            <td>Nim:</td>
-                                            <td>
-                                                <input type="text" id="nim"
-                                                    class="form-control @error('nim') is-invalid @enderror"
-                                                    placeholder="masukan nim" name="nim"
-                                                    aria-describedby="defaultFormControlHelp"
-                                                    value="{{ $u->nim }}" />
-                                                @error('nim')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </td>
                                         </tr>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Email:</td>
@@ -215,6 +199,9 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
+
                                             <td>Password:</td>
                                             <td>
                                                 <input type="password" id="password"
@@ -251,10 +238,10 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Pengguna</h5>
+                        <h5 class="modal-title" id="modalToggleLabel2">Create Inventori Pengguna (Admin)</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('admin.dashboard_inventori_create_user') }}" method="POST"
+                    <form action="{{ route('admin.dashboard_inventori_create_admin') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body table-responsive">
@@ -284,17 +271,6 @@
 
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
-
-                                        <td>Nim:</td>
-                                        <td>
-                                            <input type="text" id="nim"
-                                                class="form-control @error('nim') is-invalid @enderror"
-                                                placeholder="Masukan Nim" name="nim"
-                                                aria-describedby="defaultFormControlHelp" value="{{ old('nim') }}" />
-                                            @error('nim')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
                                         <td>Email:</td>
                                         <td>
                                             <input type="email" id="email"
@@ -305,8 +281,6 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
-                                    </tr>
-                                    <tr data-dt-row="99" data-dt-column="2">
                                         <td>Password:</td>
                                         <td>
                                             <input type="password" id="password"
@@ -318,6 +292,9 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="2">
+
                                     </tr>
                                 </tbody>
                             </table>
