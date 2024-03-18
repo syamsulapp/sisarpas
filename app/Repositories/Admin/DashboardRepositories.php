@@ -193,6 +193,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         Landing::create($request);
     }
 
+    public function createFooterRepositories($request): void
+    {
+        Footer::create($request);
+    }
+
     public function updateLandingRepositories($model, $request): void
     {
         $model->update($request);

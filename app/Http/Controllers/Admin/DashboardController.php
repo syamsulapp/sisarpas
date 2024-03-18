@@ -327,6 +327,11 @@ class DashboardController extends DashboardRepositories
         return $req;
     }
 
+    private function submitRequestFooter($request)
+    {
+        return $request->only('alamat_gedung', 'nomor_telpon', 'email', 'nama_gedung', 'facebook', 'instagram', 'youtube', 'status');
+    }
+
     private function submitLandingRequestUpdateNoFile($request)
     {
         return $request->only('type', 'status');

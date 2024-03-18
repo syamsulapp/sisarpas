@@ -56,8 +56,9 @@
                                         data-bs-target="#detailModalLandingHeader--{{ $l->id }}">
                                         <i class='bx bx-info-circle' style='color:#8f0d04'></i>
                                     </button>
-                                    {{ $l->alamat_gedung }}
+                                    {{ $l->id }}
                                 </td>
+                                <td>{{ $l->alamat_gedung }}</td>
                                 <td>{{ $l->nomor_telpon }}</td>
                                 <td>{{ $l->email }}</td>
                                 <td>{{ $l->created_at }}</td>
@@ -180,7 +181,7 @@
                                             <td>
                                                 <input type="text" id="alamat_gedung"
                                                     class="form-control @error('alamat_gedung') is-invalid @enderror"
-                                                    name="alamat_gedung" placeholder="Pilih Jenis File"
+                                                    name="alamat_gedung" placeholder="Masukan Alamat Gedung"
                                                     value="{{ $l->alamat_gedung }}" />
                                                 @error('alamat_gedung')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -190,7 +191,7 @@
                                             <td>
                                                 <input type="text" id="nama_gedung"
                                                     class="form-control @error('nama_gedung') is-invalid @enderror"
-                                                    name="nama_gedung" placeholder="Pilih Jenis File"
+                                                    name="nama_gedung" placeholder="Masukan Nama Gedung"
                                                     value="{{ $l->nama_gedung }}" />
                                                 @error('nama_gedung')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -202,7 +203,7 @@
                                             <td>
                                                 <input type="email" id="email"
                                                     class="form-control @error('email') is-invalid @enderror"
-                                                    name="email" placeholder="Pilih Jenis File"
+                                                    name="email" placeholder="Masukan Email"
                                                     value="{{ $l->email }}" />
                                                 @error('email')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -212,7 +213,7 @@
                                             <td>
                                                 <input type="text" id="nomor_telpon"
                                                     class="form-control @error('nomor_telpon') is-invalid @enderror"
-                                                    name="nomor_telpon" placeholder="Pilih Jenis File"
+                                                    name="nomor_telpon" placeholder="Masukan Nomor Telpon"
                                                     value="{{ $l->nomor_telpon }}" />
                                                 @error('nomor_telpon')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -224,7 +225,7 @@
                                             <td>
                                                 <input type="text" id="facebook"
                                                     class="form-control @error('facebook') is-invalid @enderror"
-                                                    name="facebook" placeholder="Pilih Jenis File"
+                                                    name="facebook" placeholder="Masukan Facebook"
                                                     value="{{ $l->facebook }}" />
                                                 @error('facebook')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -234,7 +235,7 @@
                                             <td>
                                                 <input type="text" id="instagram"
                                                     class="form-control @error('instagram') is-invalid @enderror"
-                                                    name="instagram" placeholder="Pilih Jenis File"
+                                                    name="instagram" placeholder="Masukan Instagram"
                                                     value="{{ $l->instagram }}" />
                                                 @error('instagram')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -246,7 +247,7 @@
                                             <td>
                                                 <input type="text" id="youtube"
                                                     class="form-control @error('youtube') is-invalid @enderror"
-                                                    name="youtube" placeholder="Pilih Jenis File"
+                                                    name="youtube" placeholder="Masukan Youtube"
                                                     value="{{ $l->youtube }}" />
                                                 @error('youtube')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -330,7 +331,7 @@
                                         <td>
                                             <input type="email" id="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
-                                                placeholder="Pilih Jenis File" />
+                                                placeholder="Masukan Email" />
                                             @error('email')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
