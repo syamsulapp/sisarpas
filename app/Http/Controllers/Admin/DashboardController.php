@@ -254,12 +254,15 @@ class DashboardController extends DashboardRepositories
     public function doDeleteLandingFooter(Footer $id): RedirectResponse
     {
         try {
-            if (!$this->checkIdByDeleteFooter($id)) {
+            if (!$this->checkIdByDeleteFooter($id->id)) {
                 $this->redirectError('admin.dashboard_landing_footer', 'Maaf ID tidak di temukan');
             }
-            $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing footer'));
-            $this->deleteFooterRepositories(Footer::where('id', $id->id)->first());
-            return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Delete Landing footer');
+
+            if ($this->checkIdByDeleteFooter($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing footer'));
+                $this->deleteFooterRepositories(Footer::where('id', $id->id)->first()->id);
+                return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Delete Landing footer');
+            }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada delete landing footer');
@@ -279,6 +282,11 @@ class DashboardController extends DashboardRepositories
     private function checkIdByUpdateFooter($request): bool
     {
         return $this->checkIdByUpdateFooterRepositories($request);
+    }
+
+    private function checkIdByDeleteFooter($id): bool
+    {
+        return $this->checkIdByDeleteFooterRepositories($id);
     }
 
     private function viewForListLandingHeader($landing)

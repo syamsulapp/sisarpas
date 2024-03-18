@@ -43,9 +43,9 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/create')) {
             return [
-                'alamat_gedung' => 'required|string|unique:footers,alamat_gedung',
+                'alamat_gedung' => 'required',
                 'nomor_telpon' => 'required|string',
-                'email' => 'required|string|unique:footers,email',
+                'email' => 'required|string',
                 'nama_gedung' => 'required|string',
                 'facebook' => 'required|string',
                 'instagram' => 'required|string',
@@ -179,6 +179,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Footer::where('id', $request['id'])->first() ? true : false;
     }
 
+    protected function checkIdByDeleteFooterRepositories($id): bool
+    {
+        return Footer::where('id', $id)->first() ? true : false;
+    }
+
     protected function getListLandingHeaderRepositories()
     {
         return Landing::where('type', 'image')->orderBy('id', 'desc')->get();
@@ -216,6 +221,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function deleteLandingRepositories($model): void
     {
         $model->delete();
+    }
+
+    public function deleteFooterRepositories($id): void
+    {
+        Footer::where('id', $id)->delete();
     }
     /**
      * end::landing

@@ -20,9 +20,9 @@ class Footer extends Model
         'updated_at',
     ];
 
-    protected $cast = [
+    protected $casts = [
         'created_at' => 'date:Y-m-d H:i:s',
-        'created_at' => 'date:Y-m-d H:i:s',
+        'updated_at' => 'date:Y-m-d H:i:s',
     ];
     use HasFactory;
 }
