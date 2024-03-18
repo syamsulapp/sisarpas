@@ -185,26 +185,7 @@
                                                 @enderror
                                             </td>
                                         </tr>
-                                        <tr data-dt-row="99" data-dt-column="9">
-
-                                            <td>Type:</td>
-                                            <td>
-                                                <select name="type" id="defaultFormControlInput"
-                                                    class="form-control @error('type') is-invalid @enderror"
-                                                    placeholder="Pilih Jenis File">
-                                                    <option value="" selected>Pilih Jenis File</option>
-                                                    <option value="video" {{ $l->type == 'video' ? 'selected' : '' }}>
-                                                        video
-                                                    </option>
-                                                    <option value="image" {{ $l->type == 'image' ? 'selected' : '' }}>
-                                                        image
-                                                    </option>
-                                                </select>
-                                                @error('type')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </td>
-                                        </tr>
+                                        <input type="text" name="type" value="{{ $l->type }}" hidden>
                                         <tr data-dt-row="99" data-dt-column="8">
                                             <td>Status:</td>
                                             <td>
@@ -276,20 +257,8 @@
                                             @enderror
                                         </td>
 
-                                        <td>Type:</td>
-                                        <td>
-                                            <select name="type" id="defaultFormControlInput"
-                                                class="form-control @error('type') is-invalid @enderror"
-                                                placeholder="Pilih Jenis File">
-                                                <option value="" selected>Pilih Jenis File</option>
-                                                <option value="image">image</option>
-                                                <option value="video">video</option>
-                                            </select>
-                                            @error('type')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
                                     </tr>
+                                    <input type="text" name="type" value="{{ 'video' }}" hidden>
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Status:</td>
                                         <td>
