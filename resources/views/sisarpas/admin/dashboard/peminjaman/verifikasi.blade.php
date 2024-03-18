@@ -125,6 +125,10 @@
                                         <td>Keterangan Peminjaman:</td>
                                         <td>{{ $p->keterangan_pinjam }}</td>
                                     </tr>
+                                    <tr data-dt-row="99" data-dt-column="3">
+                                        <td>Tujuan Peminjaman:</td>
+                                        <td>{{ $p->tujuan_pinjam }}</td>
+                                    </tr>
                                     <tr data-dt-row="99" data-dt-column="4">
                                         <td>Status:</td>
                                         <td>
@@ -218,6 +222,16 @@
                                                     value="{{ $p->users->name }}" disabled />
                                             </td>
 
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="2">
+                                            <td>Tujuan Pinjam:</td>
+                                            <td>
+                                                <textarea id="tujuan_pinjam" class="form-control" aria-describedby="defaultFormControlHelp" disabled>{{ $p->tujuan_pinjam }}</textarea>
+                                            </td>
+                                            <td>Keterangan Pinjam:</td>
+                                            <td>
+                                                <textarea id="keterangan_pinjam" class="form-control" aria-describedby="defaultFormControlHelp" disabled>{{ $p->keterangan_pinjam }}</textarea>
+                                            </td>
                                         </tr>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Tanggal Pengembalian:</td>

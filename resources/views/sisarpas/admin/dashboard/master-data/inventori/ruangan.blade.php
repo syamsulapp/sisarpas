@@ -259,7 +259,7 @@
                                         </tr>
 
                                         <tr data-dt-row="99" data-dt-column="2">
-                                            <td>Spesifikasi Barang:</td>
+                                            <td>Spesifikasi Ruangan:</td>
                                             <td>
                                                 <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
                                                     aria-describedby="defaultFormControlHelp">{{ $r->spesifikasi_barang }}</textarea>
@@ -392,7 +392,7 @@
                                         </td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Spesifikasi Barang:</td>
+                                        <td>Spesifikasi Ruangan:</td>
                                         <td>
                                             <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
                                                 aria-describedby="defaultFormControlHelp">{{ old('spesifikasi_barang') }}</textarea>
