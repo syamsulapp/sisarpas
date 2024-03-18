@@ -189,7 +189,7 @@
                                                 allowfullscreen></iframe> --}}
 
                                         <tr data-dt-row="99" data-dt-column="9">
-                                            <td>File:</td>
+                                            <td>Video From Your Computer:</td>
                                             <td>
                                                 <input type="file" id="selectImage"
                                                     class="form-control @error('file') is-invalid @enderror"
@@ -202,9 +202,10 @@
                                         </tr>
                                         <tr data-dt-row="99" data-dt-column="9">
 
-                                            <td>Youtube Source:</td>
+                                            <td>Video From Youtube:</td>
                                             <td>
-                                                <input type="text" id="selectImage" class="form-control @error('embed_yt') is-invalid @enderror"
+                                                <input type="text" id="selectImage"
+                                                    class="form-control @error('embed_yt') is-invalid @enderror"
                                                     placeholder="Masukan youtube embed" name="embed_yt"
                                                     aria-describedby="defaultFormControlHelp"
                                                     value="{{ $l->file }}" />
@@ -274,7 +275,7 @@
                                         </td>
                                     </tr> --}}
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>File:</td>
+                                        <td>Video From Your Computer:</td>
                                         <td>
                                             <input type="file" id="selectImage"
                                                 class="form-control @error('file') is-invalid @enderror"
@@ -288,7 +289,7 @@
                                     </tr>
                                     <input type="text" name="type" value="{{ 'video' }}" hidden>
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Youtube Soruce:</td>
+                                        <td>Video From Youtube:</td>
                                         <td>
                                             <input type="text"
                                                 class="form-control @error('embed_yt') is-invalid @enderror"
