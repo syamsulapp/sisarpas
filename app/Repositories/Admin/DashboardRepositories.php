@@ -31,13 +31,15 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/create')) {
             return [
-                'file' => 'required|file|mimes:mp4|max:2048',
+                'file' => 'file|mimes:mp4|max:2048',
+                'embed_yt' => '',
                 'type' => 'required|string|in:video',
                 'status' => 'required|string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/update')) {
             return [
                 'file' => 'file|mimes:mp4|max:2048',
+                'embed_yt' => '',
                 'type' => 'string|in:video',
                 'status' => 'string|required|in:hide,unhide',
             ];

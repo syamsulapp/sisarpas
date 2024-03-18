@@ -186,11 +186,11 @@ class DashboardController extends DashboardRepositories
                 return $this->redirectError('admin.dashboard_landing_video', 'Maaf ID Tidak Di temukan');
             }
 
-            if (!isset($this->landingRequest($request)['file'])) {
+            if (!isset($this->landingRequest($request)['file']) || !isset($this->landingRequest($request)['embed_yt'])) {
                 $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitLandingRequestUpdateNoFile($request));
             }
 
-            if (isset($this->landingRequest($request)['file'])) {
+            if (isset($this->landingRequest($request)['file']) || isset($this->landingRequest($request)['embed_yt'])) {
                 $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitRequest($request));
             }
 
@@ -321,7 +321,7 @@ class DashboardController extends DashboardRepositories
 
     private function landingRequest($request)
     {
-        return $request->only('file', 'type', 'status');
+        return $request->only('file', 'type', 'status', 'embed_yt');
     }
 
     private function fileRequestImg($request)
@@ -336,7 +336,11 @@ class DashboardController extends DashboardRepositories
     private function submitRequest($request)
     {
         $req = $this->landingRequest($request);
-        $req['file'] = $this->fileRequestImg($request);
+        if (empty($req['embed_yt'])) {
+            $req['file'] = $this->fileRequestImg($request);
+        } else {
+            $req['file'] = $req['embed_yt'];
+        }
         return $req;
     }
 
