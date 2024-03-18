@@ -39,18 +39,18 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'file' => 'file|mimes:mp4|max:2048',
                 'type' => 'string|in:video',
-                'status' => 'string|required|in:hide,unhide',
+                'status' => 'string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/create')) {
             return [
-                'alamat_gedung' => 'required',
-                'nomor_telpon' => 'required|string',
-                'email' => 'required|string',
-                'nama_gedung' => 'required|string',
-                'facebook' => 'required|string',
-                'instagram' => 'required|string',
-                'youtube' => 'required|string',
-                'status' => 'required|in:hide,unhide',
+                'alamat_gedung' => 'string',
+                'nomor_telpon' => 'string',
+                'email' => 'string',
+                'nama_gedung' => 'string',
+                'facebook' => 'string',
+                'instagram' => 'string',
+                'youtube' => 'string',
+                'status' => 'in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
             return [
