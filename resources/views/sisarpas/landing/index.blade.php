@@ -232,55 +232,56 @@
                         data-aos="fade-up" data-aos-delay="100">
                         <h4>Mengalami Kendala?</h4>
                         <p>Silahkan hubungi kontak kami, kami siap membantu anda</p>
-                        <h5>Kontak</h5>
-                        <ul>
-                            <li>
-                                <i class="bx bx-home"></i>
-                                <div>
-                                    <h6>Gedung D Lantai 1, ITERA, Jalan Terusan Ryacudu, Way Hui, Kecamatan Jati Agung,
-                                        Lampung Selatan 35365</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-phone"></i>
-                                <div>
-                                    <h6>(08123) 12345678</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-mail-send"></i>
-                                <div>
-                                    <h6>loremipsum123@gmail.com</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-buildings"></i>
-                                <div>
-                                    <h6>Ruang SARPRAS 1203</h6>
-                                </div>
-                            </li>
-                        </ul>
-                        <h5>Social Media</h5>
-                        <ul>
-                            <li>
-                                <i class="bx bxl-facebook-circle"></i>
-                                <div>
-                                    <h6>sarpraas1234</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bxl-instagram"></i>
-                                <div>
-                                    <h6>sarpras0987</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bxl-youtube"></i>
-                                <div>
-                                    <h6>sarprasitera</h6>
-                                </div>
-                            </li>
-                        </ul>
+                        @foreach ($landing_footer as $lf)
+                            <h5>Kontak</h5>
+                            <ul>
+                                <li>
+                                    <i class="bx bx-home"></i>
+                                    <div>
+                                        <h6>{{ $lf->alamat_gedung }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-phone"></i>
+                                    <div>
+                                        <h6>{{ $lf->nomor_telpon }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-mail-send"></i>
+                                    <div>
+                                        <h6>{{ $lf->email }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-buildings"></i>
+                                    <div>
+                                        <h6>{{ $lf->nama_gedung }}</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h5>Social Media</h5>
+                            <ul>
+                                <li>
+                                    <i class="bx bxl-facebook-circle"></i>
+                                    <div>
+                                        <h6>{{ $lf->facebook }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bxl-instagram"></i>
+                                    <div>
+                                        <h6>{{ $lf->instagram }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bxl-youtube"></i>
+                                    <div>
+                                        <h6>{{ $lf->youtube }}</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        @endforeach
                     </div>
                 </div>
             </div>
