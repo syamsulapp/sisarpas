@@ -164,14 +164,10 @@
                         @if (strpos($lv->file, '.mp4'))
                             <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up"
                                 data-aos-delay="100">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <video width="410px" controls>
-                                            <source src="{{ asset('sisarpas/assets/landingFile/' . $lv->file) }}"
-                                                type="video/mp4" />
-                                        </video>
-                                    </div>
-                                </div>
+                                <video width="410px" controls>
+                                    <source src="{{ asset('sisarpas/assets/landingFile/' . $lv->file) }}"
+                                        type="video/mp4" />
+                                </video>
                             </div>
                         @elseif(strpos($lv->file, 'embed'))
                             <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up"
