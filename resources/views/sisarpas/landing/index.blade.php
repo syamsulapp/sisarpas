@@ -240,58 +240,68 @@
                     <h4>Mengalami Kendala?</h4>
                     <p>Silahkan hubungi kontak kami, kami siap membantu anda</p>
                     @foreach ($landing_footer as $lf)
-                        @if (isset($lf->alamat_gedung) && isset($lf->nomor_telpon) && isset($lf->email) && isset($lf->nama_gedung))
-                            <h5>Kontak</h5>
-                            <ul>
+                        <h5>Kontak</h5>
+                        <ul>
+                            @isset($lf->alamat_gedung)
                                 <li>
                                     <i class="bx bx-home"></i>
                                     <div>
                                         <h6>{{ $lf->alamat_gedung }}</h6>
                                     </div>
                                 </li>
+                            @endisset
+                            @isset($lf->nomor_telpon)
                                 <li>
                                     <i class="bx bx-phone"></i>
                                     <div>
                                         <h6>{{ $lf->nomor_telpon }}</h6>
                                     </div>
                                 </li>
+                            @endisset
+                            @isset($lf->email)
                                 <li>
                                     <i class="bx bx-mail-send"></i>
                                     <div>
                                         <h6>{{ $lf->email }}</h6>
                                     </div>
                                 </li>
+                            @endisset
+                            @isset($lf->nama_gedung)
                                 <li>
                                     <i class="bx bx-buildings"></i>
                                     <div>
                                         <h6>{{ $lf->nama_gedung }}</h6>
                                     </div>
                                 </li>
-                            </ul>
-                        @endif
-                        @if (isset($lf->facebook) && isset($lf->instagram) && isset($lf->youtube))
-                            <h5>Social Media</h5>
-                            <ul>
+                            @endisset
+                        </ul>
+                        <h5>Social Media</h5>
+                        <ul>
+                            @isset($lf->facebook)
                                 <li>
                                     <i class="bx bxl-facebook-circle"></i>
                                     <div>
                                         <h6>{{ $lf->facebook }}</h6>
                                     </div>
                                 </li>
+                            @endisset
+                            @isset($lf->instagram)
                                 <li>
                                     <i class="bx bxl-instagram"></i>
                                     <div>
                                         <h6>{{ $lf->instagram }}</h6>
                                     </div>
                                 </li>
+                            @endisset
+                            @isset($lf->youtube)
                                 <li>
                                     <i class="bx bxl-youtube"></i>
                                     <div>
                                         <h6>{{ $lf->youtube }}</h6>
                                     </div>
                                 </li>
-                            </ul>
-                        @endif
+                            @endisset
+                        </ul>
                     @endforeach
                 </div>
             </div>

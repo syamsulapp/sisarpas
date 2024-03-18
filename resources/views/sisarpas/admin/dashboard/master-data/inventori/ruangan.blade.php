@@ -113,7 +113,7 @@
                                         <td>{{ $r->nama_barang }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
-                                        <td>Jumlah:</td>
+                                        <td>Kapasitas Ruangan:</td>
                                         <td>{{ $r->jumlah_barang }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
@@ -214,14 +214,14 @@
                                             <td>
                                                 <input type="text" id="selectImage"
                                                     class="form-control @error('nama_barang') is-invalid @enderror"
-                                                    placeholder="masukan nama barang" name="nama_barang"
+                                                    placeholder="masukan kapasitas ruangan" name="nama_barang"
                                                     aria-describedby="defaultFormControlHelp"
                                                     value="{{ $r->nama_barang }}" />
                                                 @error('nama_barang')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
-                                            <td>Jumlah:</td>
+                                            <td>Kapasitas Ruangan:</td>
                                             <td>
                                                 <input type="text" id="jumlah_barang"
                                                     class="form-control @error('jumlah_barang') is-invalid @enderror"
@@ -355,11 +355,11 @@
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
 
-                                        <td>Jumlah:</td>
+                                        <td>Kapasitas Ruangan:</td>
                                         <td>
                                             <input type="text" id="jumlah_barang"
                                                 class="form-control @error('jumlah_barang') is-invalid @enderror"
-                                                placeholder="masukan jumlah barang" name="jumlah_barang"
+                                                placeholder="masukan kapasitas ruangan" name="jumlah_barang"
                                                 aria-describedby="defaultFormControlHelp"
                                                 value="{{ old('jumlah_barang') }}" />
                                             @error('jumlah_barang')
