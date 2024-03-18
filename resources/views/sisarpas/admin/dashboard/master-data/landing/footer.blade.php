@@ -311,7 +311,8 @@
                                         <td>
                                             <input type="text" id="alamat_gedung"
                                                 class="form-control @error('alamat_gedung') is-invalid @enderror"
-                                                name="alamat_gedung" placeholder="Masukan Alamat Gedung" />
+                                                name="alamat_gedung" placeholder="Masukan Alamat Gedung"
+                                                value="{{ old('alamat_gedung') }}" />
                                             @error('alamat_gedung')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -320,7 +321,8 @@
                                         <td>
                                             <input type="text" id="nama_gedung"
                                                 class="form-control @error('nama_gedung') is-invalid @enderror"
-                                                name="nama_gedung" placeholder="Masukan Nama Gedung" />
+                                                name="nama_gedung" placeholder="Masukan Nama Gedung"
+                                                value="{{ old('nama_gedung') }}" />
                                             @error('nama_gedung')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -331,7 +333,7 @@
                                         <td>
                                             <input type="email" id="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
-                                                placeholder="Masukan Email" />
+                                                placeholder="Masukan Email" value="{{ old('email') }}" />
                                             @error('email')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -340,7 +342,8 @@
                                         <td>
                                             <input type="text" id="nomor_telpon"
                                                 class="form-control @error('nomor_telpon') is-invalid @enderror"
-                                                name="nomor_telpon" placeholder="Masukan Email" />
+                                                name="nomor_telpon" placeholder="Masukan Nomor Telpon"
+                                                value="{{ old('nomor_telpon') }}" />
                                             @error('nomor_telpon')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -351,7 +354,8 @@
                                         <td>
                                             <input type="text" id="facebook"
                                                 class="form-control @error('facebook') is-invalid @enderror"
-                                                name="facebook" placeholder="Masukan Facebook" />
+                                                name="facebook" placeholder="Masukan Facebook"
+                                                value="{{ old('facebook') }}" />
                                             @error('facebook')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -360,7 +364,8 @@
                                         <td>
                                             <input type="text" id="instagram"
                                                 class="form-control @error('instagram') is-invalid @enderror"
-                                                name="instagram" placeholder="Masukan Instagram" />
+                                                name="instagram" placeholder="Masukan Instagram"
+                                                value="{{ old('instagram') }}" />
                                             @error('instagram')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -371,7 +376,8 @@
                                         <td>
                                             <input type="text" id="youtube"
                                                 class="form-control @error('youtube') is-invalid @enderror"
-                                                name="youtube" placeholder="Masukan Youtube" />
+                                                name="youtube" placeholder="Masukan Youtube"
+                                                value="{{ old('youtube') }}" />
                                             @error('youtube')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

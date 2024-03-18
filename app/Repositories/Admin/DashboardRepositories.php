@@ -27,7 +27,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'file' => 'file|image|mimes:jpg,png,jpeg',
                 'type' => 'string|in:image',
-                'status' => 'string|required|in:hide,unhide',
+                'status' => 'string|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/video/create')) {
             return [
@@ -43,14 +43,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/create')) {
             return [
-                'alamat_gedung' => 'string',
-                'nomor_telpon' => 'string',
-                'email' => 'string',
-                'nama_gedung' => 'string',
-                'facebook' => 'string',
-                'instagram' => 'string',
-                'youtube' => 'string',
-                'status' => 'in:hide,unhide',
+                'status' => 'required|in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
             return [

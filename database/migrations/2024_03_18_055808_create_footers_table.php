@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('footers', function (Blueprint $table) {
             $table->id();
-            $table->string('alamat_gedung');
-            $table->string('nomor_telpon');
-            $table->string('email');
-            $table->string('nama_gedung');
-            $table->string('facebook');
-            $table->string('instagram');
-            $table->string('youtube');
+            $table->string('alamat_gedung')->nullable();
+            $table->string('nomor_telpon')->nullable();
+            $table->string('email')->nullable();
+            $table->string('nama_gedung')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('youtube')->nullable();
             $table->enum('status', ['hide', 'unhide']);
             $table->timestamps();
         });

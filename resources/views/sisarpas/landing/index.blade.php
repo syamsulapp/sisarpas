@@ -240,54 +240,58 @@
                     <h4>Mengalami Kendala?</h4>
                     <p>Silahkan hubungi kontak kami, kami siap membantu anda</p>
                     @foreach ($landing_footer as $lf)
-                        <h5>Kontak</h5>
-                        <ul>
-                            <li>
-                                <i class="bx bx-home"></i>
-                                <div>
-                                    <h6>{{ $lf->alamat_gedung }}</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-phone"></i>
-                                <div>
-                                    <h6>{{ $lf->nomor_telpon }}</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-mail-send"></i>
-                                <div>
-                                    <h6>{{ $lf->email }}</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bx-buildings"></i>
-                                <div>
-                                    <h6>{{ $lf->nama_gedung }}</h6>
-                                </div>
-                            </li>
-                        </ul>
-                        <h5>Social Media</h5>
-                        <ul>
-                            <li>
-                                <i class="bx bxl-facebook-circle"></i>
-                                <div>
-                                    <h6>{{ $lf->facebook }}</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bxl-instagram"></i>
-                                <div>
-                                    <h6>{{ $lf->instagram }}</h6>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="bx bxl-youtube"></i>
-                                <div>
-                                    <h6>{{ $lf->youtube }}</h6>
-                                </div>
-                            </li>
-                        </ul>
+                        @if (isset($lf->alamat_gedung) && isset($lf->nomor_telpon) && isset($lf->email) && isset($lf->nama_gedung))
+                            <h5>Kontak</h5>
+                            <ul>
+                                <li>
+                                    <i class="bx bx-home"></i>
+                                    <div>
+                                        <h6>{{ $lf->alamat_gedung }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-phone"></i>
+                                    <div>
+                                        <h6>{{ $lf->nomor_telpon }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-mail-send"></i>
+                                    <div>
+                                        <h6>{{ $lf->email }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-buildings"></i>
+                                    <div>
+                                        <h6>{{ $lf->nama_gedung }}</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        @endif
+                        @if (isset($lf->facebook) && isset($lf->instagram) && isset($lf->youtube))
+                            <h5>Social Media</h5>
+                            <ul>
+                                <li>
+                                    <i class="bx bxl-facebook-circle"></i>
+                                    <div>
+                                        <h6>{{ $lf->facebook }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bxl-instagram"></i>
+                                    <div>
+                                        <h6>{{ $lf->instagram }}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bxl-youtube"></i>
+                                    <div>
+                                        <h6>{{ $lf->youtube }}</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        @endif
                     @endforeach
                 </div>
             </div>
