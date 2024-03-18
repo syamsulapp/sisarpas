@@ -161,8 +161,9 @@
 
                 <div class="row">
                     @foreach ($landing_video as $lv)
-                        @empty($lv->file)
-                            <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                        @if (strpos($lv->file, '.mp4'))
+                            <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up"
+                                data-aos-delay="100">
                                 <div class="member">
                                     <div class="member-img">
                                         <video width="410px" controls>
@@ -172,130 +173,131 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-                                <iframe width="100%" height="410px" src="{{ $lv->file }}" title="YouTube video player"
-                                    frameborder="0"
+                        @elseif(strpos($lv->file, 'embed'))
+                            <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up"
+                                data-aos-delay="100">
+                                <iframe width="100%" height="410px" src="{{ $lv->file }}"
+                                    title="YouTube video player" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen></iframe>
                             </div>
                         @endempty
                     @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- End Informasi Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Kontak</h2>
+                <h3>Mengalami Kendala?</h3>
+                <p></p>
+            </div>
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-6">
+                    <form action="{{ route('sisarpas.contact') }}" method="POST" class="php-email-form">
+                        @csrf
+                        <div class="text-centers">
+                            <h3>Hubungi Kami</h3>
+                        </div>
+                        @session('success')
+                            <div class="alert alert-success" role="alert">
+                                {{ $value }}
+                            </div>
+                        @endsession
+                        @session('error')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $value }}
+                            </div>
+                        @endsession
+                        <div class="form-group">
+                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                name="email" id="email" placeholder="Masukkan Email Anda" />
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control  @error('message') is-invalid @enderror" name="message" rows="5"
+                                placeholder="Masukkan Pesan Anda"></textarea>
+                            @error('message')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" style="font-weight: bold">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <h4>Mengalami Kendala?</h4>
+                    <p>Silahkan hubungi kontak kami, kami siap membantu anda</p>
+                    @foreach ($landing_footer as $lf)
+                        <h5>Kontak</h5>
+                        <ul>
+                            <li>
+                                <i class="bx bx-home"></i>
+                                <div>
+                                    <h6>{{ $lf->alamat_gedung }}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="bx bx-phone"></i>
+                                <div>
+                                    <h6>{{ $lf->nomor_telpon }}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="bx bx-mail-send"></i>
+                                <div>
+                                    <h6>{{ $lf->email }}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="bx bx-buildings"></i>
+                                <div>
+                                    <h6>{{ $lf->nama_gedung }}</h6>
+                                </div>
+                            </li>
+                        </ul>
+                        <h5>Social Media</h5>
+                        <ul>
+                            <li>
+                                <i class="bx bxl-facebook-circle"></i>
+                                <div>
+                                    <h6>{{ $lf->facebook }}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="bx bxl-instagram"></i>
+                                <div>
+                                    <h6>{{ $lf->instagram }}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="bx bxl-youtube"></i>
+                                <div>
+                                    <h6>{{ $lf->youtube }}</h6>
+                                </div>
+                            </li>
+                        </ul>
+                    @endforeach
                 </div>
             </div>
-        </section>
-        <!-- End Informasi Section -->
-
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container" data-aos="fade-up">
-                <div class="section-title">
-                    <h2>Kontak</h2>
-                    <h3>Mengalami Kendala?</h3>
-                    <p></p>
-                </div>
-                <div class="row" data-aos="fade-up" data-aos-delay="100">
-                    <div class="col-lg-6">
-                        <form action="{{ route('sisarpas.contact') }}" method="POST" class="php-email-form">
-                            @csrf
-                            <div class="text-centers">
-                                <h3>Hubungi Kami</h3>
-                            </div>
-                            @session('success')
-                                <div class="alert alert-success" role="alert">
-                                    {{ $value }}
-                                </div>
-                            @endsession
-                            @session('error')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $value }}
-                                </div>
-                            @endsession
-                            <div class="form-group">
-                                <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" id="email" placeholder="Masukkan Email Anda" />
-                                @error('email')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control  @error('message') is-invalid @enderror" name="message" rows="5"
-                                    placeholder="Masukkan Pesan Anda"></textarea>
-                                @error('message')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="my-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" style="font-weight: bold">Kirim</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <h4>Mengalami Kendala?</h4>
-                        <p>Silahkan hubungi kontak kami, kami siap membantu anda</p>
-                        @foreach ($landing_footer as $lf)
-                            <h5>Kontak</h5>
-                            <ul>
-                                <li>
-                                    <i class="bx bx-home"></i>
-                                    <div>
-                                        <h6>{{ $lf->alamat_gedung }}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="bx bx-phone"></i>
-                                    <div>
-                                        <h6>{{ $lf->nomor_telpon }}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="bx bx-mail-send"></i>
-                                    <div>
-                                        <h6>{{ $lf->email }}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="bx bx-buildings"></i>
-                                    <div>
-                                        <h6>{{ $lf->nama_gedung }}</h6>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h5>Social Media</h5>
-                            <ul>
-                                <li>
-                                    <i class="bx bxl-facebook-circle"></i>
-                                    <div>
-                                        <h6>{{ $lf->facebook }}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="bx bxl-instagram"></i>
-                                    <div>
-                                        <h6>{{ $lf->instagram }}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="bx bxl-youtube"></i>
-                                    <div>
-                                        <h6>{{ $lf->youtube }}</h6>
-                                    </div>
-                                </li>
-                            </ul>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End Contact Section -->
-    </main>
-    <!-- End #main -->
+        </div>
+    </section>
+    <!-- End Contact Section -->
+</main>
+<!-- End #main -->
 @endsection

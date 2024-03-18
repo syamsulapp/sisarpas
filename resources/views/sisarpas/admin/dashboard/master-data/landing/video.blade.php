@@ -99,24 +99,28 @@
                         <div class="modal-body">
                             <table class="table">
                                 <tbody>
-                                    <tr data-dt-row="99" data-dt-column="10">
-                                        <td>Video:</td>
-                                        <td><video width="100%" controls>
-                                                <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
-                                                    type="video/mp4" />
-                                                <video></td>
-                                    </tr>
-                                    {{-- <iframe width="100%" height="410px" src="{{ $l->file }}"
+                                    @if (strpos($l->file, 'embed'))
+                                        <iframe width="100%" height="410px" src="{{ $l->file }}"
                                             title="YouTube video player" frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowfullscreen></iframe> --}}
+                                            allowfullscreen></iframe>
+                                    @elseif(strpos($l->file, '.mp4'))
+                                        <tr data-dt-row="99" data-dt-column="10">
+                                            <td>Video:</td>
+                                            <td><video width="100%" controls>
+                                                    <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
+                                                        type="video/mp4" />
+                                                    <video></td>
+                                        </tr>
+                                    @endif
+
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Tipe:</td>
                                         <td>{{ $l->type }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Embed Youtube:</td>
-                                        <td>{{ $l->file ? $l->file : 'belum ada' }}</td>
+                                        <td>{{ strpos($l->file, 'embed') ? $l->file : 'belum ada' }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="4">
                                         <td>Status:</td>
@@ -176,17 +180,21 @@
                                 <table class="table">
                                     <tbody>
                                         <input type="number" name="id" value="{{ $l->id }}" hidden>
-                                        <tr data-dt-row="99" data-dt-column="10">
-                                            <td>Video:</td>
-                                            <td><video width="100%" controls>
-                                                    <source src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
-                                                        type="video/mp4" />
-                                                    <video></td>
-                                        </tr>
-                                        {{-- <iframe width="100%" height="410px" src="{{ $l->file }}"
+                                        @if (strpos($l->file, 'embed'))
+                                            <iframe width="100%" height="410px" src="{{ $l->file }}"
                                                 title="YouTube video player" frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                allowfullscreen></iframe> --}}
+                                                allowfullscreen></iframe>
+                                        @elseif(strpos($l->file, '.mp4'))
+                                            <tr data-dt-row="99" data-dt-column="10">
+                                                <td>Video:</td>
+                                                <td><video width="100%" controls>
+                                                        <source
+                                                            src="{{ asset('/sisarpas/assets/landingFile/' . $l->file) }}"
+                                                            type="video/mp4" />
+                                                        <video></td>
+                                            </tr>
+                                        @endif
 
                                         <tr data-dt-row="99" data-dt-column="9">
                                             <td>Video From Your Computer:</td>
@@ -208,7 +216,7 @@
                                                     class="form-control @error('embed_yt') is-invalid @enderror"
                                                     placeholder="Masukan youtube embed" name="embed_yt"
                                                     aria-describedby="defaultFormControlHelp"
-                                                    value="{{ $l->file }}" />
+                                                    value="{{ strpos($l->file, 'embed') ? $l->file : '' }}" />
                                                 @error('embed_yt')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
