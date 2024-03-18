@@ -54,7 +54,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
             return [
-                'alamat_gedung' => 'string|unique:footers,alamat_gedung',
+                'alamat_gedung' => 'string',
                 'nomor_telpon' => 'string',
                 'email' => 'string',
                 'nama_gedung' => 'string',
@@ -174,6 +174,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Landing::where('id', $id->id)->first() ? true : false;
     }
 
+    protected function checkIdByUpdateFooterRepositories($request): bool
+    {
+        return Footer::where('id', $request['id'])->first() ? true : false;
+    }
+
     protected function getListLandingHeaderRepositories()
     {
         return Landing::where('type', 'image')->orderBy('id', 'desc')->get();
@@ -196,6 +201,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function createFooterRepositories($request): void
     {
         Footer::create($request);
+    }
+
+    public function updateFooterRepositories($request): void
+    {
+        Footer::where('id', $request['id'])->update($request);
     }
 
     public function updateLandingRepositories($model, $request): void

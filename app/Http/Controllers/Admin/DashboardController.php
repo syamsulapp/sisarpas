@@ -210,10 +210,10 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdByUpdateFooter($request)) {
-                $this->updateFooterRepositories(Footer::where('id', $request->id)->first(), $this->submitLandingRequestUpdateFooter($request));
+                $this->updateFooterRepositories($this->submitLandingRequestUpdateFooter($request));
             }
 
-            $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $request->id)->first(), 'telah mengubah landing footer'));
+            $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $request->id)->first(), 'telah mengubah landing footer'));
             return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Mengubah Landing footer');
         } catch (\Exception $errros) {
             $this->logError($this->dataLogError($errros->getMessage()));
@@ -276,6 +276,11 @@ class DashboardController extends DashboardRepositories
         return $this->checkIdByDeleteLandingRepositories($id);
     }
 
+    private function checkIdByUpdateFooter($request): bool
+    {
+        return $this->checkIdByUpdateFooterRepositories($request);
+    }
+
     private function viewForListLandingHeader($landing)
     {
         return view('sisarpas.admin.dashboard.master-data.landing.header', compact('landing'));
@@ -330,6 +335,11 @@ class DashboardController extends DashboardRepositories
     private function submitRequestFooter($request)
     {
         return $request->only('alamat_gedung', 'nomor_telpon', 'email', 'nama_gedung', 'facebook', 'instagram', 'youtube', 'status');
+    }
+
+    private function submitLandingRequestUpdateFooter($request)
+    {
+        return $request->only('id', 'alamat_gedung', 'nomor_telpon', 'email', 'nama_gedung', 'facebook', 'instagram', 'youtube', 'status');
     }
 
     private function submitLandingRequestUpdateNoFile($request)
