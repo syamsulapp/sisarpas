@@ -941,20 +941,20 @@ class DashboardController extends DashboardRepositories
     {
         $req = $this->requestCreateAdmin($request);
         $req['image'] = $this->imageAdmin($request);
-        $req['roles_id'] = 2;
+        $req['roles_id'] = 1;
         return $req;
     }
     private function submitRequestUpdateAdminWithImg($request)
     {
         $req = $this->requestUpdateAdminWithImg($request);
         $req['image'] = $this->imageAdmin($request);
-        $req['roles_id'] = 2;
+        $req['roles_id'] = 1;
         return $req;
     }
     private function submitRequestUpdateAdminNoImg($request)
     {
         $req = $this->requestUpdateAdminNoImg($request);
-        $req['roles_id'] = 2;
+        $req['roles_id'] = 1;
         return $req;
     }
     /**
