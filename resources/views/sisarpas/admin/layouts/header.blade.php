@@ -39,8 +39,13 @@
                              <div class="d-flex">
                                  <div class="flex-shrink-0 me-3">
                                      <div class="avatar avatar-online">
-                                         <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}"
-                                             alt class="w-px-40 h-auto rounded-circle" />
+                                         @isset(Auth::guard('admin')->user()->image)
+                                             <img src="{{ asset('sisarpas/assets/adminImage/' . Auth::guard('admin')->user()->image) }}"
+                                                 alt class="w-px-40 h-auto rounded-circle" width="512px" height="512px" />
+                                         @else
+                                             <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}"
+                                                 alt class="w-px-40 h-auto rounded-circle" />
+                                         @endisset
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">

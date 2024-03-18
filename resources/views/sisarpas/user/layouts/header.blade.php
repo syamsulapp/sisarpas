@@ -44,7 +44,7 @@
                                                  alt class="w-px-40 h-auto rounded-circle" />
                                          @else
                                              <img src="{{ asset('sisarpas/assets/userImage/' . Auth::guard('user')->user()->image) }}"
-                                                 alt class="w-px-40 h-auto rounded-circle" />
+                                                 alt class="w-px-40 h-auto rounded-circle" width="512px" height="512px" />
                                          @endempty
                                      </div>
                                  </div>
