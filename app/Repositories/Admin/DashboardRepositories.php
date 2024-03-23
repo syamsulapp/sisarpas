@@ -195,8 +195,10 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     protected function deleteImageFileExitsRepositories($data): void
     {
         if (isset($data->file)) {
-            $imagePath = "sisarpas/assets/landingFile/{$data->file}";
-            File::delete($imagePath);
+            $imageLanding = "sisarpas/assets/landingFile/{$data->file}";
+            File::delete($imageLanding);
+            $imageCrop = "sisarpas/assets/landingFileCrop/{$data->file}";
+            File::delete($imageCrop);
         }
 
         if (isset($data->gambar_barang)) {

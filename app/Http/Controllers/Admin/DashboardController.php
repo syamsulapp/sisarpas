@@ -314,17 +314,17 @@ class DashboardController extends DashboardRepositories
         return $this->checkIdByDeleteFooterRepositories($id);
     }
 
-    private function viewForListLandingHeader($landing)
+    private function viewForListLandingHeader($landing): View
     {
         return view('sisarpas.admin.dashboard.master-data.landing.header', compact('landing'));
     }
 
-    private function viewForListLandingVideo($landing_video)
+    private function viewForListLandingVideo($landing_video): View
     {
         return view('sisarpas.admin.dashboard.master-data.landing.video', compact('landing_video'));
     }
 
-    private function viewForListLandingFooter($landing_footer)
+    private function viewForListLandingFooter($landing_footer): View
     {
         return view('sisarpas.admin.dashboard.master-data.landing.footer', compact('landing_footer'));
     }
@@ -354,10 +354,13 @@ class DashboardController extends DashboardRepositories
         $file = $request->file('file');
         if (!strpos($file->getClientOriginalName(), 'mp4')) {
             $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-            $imageResize = $this->imageCrop->read($namaFile);
-            $imageResize->crop(2400, 1057);
             $destination_upload = "sisarpas/assets/landingFile";
-            $imageResize->save(public_path("{$destination_upload}/{$namaFile}"));
+            $file->move($destination_upload, $namaFile);
+
+            $imageResize = $this->imageCrop->read("sisarpas/assets/landingFile/{$namaFile}");
+            $imageResize->crop(2400, 1057);
+            $destination_upload_crop = "sisarpas/assets/landingFileCrop";
+            $imageResize->save(public_path("{$destination_upload_crop}/{$namaFile}"));
         } else {
             $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
             $destination_upload = "sisarpas/assets/landingFile";
