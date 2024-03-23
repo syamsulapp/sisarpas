@@ -18,6 +18,61 @@
             </div>
         @endsession
 
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        <span class="tf-icons bx bxs-video-plus me-1"></span>
+                        Video Landing Header Instruction
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <span class="tf-icons bx bxs-file-plus me-1"></span>
+                        <strong>Spesifikasi Video Yang Di Upload:.</strong>
+                        <ul>
+                            <li>Jenis Video Harus <strong>.mp4</strong></li>
+                            <li>kapasitas video yang di upload maksimal <strong>3MB</strong></li>
+                            <li> setelah diupload dan jika ingin ditampilkan harap mengatur status nya menjadi <strong>
+                                    unhide</strong></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                        <span class="tf-icons bx bxl-youtube me-1"></span>
+                        Video From Youtube Insturction Upload
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                    aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <span class="tf-icons bx bxs-file-plus me-1"></span>
+                        <strong>Spesifikasi Video Yang Di Upload:.</strong>
+                        <ul>
+                            <li>buka url/link youtube video</li>
+                            <li>klik tombol share</li>
+                            <li>copy link share</li>
+                            <li>paste di kolom input <strong>masukan embed youtube</strong> pada forms tambah data landing
+                                video </li>
+                            <li> setelah diupload dan jika ingin ditampilkan harap mengatur status nya menjadi
+                                <strong>unhide</strong></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
         <!-- DataTable with Buttons -->
         <div class="card">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -101,8 +156,8 @@
                                 <tbody>
                                     @if (strpos($l->file, 'embed'))
                                         <iframe width="100%" height="410px"
-                                            src="https://www.youtube.com{{ $l->file }}"
-                                            title="YouTube video player" frameborder="0"
+                                            src="https://www.youtube.com{{ $l->file }}" title="YouTube video player"
+                                            frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             allowfullscreen></iframe>
                                     @elseif(strpos($l->file, '.mp4'))
@@ -171,7 +226,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing Video</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <form action="{{ route('admin.dashboard_update_landing_video') }}" method="POST"
                             enctype="multipart/form-data">

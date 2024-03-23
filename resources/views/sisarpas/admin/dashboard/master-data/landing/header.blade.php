@@ -18,6 +18,34 @@
             </div>
         @endsession
 
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        <span class="tf-icons bx bxs-image-add me-1"></span>
+                        Image Landing Header Instruction
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <span class="tf-icons bx bxs-file-plus me-1"></span>
+                        <strong>Spesifikasi Gambar Landing Yang Di Upload:.</strong>
+                        <ul>
+                            <li>Jenis Gambar Harus jpg png jpeg</li>
+                            <li>kapasitas gambar yang di upload maksimal 3MB</li>
+                            <li> resolution gambar yang diupload minimal 2400x1057 atau di atasnya</li>
+                            <li> setelah diupload dan jika ingin ditampilkan harap mengatur status nya menjadi unhide</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
         <!-- DataTable with Buttons -->
         <div class="card">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -154,7 +182,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing Header</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <form action="{{ route('admin.dashboard_update_landing_header') }}" method="POST"
                             enctype="multipart/form-data">

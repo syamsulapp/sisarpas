@@ -72,7 +72,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'kategori_barang' => 'in:barang,ruangan',
                 'detail_barang' => 'required|string',
                 'spesifikasi_barang' => 'string',
-                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg',
+                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg|max:3048',
                 'status_barang' => 'required|in:ready,not-ready,maintenance',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/barang/update')) {
@@ -84,7 +84,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'kategori_barang' => 'in:barang,ruangan',
                 'detail_barang' => 'string',
                 'spesifikasi_barang' => 'string',
-                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
+                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg|max:3048',
                 'status_barang' => 'in:ready,not-ready,maintenance',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/ruangan/create')) {
@@ -96,7 +96,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'kategori_barang' => 'in:barang,ruangan',
                 'detail_barang' => 'required|string',
                 'spesifikasi_barang' => 'string',
-                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg',
+                'gambar_barang' => 'required|file|image|mimes:jpg,png,jpeg|max:3048',
                 'status_barang' => 'required|in:ready,not-ready,maintenance',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/ruangan/update')) {
@@ -108,7 +108,7 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'kategori_barang' => 'in:barang,ruangan',
                 'detail_barang' => 'string',
                 'spesifikasi_barang' => 'string',
-                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg',
+                'gambar_barang' => 'file|image|mimes:jpg,png,jpeg|max:3048',
                 'status_barang' => 'in:ready,not-ready,maintenance',
             ];
         } else if (request()->is('admin/dashboard/peminjaman/verifikasi')) {
@@ -120,14 +120,14 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'name' => 'required|string',
                 'email' => 'required|email|unique:admins,email',
                 'password' => 'required|string',
-                'image' => 'required|file|image|mimes:jpg,png,jpeg',
+                'image' => 'required|file|image|mimes:jpg,png,jpeg|max:3048',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/admin/update')) {
             return [
                 'id' => 'integer',
                 'name' => 'string',
                 'email' => 'email',
-                'image' => 'file|image|mimes:jpg,png,jpeg',
+                'image' => 'file|image|mimes:jpg,png,jpeg|max:3048',
             ];
         } else if (request()->is('admin/dashboard/master_data/inventori/penjadwalan/create')) {
             return [
