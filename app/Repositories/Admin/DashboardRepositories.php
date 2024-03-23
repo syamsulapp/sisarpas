@@ -188,6 +188,8 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             $imagePath = "sisarpas/assets/adminAkunImage/{$data->image}";
             return File::exists($imagePath) ? true : false;
         }
+
+        return false;
     }
 
     protected function deleteImageFileExitsRepositories($data): void

@@ -353,17 +353,18 @@ class DashboardController extends DashboardRepositories
     {
         $file = $request->file('file');
         if (!strpos($file, '.mp4')) {
-            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-            $imageResize = $this->imageCrop->read($namaFile);
-            $imageResize->crop(2400, 1057);
-            $destination_upload = "sisarpas/assets/landingFile";
-            $imageResize->save(public_path("{$destination_upload}/{$namaFile}"));
-            return $namaFile;
+            // $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+            // $imageResize = $this->imageCrop->read($namaFile);
+            // $imageResize->crop(2400, 1057);
+            // $destination_upload = "sisarpas/assets/landingFile";
+            // $imageResize->save(public_path("{$destination_upload}/{$namaFile}"));
+            // return $namaFile;
         } else {
-            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-            $destination_upload = "sisarpas/assets/landingFile";
-            $file->move($destination_upload, $namaFile);
-            return $namaFile;
+            // $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+            // $destination_upload = "sisarpas/assets/landingFile";
+            // $file->move($destination_upload, $namaFile);
+            // return $namaFile;
+            dd('halo');
         }
     }
 
