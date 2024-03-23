@@ -172,7 +172,8 @@
                         @elseif(strpos($lv->file, 'embed'))
                             <div class="col-lg-8 col-md-9 d-flex align-items-stretch" data-aos="fade-up"
                                 data-aos-delay="100">
-                                <iframe width="100%" height="410px" src="{{ $lv->file }}"
+                                <iframe width="100%" height="410px"
+                                    src="https://www.youtube.com{{ $lv->file }}?autoplay=1"
                                     title="YouTube video player" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen></iframe>

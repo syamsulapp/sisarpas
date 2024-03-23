@@ -100,7 +100,8 @@
                             <table class="table">
                                 <tbody>
                                     @if (strpos($l->file, 'embed'))
-                                        <iframe width="100%" height="410px" src="{{ $l->file }}"
+                                        <iframe width="100%" height="410px"
+                                            src="https://www.youtube.com{{ $l->file }}"
                                             title="YouTube video player" frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             allowfullscreen></iframe>
@@ -181,7 +182,8 @@
                                     <tbody>
                                         <input type="number" name="id" value="{{ $l->id }}" hidden>
                                         @if (strpos($l->file, 'embed'))
-                                            <iframe width="100%" height="410px" src="{{ $l->file }}"
+                                            <iframe width="100%" height="410px"
+                                                src="https://www.youtube.com{{ $l->file }}"
                                                 title="YouTube video player" frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                 allowfullscreen></iframe>

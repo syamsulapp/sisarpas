@@ -375,7 +375,10 @@ class DashboardController extends DashboardRepositories
         if (empty($req['embed_yt'])) {
             $req['file'] = $this->fileRequestImg($request);
         } else {
-            $req['file'] = $req['embed_yt'];
+            //https://youtu.be/r9k74AGYZoU?si=yfLb4EmXvAhGlBqU
+            $req['embed_yt'] = trim($req['embed_yt'], 'https://youtu.be/');
+            $req['embed_yt'] = strtok($req['embed_yt'], '?');
+            $req['file'] = "/embed/{$req['embed_yt']}";
         }
         return $req;
     }
