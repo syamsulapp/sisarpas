@@ -64,7 +64,8 @@
                             <li>paste di kolom input <strong>masukan embed youtube</strong> pada forms tambah data landing
                                 video </li>
                             <li> setelah diupload dan jika ingin ditampilkan harap mengatur status nya menjadi
-                                <strong>unhide</strong></li>
+                                <strong>unhide</strong>
+                            </li>
 
                         </ul>
                     </div>
@@ -273,8 +274,7 @@
                                                 <input type="text" id="selectImage"
                                                     class="form-control @error('embed_yt') is-invalid @enderror"
                                                     placeholder="Masukan youtube embed" name="embed_yt"
-                                                    aria-describedby="defaultFormControlHelp"
-                                                    value="{{ strpos($l->file, 'embed') ? $l->file : '' }}" />
+                                                    aria-describedby="defaultFormControlHelp" />
                                                 @error('embed_yt')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

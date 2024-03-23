@@ -199,7 +199,7 @@ class DashboardController extends DashboardRepositories
                 return $this->redirectError('admin.dashboard_landing_video', 'Maaf ID Tidak Di temukan');
             }
 
-            if (!isset($this->landingRequest($request)['file']) || !isset($this->landingRequest($request)['embed_yt'])) {
+            if (!isset($this->landingRequest($request)['file']) && !isset($this->landingRequest($request)['embed_yt'])) {
                 $this->updateLandingRepositories(Landing::where('id', $request->id)->first(), $this->submitLandingRequestUpdateNoFile($request));
             }
 
