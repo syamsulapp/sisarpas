@@ -13,6 +13,7 @@ use App\Models\Footer;
 use App\Models\ScheduleRoom;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\File;
 
 class DashboardRepositories extends FormRequest implements DashboardInterface
 {
@@ -169,6 +170,42 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     protected function checkIdByUpdateFooterRepositories($request): bool
     {
         return Footer::where('id', $request['id'])->first() ? true : false;
+    }
+
+    protected function imageFileExitsRepositories($data): bool
+    {
+        if (isset($data->file)) {
+            $imagePath = "sisarpas/assets/landingFile/{$data->file}";
+            return File::exists($imagePath) ? true : false;
+        }
+
+        if (isset($data->gambar_barang)) {
+            $imagePath = "sisarpas/assets/inventoriFile/{$data->gambar_barang}";
+            return File::exists($imagePath) ? true : false;
+        }
+
+        if (isset($data->image)) {
+            $imagePath = "sisarpas/assets/adminAkunImage/{$data->image}";
+            return File::exists($imagePath) ? true : false;
+        }
+    }
+
+    protected function deleteImageFileExitsRepositories($data): void
+    {
+        if (isset($data->file)) {
+            $imagePath = "sisarpas/assets/landingFile/{$data->file}";
+            File::delete($imagePath);
+        }
+
+        if (isset($data->gambar_barang)) {
+            $imagePath = "sisarpas/assets/inventoriFile/{$data->gambar_barang}";
+            File::delete($imagePath);
+        }
+
+        if (isset($data->image)) {
+            $imagePath = "sisarpas/assets/adminAkunImage/{$data->image}";
+            File::delete($imagePath);
+        }
     }
 
     protected function checkIdByDeleteFooterRepositories($id): bool

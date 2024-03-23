@@ -89,7 +89,7 @@
                                 <tbody>
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>Photo Profile:</td>
-                                        <td><img src="{{ asset('/sisarpas/assets/adminImage/' . $u->image) }}"
+                                        <td><img src="{{ asset('/sisarpas/assets/adminAkunImage/' . $u->image) }}"
                                                 width="20%"></td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
@@ -158,7 +158,7 @@
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Preview Image:</td>
                                             <td><img id="preview"
-                                                    src="{{ asset('/sisarpas/assets/adminImage/' . $u->image) }}"
+                                                    src="{{ asset('/sisarpas/assets/adminAkunImage/' . $u->image) }}"
                                                     width="20%" />
                                             </td>
                                         </tr>

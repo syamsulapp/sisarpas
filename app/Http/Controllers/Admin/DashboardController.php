@@ -22,19 +22,22 @@ use App\Repositories\Admin\DashboardRepositories;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class DashboardController extends DashboardRepositories
 {
-    protected $admin, $successLog, $errorlog;
+    protected $admin, $successLog, $errorlog, $imageCrop;
     public function __construct(Admin $admin, Successlog $successLog, Errorlog $errorlog)
     {
         $this->admin = $admin;
         $this->successLog = $successLog;
         $this->errorlog = $errorlog;
+        $this->imageCrop = new ImageManager(new Driver);
     }
 
     /**
-     * begin::logging and redirect response
+     * begin:: handler logging and redirect response and others
      */
     private function logSuccess($getLogSuccess)
     {
@@ -73,8 +76,18 @@ class DashboardController extends DashboardRepositories
         return Redirect::route($route);
     }
 
+    private function imageFileExits($data): bool
+    {
+        return $this->imageFileExitsRepositories($data);
+    }
+
+    private function deleteImageFileExits($data): void
+    {
+        $this->deleteImageFileExitsRepositories($data);
+    }
+
     /**
-     * end::logging and redirect response
+     * end::handler logging and redirect response and others
      */
 
 
@@ -224,9 +237,15 @@ class DashboardController extends DashboardRepositories
     public function doDeleteLandingHeader(Landing $id): RedirectResponse
     {
         try {
+
             if (!$this->checkIdByDeleteLanding($id)) {
                 $this->redirectError('admin.dashboard_landing', 'Maaf ID tidak di temukan');
             }
+
+            if ($this->imageFileExits($id)) {
+                $this->deleteImageFileExits($id);
+            }
+
             $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing header'));
             $this->deleteLandingRepositories(Landing::where('id', $id->id)->first());
             return $this->redirectSuccess('admin.dashboard_landing_header', 'Berhasil Delete Landing header');
@@ -239,9 +258,15 @@ class DashboardController extends DashboardRepositories
     public function doDeleteLandingVideo(Landing $id): RedirectResponse
     {
         try {
+
             if (!$this->checkIdByDeleteLanding($id)) {
                 $this->redirectError('admin.dashboard_landing_video', 'Maaf ID tidak di temukan');
             }
+
+            if ($this->imageFileExits($id)) {
+                $this->deleteImageFileExits($id);
+            }
+
             $this->logSuccess($this->dataLogSuccessByID(Landing::where('id', $id->id)->first(), 'telah menghapus landing video'));
             $this->deleteLandingRepositories(Landing::where('id', $id->id)->first());
             return $this->redirectSuccess('admin.dashboard_landing_video', 'Berhasil Delete Landing video');
@@ -327,10 +352,19 @@ class DashboardController extends DashboardRepositories
     private function fileRequestImg($request)
     {
         $file = $request->file('file');
-        $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
-        $destination_upload = "sisarpas/assets/landingFile";
-        $file->move($destination_upload, $namaFile);
-        return $namaFile;
+        if (!strpos($file, '.mp4')) {
+            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+            $imageResize = $this->imageCrop->read($namaFile);
+            $imageResize->crop(2400, 1057);
+            $destination_upload = "sisarpas/assets/landingFile";
+            $imageResize->save(public_path("{$destination_upload}/{$namaFile}"));
+            return $namaFile;
+        } else {
+            $namaFile = date('Y-m-d H:i:s') . "_" . $file->getClientOriginalName();
+            $destination_upload = "sisarpas/assets/landingFile";
+            $file->move($destination_upload, $namaFile);
+            return $namaFile;
+        }
     }
 
     private function submitRequest($request)
@@ -488,6 +522,7 @@ class DashboardController extends DashboardRepositories
     public function doDeleteBarang(Barang $id)
     {
         try {
+
             if (!$this->checkIdDeleteBarang($id->id)) {
                 return $this->redirectError('admin.dashboard_inventori_barang', 'Id barang salah');
             }
@@ -495,6 +530,11 @@ class DashboardController extends DashboardRepositories
             if ($this->checkIdDeleteBarang($id->id)) {
                 $this->logSuccess($this->dataLogSuccessByID(Barang::where('id', $id->id)->first(), 'Berhasil Menghapus Barang Inventori'));
                 $this->deleteBarangRepositories($id->id);
+
+                if ($this->imageFileExits($id)) {
+                    $this->deleteImageFileExits($id);
+                }
+
                 return $this->redirectSuccess('admin.dashboard_inventori_barang', 'Berhasil Menghapus Barang Inventori');
             }
         } catch (\Exception $errors) {
@@ -629,6 +669,7 @@ class DashboardController extends DashboardRepositories
     public function doDeleteRuangan(Ruangan $id)
     {
         try {
+
             if (!$this->checkIdDeleteRuangan($id->id)) {
                 return $this->redirectError('admin.dashboard_inventori_ruangan', 'Id ruangan salah');
             }
@@ -636,6 +677,11 @@ class DashboardController extends DashboardRepositories
             if ($this->checkIdDeleteRuangan($id->id)) {
                 $this->logSuccess($this->dataLogSuccessByID(Ruangan::where('id', $id->id)->first(), 'Berhasil Menghapus Ruangan Inventori'));
                 $this->deleteRuanganRepositories($id->id);
+
+                if ($this->imageFileExits($id)) {
+                    $this->deleteImageFileExits($id);
+                }
+
                 return $this->redirectSuccess('admin.dashboard_inventori_ruangan', 'Berhasil Menghapus Ruangan Inventori');
             }
         } catch (\Exception $errors) {
@@ -794,7 +840,7 @@ class DashboardController extends DashboardRepositories
 
 
     /**
-     * begin::user inventori(master data admin)
+     * begin::admin inventori(master data admin)
      */
 
     public function admininventori()
@@ -877,7 +923,12 @@ class DashboardController extends DashboardRepositories
 
             if ($this->checkIdDeleteAdmin($id->id)) {
                 $this->logSuccess($this->dataLogSuccessByID(Admin::where('id', $id->id)->first(), 'Berhasil Menghapus admin Inventori'));
-                $this->deleteUserRepositories($id->id);
+                $this->deleteAdminRepositories($id->id);
+
+                if ($this->imageFileExits($id)) {
+                    $this->deleteImageFileExits($id);
+                }
+
                 return $this->redirectSuccess('admin.dashboard_inventori_admin', 'Berhasil Menghapus admin Inventori');
             }
         } catch (\Exception $errors) {
@@ -910,7 +961,7 @@ class DashboardController extends DashboardRepositories
     {
         $image = $request->file('image');
         $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
-        $destination_upload = "sisarpas/assets/adminImage";
+        $destination_upload = "sisarpas/assets/adminAkunImage";
         $image->move($destination_upload, $namaFile);
         return $namaFile;
     }
@@ -958,7 +1009,7 @@ class DashboardController extends DashboardRepositories
         return $req;
     }
     /**
-     * end::user inventori(master data admin)
+     * end::admin inventori(master data admin)
      */
 
     /**
