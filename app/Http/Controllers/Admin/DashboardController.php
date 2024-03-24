@@ -184,10 +184,10 @@ class DashboardController extends DashboardRepositories
         try {
             $this->createInformasiPentingRepositories($this->submitRequestInformasiPenting($request));
             $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing informasi penting'));
-            return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Menambahkan Landing informasi penting');
+            return $this->redirectSuccess('admin.dashboard_landing_informasi_penting', 'Berhasil Menambahkan Landing informasi penting');
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
-            return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada create landing informasi penting');
+            return $this->redirectError('admin.dashboard_landing_informasi_penting', 'Maaf ada kesalahan sistem pada create landing informasi penting');
         }
     }
 
@@ -345,6 +345,11 @@ class DashboardController extends DashboardRepositories
             if ($this->checkIdByDeleteInformasiPenting($id->id)) {
                 $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing informasi penting'));
                 $this->deleteInformasiPentingRepositories(Footer::where('id', $id->id)->first()->id);
+
+                if ($this->imageFileExits($id)) {
+                    $this->deleteImageFileExits($id);
+                }
+
                 return $this->redirectSuccess('admin.dashboard_landing_informasi_penting', 'Berhasil Delete Landing informasi penting');
             }
         } catch (\Exception $errors) {
@@ -413,7 +418,7 @@ class DashboardController extends DashboardRepositories
         return $this->getListLandingInformasiPentingRepositories();
     }
 
-    private function landingRequest($request)
+    private function landingRequest($request): array
     {
         return $request->only('file', 'type', 'status', 'embed_yt');
     }
@@ -438,7 +443,7 @@ class DashboardController extends DashboardRepositories
         return $namaFile;
     }
 
-    private function submitRequest($request)
+    private function submitRequest($request): array
     {
         $req = $this->landingRequest($request);
         if (empty($req['embed_yt'])) {
@@ -452,17 +457,38 @@ class DashboardController extends DashboardRepositories
         return $req;
     }
 
-    private function submitRequestFooter($request)
+    private function submitRequestFooter($request): array
     {
         return $request->only('alamat_gedung', 'nomor_telpon', 'email', 'nama_gedung', 'facebook', 'instagram', 'youtube', 'status');
     }
 
-    private function submitLandingRequestUpdateFooter($request)
+    private function fileImageRequestInformasiPenting($request)
+    {
+        $image = $request->file('gambar_informasi');
+        $namaFile = date('Y-m-d H:i:s') . "_" . $image->getClientOriginalName();
+        $destination_upload = "sisarpas/assets/landingFile";
+        $image->move($destination_upload, $namaFile);
+        return $namaFile;
+    }
+
+    private function RequestInformasiPenting($request): array
+    {
+        return $request->only('judul_informasi', 'isi_informasi', 'gambar_informasi');
+    }
+
+    private function submitRequestInformasiPenting($request): array
+    {
+        $req = $this->RequestInformasiPenting($request);
+        $req['gambar_informasi'] = $this->fileImageRequestInformasiPenting($request);
+        return $req;
+    }
+
+    private function submitLandingRequestUpdateFooter($request): array
     {
         return $request->only('id', 'alamat_gedung', 'nomor_telpon', 'email', 'nama_gedung', 'facebook', 'instagram', 'youtube', 'status');
     }
 
-    private function submitLandingRequestUpdateNoFile($request)
+    private function submitLandingRequestUpdateNoFile($request): array
     {
         return $request->only('type', 'status');
     }

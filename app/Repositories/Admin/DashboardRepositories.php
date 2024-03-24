@@ -48,6 +48,18 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return [
                 'status' => 'required|in:hide,unhide',
             ];
+        } else if (request()->is('admin/dashboard/master_data/landing/informasi_penting/create')) {
+            return [
+                'judul_informasi' => 'required|string',
+                'isi_informasi' => 'required|',
+                'gambar_informasi' => 'required|file|image|mimes:jpg,png,jpeg|max:3048',
+            ];
+        } elseif (request()->is('admin/dashboard/master_data/landing/informasi_penting/update')) {
+            return [
+                'judul_informasi' => 'string',
+                'isi_informasi' => '',
+                'gambar_informasi' => 'file|image|mimes:jpg,png,jpeg|max:3048',
+            ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
             return [
                 'alamat_gedung' => 'string',
@@ -245,6 +257,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function createFooterRepositories($request): void
     {
         Footer::create($request);
+    }
+
+    public function createInformasiPentingRepositories($request): void
+    {
+        Informasi_penting::create($request);
     }
 
     public function updateFooterRepositories($request): void

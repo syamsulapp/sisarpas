@@ -11,6 +11,7 @@ interface DashboardInterface
     public function createFooterRepositories($request): void;
     public function updateFooterRepositories($request): void;
     public function deleteFooterRepositories($id): void;
+    public function createInformasiPentingRepositories($request): void;
     //contacts
     public function updateContactsRepositories($model, $request): void;
     public function deleteContactsRepositories($model): void;

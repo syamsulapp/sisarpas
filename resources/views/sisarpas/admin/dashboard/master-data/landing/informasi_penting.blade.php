@@ -139,13 +139,13 @@
             <!-- modal edit -->
             <div class="modal fade" id="modalEditLandingIsiInformasi--{{ $l->id }}" tabindex="-1"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalToggleLabel2">Edit Data Landing Isi Informasi</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{ route('admin.dashboard_update_landing_footer') }}" method="POST"
+                        <form action="{{ route('admin.dashboard_update_landing_informasi_penting') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
@@ -158,7 +158,7 @@
                                             <td>
                                                 <input type="text" id="judul_informasi"
                                                     class="form-control @error('judul_informasi') is-invalid @enderror"
-                                                    name="judul_informasi" placeholder="Masukan Alamat Gedung"
+                                                    name="judul_informasi" placeholder="Masukan Alamat Judul Informasi"
                                                     value="{{ $l->judul_informasi }}" />
                                                 @error('judul_informasi')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -168,7 +168,7 @@
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Informasi:</td>
                                             <td>
-                                                <input type="email" id="isi_informasi"
+                                                <input type="email" id="tiny"
                                                     class="form-control @error('isi_informasi') is-invalid @enderror"
                                                     name="isi_informasi" placeholder="Masukan Isi Informasi"
                                                     value="{{ $l->isi_informasi }}" />
@@ -199,13 +199,13 @@
 
         <!-- modal create -->
         <div class="modal fade" id="createDataLandingInformasiPenting" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalToggleLabel2">Create Data Landing Informasi Penting</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('admin.dashboard_create_landing_footer') }}" method="POST"
+                    <form action="{{ route('admin.dashboard_create_landing_informasi_penting') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body table-responsive">
@@ -216,7 +216,8 @@
                                         <td>
                                             <input type="text" id="judul_informasi"
                                                 class="form-control @error('judul_informasi') is-invalid @enderror"
-                                                name="judul_informasi" placeholder="Masukan Alamat Gedung" />
+                                                name="judul_informasi" placeholder="Masukan Judul Informasi Kegiatan"
+                                                value="{{ old('judul_informasi') }}" />
                                             @error('judul_informasi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -231,8 +232,21 @@
                                             @error('isi_informasi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror --}}
-                                            <textarea id="isi_informasi" class="form-control @error('isi_informasi') is-invalid @enderror">{{ old('isi_informasi') }}</textarea>
-                                             @error('isi_informasi')
+                                            <textarea id="informasiPentingText" name="isi_informasi"
+                                                class="form-control @error('isi_informasi') is-invalid @enderror">{{ old('isi_informasi') }}</textarea>
+                                            @error('isi_informasi')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="9">
+                                        <td>Image:</td>
+                                        <td>
+                                            <input type="file" id="selectImage"
+                                                class="form-control @error('gambar_informasi') is-invalid @enderror"
+                                                placeholder="Please Drop image informasi" name="gambar_informasi"
+                                                aria-describedby="defaultFormControlHelp" />
+                                            @error('gambar_informasi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
@@ -261,7 +275,7 @@
     <script src="{{ asset('sisarpas/assets/js/wysiwyg.js') }}"></script>
     <script>
         tinymce.init({
-            selector: "textarea#isi_informasi",
+            selector: "textarea#informasiPentingText",
             plugins: [
                 "a11ychecker",
                 "advlist",
