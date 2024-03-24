@@ -187,6 +187,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Footer::where('id', $request['id'])->first() ? true : false;
     }
 
+    protected function checkIdByUpdateInformasiPentingRepositoreis($request): bool
+    {
+        return Informasi_penting::where('id', $request['id'])->first() ? true : false;
+    }
+
     protected function imageFileExitsRepositories($data): bool
     {
         if (isset($data->file)) {
@@ -232,6 +237,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         return Footer::where('id', $id)->first() ? true : false;
     }
 
+    protected function checkIdByDeleteInformasiPentingRepositories($id): bool
+    {
+        return Informasi_penting::where('id', $id)->first() ? true : false;
+    }
+
     protected function getListLandingHeaderRepositories()
     {
         return Landing::where('type', 'image')->orderBy('id', 'desc')->get();
@@ -269,6 +279,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function updateFooterRepositories($request): void
     {
         Footer::where('id', $request['id'])->update($request);
+    }
+
+    public function updateInformasiPentingRepositories($request): void
+    {
+        Informasi_penting::where('id', $request['id'])->update($request);
     }
 
     public function updateLandingRepositories($model, $request): void

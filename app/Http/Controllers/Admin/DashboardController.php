@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Landing;
 use App\Models\Errorlog;
 use App\Models\Footer;
+use App\Models\Informasi_penting;
 use App\Models\ScheduleRoom;
 use App\Models\Successlog;
 use App\Models\User;
@@ -264,10 +265,10 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdByUpdateInformasiPenting($request)) {
-                $this->updateInformasiPentingRepositories($this->submitLandingRequestUpdateInformasiPenting($request));
+                $this->updateInformasiPentingRepositories($this->submitRequestInformasiPentingUpdate($request));
             }
 
-            $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $request->id)->first(), 'telah mengubah landing informasi penting'));
+            $this->logSuccess($this->dataLogSuccessByID(Informasi_penting::where('id', $request->id)->first(), 'telah mengubah landing informasi penting'));
             return $this->redirectSuccess('admin.dashboard_landing_informasi_penting', 'Berhasil Mengubah Landing informasi penting');
         } catch (\Exception $errros) {
             $this->logError($this->dataLogError($errros->getMessage()));
@@ -335,7 +336,7 @@ class DashboardController extends DashboardRepositories
         }
     }
 
-    public function doDeleteLandingInformasiPenting(Footer $id): RedirectResponse
+    public function doDeleteLandingInformasiPenting(Informasi_penting $id): RedirectResponse
     {
         try {
             if (!$this->checkIdByDeleteInformasiPenting($id->id)) {
@@ -343,8 +344,8 @@ class DashboardController extends DashboardRepositories
             }
 
             if ($this->checkIdByDeleteInformasiPenting($id->id)) {
-                $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing informasi penting'));
-                $this->deleteInformasiPentingRepositories(Footer::where('id', $id->id)->first()->id);
+                $this->logSuccess($this->dataLogSuccessByID(Informasi_penting::where('id', $id->id)->first(), 'telah menghapus landing informasi penting'));
+                $this->deleteInformasiPentingRepositories(Informasi_penting::where('id', $id->id)->first()->id);
 
                 if ($this->imageFileExits($id)) {
                     $this->deleteImageFileExits($id);
@@ -376,6 +377,16 @@ class DashboardController extends DashboardRepositories
     private function checkIdByDeleteFooter($id): bool
     {
         return $this->checkIdByDeleteFooterRepositories($id);
+    }
+
+    private function checkIdByUpdateInformasiPenting($request): bool
+    {
+        return $this->checkIdByUpdateInformasiPentingRepositoreis($request);
+    }
+
+    private function checkIdByDeleteInformasiPenting($id): bool
+    {
+        return $this->checkIdByDeleteInformasiPentingRepositories($id);
     }
 
     private function viewForListLandingHeader($landing): View
@@ -471,15 +482,41 @@ class DashboardController extends DashboardRepositories
         return $namaFile;
     }
 
-    private function RequestInformasiPenting($request): array
+    private function requestInformasiPenting($request): array
     {
         return $request->only('judul_informasi', 'isi_informasi', 'gambar_informasi', 'status');
     }
 
+    private function requestInformasiPentingUpdate($request): array
+    {
+        return $request->only('id', 'judul_informasi', 'isi_informasi', 'gambar_informasi', 'status');
+    }
+
+    private function requestInformasiPentingUpdateNoImg($request): array
+    {
+        return $request->only('id', 'judul_informasi', 'isi_informasi', 'status');
+    }
+
+    private function checkGambarInformasiPenting($request): bool
+    {
+        return empty($request['gambar_informasi']) ? true : false;
+    }
+
     private function submitRequestInformasiPenting($request): array
     {
-        $req = $this->RequestInformasiPenting($request);
+        $req = $this->requestInformasiPenting($request);
         $req['gambar_informasi'] = $this->fileImageRequestInformasiPenting($request);
+        return $req;
+    }
+    private function submitRequestInformasiPentingUpdate($request): array
+    {
+        if (!$this->checkGambarInformasiPenting($request)) {
+            $req = $this->requestInformasiPentingUpdate($request);
+            $req['gambar_informasi'] = $this->fileImageRequestInformasiPenting($request);
+        } else {
+            $req = $this->requestInformasiPentingUpdateNoImg($request);
+        }
+
         return $req;
     }
 
