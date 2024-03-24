@@ -33,7 +33,8 @@
         <li
             class="menu-item {{ request()->is('admin/dashboard/master_data/landing/header') ||
             request()->is('admin/dashboard/master_data/landing/video') ||
-            request()->is('admin/dashboard/master_data/landing/footer')
+            request()->is('admin/dashboard/master_data/landing/footer') ||
+            request()->is('admin/dashboard/master_data/landing/informasi_penting')
                 ? 'active open'
                 : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -56,7 +57,8 @@
                         <div data-i18n="Pricing">Footer</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/informasi_penting') ? 'active' : '' }}">
+                <li
+                    class="menu-item {{ request()->is('admin/dashboard/master_data/landing/informasi_penting') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard_landing_informasi_penting') }}" class="menu-link">
                         <div data-i18n="Pricing">Informasi Penting</div>
                     </a>
