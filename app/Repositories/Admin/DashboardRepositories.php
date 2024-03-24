@@ -209,6 +209,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
             return File::exists($imagePath) ? true : false;
         }
 
+        if (isset($data->gambar_informasi)) {
+            $imagePath = "sisarpas/assets/landingFile/{$data->gambar_informasi}";
+            return File::exists($imagePath) ? true : false;
+        }
+
         return false;
     }
 
@@ -229,6 +234,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
         if (isset($data->image)) {
             $imagePath = "sisarpas/assets/adminAkunImage/{$data->image}";
             File::delete($imagePath);
+        }
+
+        if (isset($data->gambar_informasi)) {
+            $imageLanding = "sisarpas/assets/landingFile/{$data->gambar_informasi}";
+            File::delete($imageLanding);
         }
     }
 
@@ -284,6 +294,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     public function updateInformasiPentingRepositories($request): void
     {
         Informasi_penting::where('id', $request['id'])->update($request);
+    }
+
+    public function deleteInformasiPentingRepositories($id): void
+    {
+        Informasi_penting::where('id', $id)->delete();
     }
 
     public function updateLandingRepositories($model, $request): void

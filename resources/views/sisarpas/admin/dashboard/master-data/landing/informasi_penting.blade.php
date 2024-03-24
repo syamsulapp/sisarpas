@@ -115,7 +115,7 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form action="{{ route('admin.dashboard_delete_landing_footer', $l->id) }}"
+                                            <form action="{{ route('admin.dashboard_delete_landing_informasi_penting', $l->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
