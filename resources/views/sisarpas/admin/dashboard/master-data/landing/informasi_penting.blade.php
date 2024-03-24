@@ -91,8 +91,8 @@
                                         <td>{{ $l->judul_informasi }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
-                                        <td>Isi:</td>
-                                        <td>{{ $l->isi_informasi }}</td>
+                                        <td>Isi Informasi:</td>
+                                        <td>{!! $l->isi_informasi !!}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="4">
                                         <td>Status:</td>
@@ -168,11 +168,21 @@
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Informasi:</td>
                                             <td>
-                                                <input type="email" id="tiny"
-                                                    class="form-control @error('isi_informasi') is-invalid @enderror"
-                                                    name="isi_informasi" placeholder="Masukan Isi Informasi"
-                                                    value="{{ $l->isi_informasi }}" />
+                                                <textarea id="informasiPentingText" name="isi_informasi"
+                                                    class="form-control @error('isi_informasi') is-invalid @enderror">{{ $l->isi_informasi }}</textarea>
                                                 @error('isi_informasi')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="9">
+                                            <td>Image:</td>
+                                            <td>
+                                                <input type="file" id="selectImage"
+                                                    class="form-control @error('gambar_informasi') is-invalid @enderror"
+                                                    placeholder="Please Drop image informasi" name="gambar_informasi"
+                                                    aria-describedby="defaultFormControlHelp" />
+                                                @error('gambar_informasi')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
@@ -226,12 +236,6 @@
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>Informasi:</td>
                                         <td>
-                                            {{-- <input type="email" id="isi_informasi"
-                                                class="form-control @error('isi_informasi') is-invalid @enderror"
-                                                name="isi_informasi" placeholder="Masukan Isi Informasi" />
-                                            @error('isi_informasi')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror --}}
                                             <textarea id="informasiPentingText" name="isi_informasi"
                                                 class="form-control @error('isi_informasi') is-invalid @enderror">{{ old('isi_informasi') }}</textarea>
                                             @error('isi_informasi')
