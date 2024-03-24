@@ -56,6 +56,11 @@
                         <div data-i18n="Pricing">Footer</div>
                     </a>
                 </li>
+                <li class="menu-item {{ request()->is('admin/dashboard/master_data/landing/informasi_penting') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard_landing_informasi_penting') }}" class="menu-link">
+                        <div data-i18n="Pricing">Informasi Penting</div>
+                    </a>
+                </li>
             </ul>
         </li>
 

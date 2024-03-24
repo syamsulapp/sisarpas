@@ -113,6 +113,12 @@ Route::prefix('admin')->group(function () {
                         Route::put('update', [AdminDashboardController::class, 'doUpdateLandingFooter'])->name('admin.dashboard_update_landing_footer');
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingFooter'])->name('admin.dashboard_delete_landing_footer');
                     });
+                    Route::prefix('informasi_penting')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingInformasiPenting'])->name('admin.dashboard_landing_informasi_penting');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingInformasiPenting'])->name('admin.dashboard_create_landing_informasi_penting');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingInformasiPenting'])->name('admin.dashboard_update_landing_informasi_penting');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingInformasiPenting'])->name('admin.dashboard_delete_landing_informasi_penting');
+                    });
                 });
                 Route::prefix('contacts')->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');

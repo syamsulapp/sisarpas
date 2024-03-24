@@ -10,6 +10,7 @@ use App\Models\Barang as Ruangan;
 use App\Interface\Admin\DashboardInterface;
 use App\Models\Admin;
 use App\Models\Footer;
+use App\Models\Informasi_penting;
 use App\Models\ScheduleRoom;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -229,6 +230,11 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     protected function getListLandingFooterRepositories()
     {
         return Footer::orderByDesc('id')->get();
+    }
+
+    protected function getListLandingInformasiPentingRepositories()
+    {
+        return Informasi_penting::orderByDesc('id')->get();
     }
 
     public function createLandingRepositories($request): void

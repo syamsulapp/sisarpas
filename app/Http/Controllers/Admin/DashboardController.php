@@ -133,6 +133,16 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function landingInformasiPenting(): View
+    {
+        try {
+            return $this->viewForListLandingInformasiPenting($this->getListLandingInformasiPenting());
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_informasi_penting', 'Mohon maaf ada kesalahan dibagian list landing informasi penting');
+        }
+    }
+
     public function doCreateLandingHeader(Request $request): RedirectResponse
     {
         try {
@@ -166,6 +176,18 @@ class DashboardController extends DashboardRepositories
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada create landing footer');
+        }
+    }
+
+    public function doCreateLandingInformasiPenting(Request $request): RedirectResponse
+    {
+        try {
+            $this->createInformasiPentingRepositories($this->submitRequestInformasiPenting($request));
+            $this->logSuccess($this->dataLogSuccess('telah menambahkan konten landing informasi penting'));
+            return $this->redirectSuccess('admin.dashboard_landing_footer', 'Berhasil Menambahkan Landing informasi penting');
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_footer', 'Maaf ada kesalahan sistem pada create landing informasi penting');
         }
     }
 
@@ -234,6 +256,25 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doUpdateLandingInformasiPenting(Request $request): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByUpdateInformasiPenting($request)) {
+                return $this->redirectError('admin.dashboard_landing_informasi_penting', 'Maaf ID Tidak Di temukan');
+            }
+
+            if ($this->checkIdByUpdateInformasiPenting($request)) {
+                $this->updateInformasiPentingRepositories($this->submitLandingRequestUpdateInformasiPenting($request));
+            }
+
+            $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $request->id)->first(), 'telah mengubah landing informasi penting'));
+            return $this->redirectSuccess('admin.dashboard_landing_informasi_penting', 'Berhasil Mengubah Landing informasi penting');
+        } catch (\Exception $errros) {
+            $this->logError($this->dataLogError($errros->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_informasi_penting', 'Maaf ada kesalahan sistem pada update landing informasi penting');
+        }
+    }
+
     public function doDeleteLandingHeader(Landing $id): RedirectResponse
     {
         try {
@@ -294,6 +335,24 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doDeleteLandingInformasiPenting(Footer $id): RedirectResponse
+    {
+        try {
+            if (!$this->checkIdByDeleteInformasiPenting($id->id)) {
+                $this->redirectError('admin.dashboard_landing_informasi_penting', 'Maaf ID tidak di temukan');
+            }
+
+            if ($this->checkIdByDeleteInformasiPenting($id->id)) {
+                $this->logSuccess($this->dataLogSuccessByID(Footer::where('id', $id->id)->first(), 'telah menghapus landing informasi penting'));
+                $this->deleteInformasiPentingRepositories(Footer::where('id', $id->id)->first()->id);
+                return $this->redirectSuccess('admin.dashboard_landing_informasi_penting', 'Berhasil Delete Landing informasi penting');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            return $this->redirectError('admin.dashboard_landing_informasi_penting', 'Maaf ada kesalahan sistem pada delete landing informasi penting');
+        }
+    }
+
     private function checkIdByUpdateLanding($request): bool
     {
         return $this->checkIdByUpdateLandingRepositories($request);
@@ -329,6 +388,11 @@ class DashboardController extends DashboardRepositories
         return view('sisarpas.admin.dashboard.master-data.landing.footer', compact('landing_footer'));
     }
 
+    private function viewForListLandingInformasiPenting($informasi_penting): View
+    {
+        return view('sisarpas.admin.dashboard.master-data.landing.informasi_penting', compact('informasi_penting'));
+    }
+
     private function getListLandingHeader()
     {
         return $this->getListLandingHeaderRepositories();
@@ -342,6 +406,11 @@ class DashboardController extends DashboardRepositories
     private function getListLandingFooter()
     {
         return $this->getListLandingFooterRepositories();
+    }
+
+    private function getListLandingInformasiPenting()
+    {
+        return $this->getListLandingInformasiPentingRepositories();
     }
 
     private function landingRequest($request)
