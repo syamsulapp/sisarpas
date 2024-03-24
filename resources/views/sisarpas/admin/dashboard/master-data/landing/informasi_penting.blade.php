@@ -86,6 +86,13 @@
                         <div class="modal-body">
                             <table class="table">
                                 <tbody>
+                                    <tr data-dt-row="99" data-dt-column="10">
+                                        <td>Preview Image:</td>
+                                        <td><img id="preview"
+                                                src="{{ asset('/sisarpas/assets/landingFile/' . $l->gambar_informasi) }}"
+                                                width="50%" />
+                                        </td>
+                                    </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
                                         <td>Judul:</td>
                                         <td>{{ $l->judul_informasi }}</td>
@@ -153,6 +160,13 @@
                                 <table class="table">
                                     <tbody>
                                         <input type="number" name="id" value="{{ $l->id }}" hidden>
+                                        <tr data-dt-row="99" data-dt-column="10">
+                                            <td>Preview Image:</td>
+                                            <td><img id="preview"
+                                                    src="{{ asset('/sisarpas/assets/landingFile/' . $l->gambar_informasi) }}"
+                                                    width="35%" />
+                                            </td>
+                                        </tr>
                                         <tr data-dt-row="99" data-dt-column="2">
                                             <td>Judul:</td>
                                             <td>
