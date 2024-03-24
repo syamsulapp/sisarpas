@@ -43,6 +43,7 @@
                         <tr>
                             <th>No</th>
                             <th>Judul</th>
+                            <th>Status</th>
                             <th>Tanggal Dibuat</th>
                         </tr>
                     </thead>
@@ -58,6 +59,14 @@
                                     {{ $l->id }}
                                 </td>
                                 <td>{{ $l->judul_informasi }}</td>
+                                <td>
+                                    @if ($l->status != 'unhide')
+                                        <span class="badge bg-label-danger me-1"> {{ $l->status }}
+                                        @else
+                                            <span class="badge bg-label-success me-1"> {{ $l->status }}
+                                    @endif
+                                    </span>
+                                </td>
                                 <td>{{ $l->created_at }}</td>
                             </tr>
                         @endforeach
@@ -66,6 +75,7 @@
                         <tr>
                             <th>No</th>
                             <th>Judul</th>
+                            <th>Status</th>
                             <th>Tanggal Dibuat</th>
                         </tr>
                     </tfoot>
@@ -115,7 +125,8 @@
                                     <tr data-dt-row="99" data-dt-column="8">
                                         <td>Aksi:</td>
                                         <td>
-                                            <form action="{{ route('admin.dashboard_delete_landing_informasi_penting', $l->id) }}"
+                                            <form
+                                                action="{{ route('admin.dashboard_delete_landing_informasi_penting', $l->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')

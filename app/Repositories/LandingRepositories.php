@@ -8,6 +8,7 @@ use App\Models\Landing;
 use App\Models\Barangpinjam;
 use App\Interface\LandingInterface;
 use App\Models\Footer;
+use App\Models\Informasi_penting;
 use App\Models\ScheduleRoom;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -68,6 +69,11 @@ class LandingRepositories extends FormRequest implements LandingInterface
     protected function LandingFooterRepositories()
     {
         return Footer::where('status', 'unhide')->orderByDesc('id')->limit(1)->get();
+    }
+
+    protected function getInformasiRuanganRepositories()
+    {
+        return Informasi_penting::where('status', 'unhide')->orderByDesc('id')->limit(3)->get();
     }
 
 

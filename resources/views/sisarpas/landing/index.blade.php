@@ -159,6 +159,22 @@
                     <p></p>
                 </div>
 
+                @foreach ($informasi_penting as $ip)
+                    <div class="row">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ asset('sisarpas/assets/landingFile/' . $ip->gambar_informasi) }}"
+                                class="card-img-top" alt="{{ __('gambar informasi') }}" width="30%">
+                            <div class="card-body">
+                                <h5 class="card-title">Judul: {{ $ip->judul_informasi }}</h5>
+                                <p class="card-text"><strong>Isi</strong>: {!! Str::words($ip->isi_informasi, 10, '...') !!}</p>
+                                <button type="button" data-item="{{ $ip->id }}"
+                                    class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#detailModalLandingInformasiPenting--{{ $ip->id }}">Lihat
+                                    Informasi</button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="row">
                     @foreach ($landing_video as $lv)
                         @if (strpos($lv->file, '.mp4'))
@@ -181,6 +197,51 @@
                         @endempty
                     @endforeach
             </div>
+
+            @foreach ($informasi_penting as $ip)
+                <div class="modal fade" id="detailModalLandingInformasiPenting--{{ $ip->id }}" tabindex="-1"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Detail Data Landing Informasi Penting
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <tbody>
+                                        <tr data-dt-row="99" data-dt-column="10">
+                                            <td>Preview Image:</td>
+                                            <td><img id="preview"
+                                                    src="{{ asset('/sisarpas/assets/landingFile/' . $ip->gambar_informasi) }}"
+                                                    width="50%" />
+                                            </td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="3">
+                                            <td>Judul:</td>
+                                            <td>{{ $ip->judul_informasi }}</td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="3">
+                                            <td>Isi Informasi:</td>
+                                            <td>{!! $ip->isi_informasi !!}</td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="3">
+                                            <td>Created At:</td>
+                                            <td>{{ $ip->created_at }}</td>
+                                        </tr>
+                                        <tr data-dt-row="99" data-dt-column="3">
+                                            <td>Updated At:</td>
+                                            <td>{{ $ip->updated_at }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
     <!-- End Informasi Section -->

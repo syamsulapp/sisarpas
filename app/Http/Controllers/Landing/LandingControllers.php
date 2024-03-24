@@ -81,7 +81,7 @@ class LandingControllers extends LandingRepositories
     public function index(): View
     {
         try {
-            return $this->viewLanding($this->getLandingHeader(), $this->getLandingVideo(), $this->getJadwalRuangan(), $this->getLandingFooter());
+            return $this->viewLanding($this->getLandingHeader(), $this->getLandingVideo(), $this->getJadwalRuangan(), $this->getLandingFooter(), $this->getInformasiRuangan());
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
         }
@@ -107,9 +107,14 @@ class LandingControllers extends LandingRepositories
         return $this->LandingFooterRepositories();
     }
 
-    private function viewLanding($landing_header, $landing_video, $landing_jadwal_ruangan, $landing_footer): View
+    private function getInformasiRuangan()
     {
-        return view('sisarpas.landing.index', compact('landing_header', 'landing_video', 'landing_jadwal_ruangan', 'landing_footer'));
+        return $this->getInformasiRuanganRepositories();
+    }
+
+    private function viewLanding($landing_header, $landing_video, $landing_jadwal_ruangan, $landing_footer, $informasi_penting): View
+    {
+        return view('sisarpas.landing.index', compact('landing_header', 'landing_video', 'landing_jadwal_ruangan', 'landing_footer', 'informasi_penting'));
     }
 
     /**
