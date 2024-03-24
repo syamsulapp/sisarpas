@@ -225,10 +225,14 @@
                                     <tr data-dt-row="99" data-dt-column="2">
                                         <td>Informasi:</td>
                                         <td>
-                                            <input type="email" id="isi_informasi"
+                                            {{-- <input type="email" id="isi_informasi"
                                                 class="form-control @error('isi_informasi') is-invalid @enderror"
                                                 name="isi_informasi" placeholder="Masukan Isi Informasi" />
                                             @error('isi_informasi')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror --}}
+                                            <textarea id="isi_informasi" class="form-control @error('isi_informasi') is-invalid @enderror">{{ old('isi_informasi') }}</textarea>
+                                             @error('isi_informasi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>
@@ -253,15 +257,38 @@
     <!-- / Content -->
 
 @endsection
-@push('script-image-prev')
+@push('js')
+    <script src="{{ asset('sisarpas/assets/js/wysiwyg.js') }}"></script>
     <script>
-        selectImage.onchange = evt => {
-            preview = document.getElementById('preview');
-            preview.style.display = 'block';
-            const [file] = selectImage.files
-            if (file) {
-                preview.src = URL.createObjectURL(file)
-            }
-        }
+        tinymce.init({
+            selector: "textarea#isi_informasi",
+            plugins: [
+                "a11ychecker",
+                "advlist",
+                "advcode",
+                "advtable",
+                "autolink",
+                "checklist",
+                "export",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+                "preview",
+                "anchor",
+                "searchreplace",
+                "visualblocks",
+                "powerpaste",
+                "fullscreen",
+                "formatpainter",
+                "insertdatetime",
+                "media",
+                "table",
+                "help",
+                "wordcount",
+            ],
+            toolbar: "undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |" +
+                "bullist numlist checklist outdent indent | removeformat | code table help",
+        });
     </script>
 @endpush
