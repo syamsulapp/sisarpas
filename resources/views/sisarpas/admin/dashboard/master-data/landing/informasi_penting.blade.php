@@ -187,6 +187,26 @@
                                                 @enderror
                                             </td>
                                         </tr>
+                                        <tr data-dt-row="99" data-dt-column="8">
+                                            <td>Status:</td>
+                                            <td>
+                                                <div class="form-check form-check-inline mt-3">
+                                                    <input class="form-check-input @error('status') is-invalid @enderror"
+                                                        type="radio" name="status" id="inlineRadio1"
+                                                        value="hide" />
+                                                    <label class="form-check-label" for="inlineRadio1">Hide</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input  @error('status') is-invalid @enderror"
+                                                        type="radio" name="status" id="inlineRadio2"
+                                                        value="unhide" />
+                                                    <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                                </div>
+                                                @error('status')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -251,6 +271,24 @@
                                                 placeholder="Please Drop image informasi" name="gambar_informasi"
                                                 aria-describedby="defaultFormControlHelp" />
                                             @error('gambar_informasi')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="8">
+                                        <td>Status:</td>
+                                        <td>
+                                            <div class="form-check form-check-inline mt-3">
+                                                <input class="form-check-input @error('status') is-invalid @enderror"
+                                                    type="radio" name="status" id="inlineRadio1" value="hide" />
+                                                <label class="form-check-label" for="inlineRadio1">Hide</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input  @error('status') is-invalid @enderror"
+                                                    type="radio" name="status" id="inlineRadio2" value="unhide" />
+                                                <label class="form-check-label" for="inlineRadio2">Unhide</label>
+                                            </div>
+                                            @error('status')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </td>

@@ -53,12 +53,14 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
                 'judul_informasi' => 'required|string',
                 'isi_informasi' => 'required|',
                 'gambar_informasi' => 'required|file|image|mimes:jpg,png,jpeg|max:3048',
+                'status' => 'required|in:hide,unhide',
             ];
         } elseif (request()->is('admin/dashboard/master_data/landing/informasi_penting/update')) {
             return [
                 'judul_informasi' => 'string',
                 'isi_informasi' => '',
                 'gambar_informasi' => 'file|image|mimes:jpg,png,jpeg|max:3048',
+                'status' => 'in:hide,unhide',
             ];
         } else if (request()->is('admin/dashboard/master_data/landing/footer/update')) {
             return [

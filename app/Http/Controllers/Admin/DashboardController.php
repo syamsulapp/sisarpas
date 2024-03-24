@@ -473,7 +473,7 @@ class DashboardController extends DashboardRepositories
 
     private function RequestInformasiPenting($request): array
     {
-        return $request->only('judul_informasi', 'isi_informasi', 'gambar_informasi');
+        return $request->only('judul_informasi', 'isi_informasi', 'gambar_informasi', 'status');
     }
 
     private function submitRequestInformasiPenting($request): array

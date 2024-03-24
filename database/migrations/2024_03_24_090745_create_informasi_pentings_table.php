@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul_informasi');
             $table->text('isi_informasi');
             $table->string('gambar_informasi');
+            $table->enum('status', ['hide', 'unhide']);
             $table->timestamps();
         });
     }
