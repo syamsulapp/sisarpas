@@ -18,6 +18,33 @@
             </div>
         @endsession
 
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        <span class="tf-icons bx bxs-image-add me-1"></span>
+                        Image Ruangan Instruction
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <span class="tf-icons bx bxs-file-plus me-1"></span>
+                        <strong>Spesifikasi Gambar Landing Yang Di Upload:.</strong>
+                        <ul>
+                            <li>Jenis Gambar Harus jpg png jpeg</li>
+                            <li>kapasitas gambar yang di upload maksimal 3MB</li>
+                            <li> setelah diupload dan jika ingin ditampilkan harap mengatur status nya menjadi unhide</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
         <!-- DataTable with Buttons -->
         <div class="card">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -30,7 +57,7 @@
                             <button class="btn btn-primary" type="button" data-bs-target="#createRuangan"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">
                                 <span class="tf-icons bx bxs-file-plus me-1"></span>
-                                Tambah Data
+                                Tambah Ruangan
                             </button>
                         </div>
                     </div>
@@ -113,7 +140,7 @@
                                         <td>{{ $r->nama_barang }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
-                                        <td>Jumlah:</td>
+                                        <td>Kapasitas Ruangan:</td>
                                         <td>{{ $r->jumlah_barang }}</td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="3">
@@ -182,7 +209,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalToggleLabel2">Edit Data Ruangan</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <form action="{{ route('admin.dashboard_inventori_update_ruangan') }}" method="POST"
                             enctype="multipart/form-data">
@@ -214,14 +242,14 @@
                                             <td>
                                                 <input type="text" id="selectImage"
                                                     class="form-control @error('nama_barang') is-invalid @enderror"
-                                                    placeholder="masukan nama barang" name="nama_barang"
+                                                    placeholder="masukan kapasitas ruangan" name="nama_barang"
                                                     aria-describedby="defaultFormControlHelp"
                                                     value="{{ $r->nama_barang }}" />
                                                 @error('nama_barang')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
-                                            <td>Jumlah:</td>
+                                            <td>Kapasitas Ruangan:</td>
                                             <td>
                                                 <input type="text" id="jumlah_barang"
                                                     class="form-control @error('jumlah_barang') is-invalid @enderror"
@@ -259,7 +287,7 @@
                                         </tr>
 
                                         <tr data-dt-row="99" data-dt-column="2">
-                                            <td>Spesifikasi Barang:</td>
+                                            <td>Spesifikasi Ruangan:</td>
                                             <td>
                                                 <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
                                                     aria-describedby="defaultFormControlHelp">{{ $r->spesifikasi_barang }}</textarea>
@@ -355,11 +383,11 @@
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
 
-                                        <td>Jumlah:</td>
+                                        <td>Kapasitas Ruangan:</td>
                                         <td>
                                             <input type="text" id="jumlah_barang"
                                                 class="form-control @error('jumlah_barang') is-invalid @enderror"
-                                                placeholder="masukan jumlah barang" name="jumlah_barang"
+                                                placeholder="masukan kapasitas ruangan" name="jumlah_barang"
                                                 aria-describedby="defaultFormControlHelp"
                                                 value="{{ old('jumlah_barang') }}" />
                                             @error('jumlah_barang')
@@ -392,7 +420,7 @@
                                         </td>
                                     </tr>
                                     <tr data-dt-row="99" data-dt-column="2">
-                                        <td>Spesifikasi Barang:</td>
+                                        <td>Spesifikasi Ruangan:</td>
                                         <td>
                                             <textarea name="spesifikasi_barang" class="form-control @error('spesifikasi_barang') is-invalid @enderror"
                                                 aria-describedby="defaultFormControlHelp">{{ old('spesifikasi_barang') }}</textarea>

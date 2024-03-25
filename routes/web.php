@@ -95,10 +95,30 @@ Route::prefix('admin')->group(function () {
              */
             Route::prefix('master_data')->group(function () {
                 Route::prefix('landing')->group(function () {
-                    Route::get('/', [AdminDashboardController::class, 'landing'])->name('admin.dashboard_landing');
-                    Route::post('create', [AdminDashboardController::class, 'doCreateLanding'])->name('admin.dashboard_create_landing');
-                    Route::put('update', [AdminDashboardController::class, 'doUpdateLanding'])->name('admin.dashboard_update_landing');
-                    Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLanding'])->name('admin.dashboard_delete_landing');
+                    Route::prefix('header')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingHeader'])->name('admin.dashboard_landing_header');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingHeader'])->name('admin.dashboard_create_landing_header');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingHeader'])->name('admin.dashboard_update_landing_header');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingHeader'])->name('admin.dashboard_delete_landing_header');
+                    });
+                    Route::prefix('video')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingVideo'])->name('admin.dashboard_landing_video');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingVideo'])->name('admin.dashboard_create_landing_video');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingVideo'])->name('admin.dashboard_update_landing_video');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingVideo'])->name('admin.dashboard_delete_landing_video');
+                    });
+                    Route::prefix('footer')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingFooter'])->name('admin.dashboard_landing_footer');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingFooter'])->name('admin.dashboard_create_landing_footer');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingFooter'])->name('admin.dashboard_update_landing_footer');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingFooter'])->name('admin.dashboard_delete_landing_footer');
+                    });
+                    Route::prefix('informasi_penting')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'landingInformasiPenting'])->name('admin.dashboard_landing_informasi_penting');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateLandingInformasiPenting'])->name('admin.dashboard_create_landing_informasi_penting');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateLandingInformasiPenting'])->name('admin.dashboard_update_landing_informasi_penting');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteLandingInformasiPenting'])->name('admin.dashboard_delete_landing_informasi_penting');
+                    });
                 });
                 Route::prefix('contacts')->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'contacts'])->name('admin.dashboard_contacts');
@@ -117,6 +137,18 @@ Route::prefix('admin')->group(function () {
                         Route::post('create', [AdminDashboardController::class, 'doCreateRuangan'])->name('admin.dashboard_inventori_create_ruangan');
                         Route::put('update', [AdminDashboardController::class, 'doUpdateRuangan'])->name('admin.dashboard_inventori_update_ruangan');
                         Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteRuangan'])->name('admin.dashboard_inventori_delete_ruangan');
+                    });
+                    Route::prefix('admin')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'admininventori'])->name('admin.dashboard_inventori_admin');
+                        Route::post('create', [AdminDashboardController::class, 'doCreateAdmin'])->name('admin.dashboard_inventori_create_admin');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdateAdmin'])->name('admin.dashboard_inventori_update_admin');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeleteAdmin'])->name('admin.dashboard_inventori_delete_admin');
+                    });
+                    Route::prefix('penjadwalan')->group(function () {
+                        Route::get('/', [AdminDashboardController::class, 'penjadwalan_inventori'])->name('admin.dashboard_inventori_penjadwalan');
+                        Route::post('create', [AdminDashboardController::class, 'doCreatePenjadwalan'])->name('admin.dashboard_inventori_create_penjadwalan');
+                        Route::put('update', [AdminDashboardController::class, 'doUpdatePenjadwalan'])->name('admin.dashboard_inventori_update_penjadwalan');
+                        Route::delete('{id}/delete', [AdminDashboardController::class, 'doDeletePenjadwalan'])->name('admin.dashboard_inventori_delete_penjadwalan');
                     });
                 });
             });

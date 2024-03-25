@@ -24,8 +24,13 @@
              <li class="nav-item navbar-dropdown dropdown-user dropdown">
                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                      <div class="avatar avatar-online">
-                         <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}" alt
-                             class="w-px-40 h-auto rounded-circle" />
+                         @empty(Auth::guard('user')->user()->image)
+                             <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}" alt
+                                 class="w-px-40 h-auto rounded-circle" />
+                         @else
+                             <img src="{{ asset('sisarpas/assets/userImage/' . Auth::guard('user')->user()->image) }}" alt
+                                 class="w-px-40 h-auto rounded-circle" width="512px" height="512px" />
+                         @endempty
                      </div>
                  </a>
                  <ul class="dropdown-menu dropdown-menu-end">
@@ -34,8 +39,13 @@
                              <div class="d-flex">
                                  <div class="flex-shrink-0 me-3">
                                      <div class="avatar avatar-online">
-                                         <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}"
-                                             alt class="w-px-40 h-auto rounded-circle" />
+                                         @empty(Auth::guard('user')->user()->image)
+                                             <img src="{{ asset('sisarpas/assets/admin/assets/img/avatars/user_1144709.png') }}"
+                                                 alt class="w-px-40 h-auto rounded-circle" />
+                                         @else
+                                             <img src="{{ asset('sisarpas/assets/userImage/' . Auth::guard('user')->user()->image) }}"
+                                                 alt class="w-px-40 h-auto rounded-circle" width="512px" height="512px" />
+                                         @endempty
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">

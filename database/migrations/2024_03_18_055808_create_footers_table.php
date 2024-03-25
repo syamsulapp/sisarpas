@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('landings', function (Blueprint $table) {
+        Schema::create('footers', function (Blueprint $table) {
             $table->id();
-            $table->string('file')->nullable();
-            $table->enum('type', ['image', 'video']);
+            $table->string('alamat_gedung')->nullable();
+            $table->string('nomor_telpon')->nullable();
+            $table->string('email')->nullable();
+            $table->string('nama_gedung')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('youtube')->nullable();
             $table->enum('status', ['hide', 'unhide']);
             $table->timestamps();
         });
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('landings');
+        Schema::dropIfExists('footers');
     }
 };

@@ -8,6 +8,12 @@ interface DashboardInterface
     //landing
     public function deleteLandingRepositories($model): void;
     public function updateLandingRepositories($model, $request): void;
+    public function createFooterRepositories($request): void;
+    public function updateFooterRepositories($request): void;
+    public function deleteFooterRepositories($id): void;
+    public function createInformasiPentingRepositories($request): void;
+    public function updateInformasiPentingRepositories($request): void;
+    public function deleteInformasiPentingRepositories($id): void;
     //contacts
     public function updateContactsRepositories($model, $request): void;
     public function deleteContactsRepositories($model): void;
@@ -21,4 +27,12 @@ interface DashboardInterface
     public function deleteRuanganRepositories($id): void;
     //begin transaction verification peminjaman
     public function submitRequestVerificationBYIDRepositories($id, $request): void;
+    //user inventori
+    public function createAdminRepositories($request): void;
+    public function updateAdminRepositories($request): void;
+    public function deleteAdminRepositories($id): void;
+    //penjadwalan inventori
+    public function updatePenjadwalanRepositories($request): void;
+    public function createPenjadwalanRepositories($request): void;
+    public function deletePenjadwalanRepositories($id): void;
 }
