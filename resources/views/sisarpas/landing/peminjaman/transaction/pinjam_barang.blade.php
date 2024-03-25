@@ -38,9 +38,10 @@
                                 @endforeach
                             </div>
                         @endif
-                        <div class="warna">
-                            <b>Form Peminjaman</b>
-                        </div>
+                        <button class="warna" type="button" data-item="{{ $listDaftarPeminjam }}"
+                            data-bs-target="#daftarPeminjaman" data-bs-toggle="modal" data-bs-dismiss="modal">Daftar
+                            Peminjam</button>
+
                         <form method="POST" action="{{ route('transaction.submit.pinjam.barang') }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -76,11 +77,19 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-5 col-form-label"
+                                    <label for="tanggal_pinjam" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Tanggal Peminjaman</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" name="tanggal_pinjam" id="inputPassword3"
+                                        <input type="date" class="form-control" name="tanggal_pinjam" id="tanggal_pinjam"
                                             value="{{ old('tanggal_pinjam') }}" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="tanggal_pengembalian" class="col-sm-5 col-form-label"
+                                        style="font-weight: 600">Tanggal Pengembalian</label>
+                                    <div class="col-sm-7">
+                                        <input type="date" class="form-control" name="tanggal_pengembalian"
+                                            id="tanggal_pengembalian" value="{{ old('tanggal_pengembalian') }}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -138,4 +147,82 @@
         </section>
     </main>
     <!-- End #main -->
+    <div class="modal fade" id="daftarPeminjaman" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Daftar Peminjaman</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="card-header flex-column flex-md-row">
+                                <div class="head-label text-center">
+                                    <h5 class="card-title mb-0">Daftar Peminjaman SARPRAS</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive text-nowrap">
+                            <table id="example" class="table" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Mahasiswa</th>
+                                        <th>Barang Yang Di Pinjam</th>
+                                        <th>Tanggal Pinjam</th>
+                                        <th>Tanggal Pengembalian</th>
+                                        <th>Status Pinjam</th>
+                                        <th>Tanggal Pengajuan Pinjam</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($listDaftarPeminjam as $ldp)
+                                        <tr>
+                                            <td>
+                                                <button type="button" data-item="{{ $ldp->id }}"
+                                                    class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#detailModalBarang--{{ $ldp->id }}">
+                                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i>
+                                                </button>
+                                                {{ $ldp->id }}
+                                            </td>
+                                            <td>{{ $ldp->users->name }}</td>
+                                            <td>{{ $ldp->barangs->nama_barang }}</td>
+                                            <td>{{ $ldp->tanggal_pinjam }}</td>
+                                            <td>{{ $ldp->tanggal_pengembalian }}</td>
+                                            <td>
+                                                @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
+                                                    <span class="badge bg-label-success me-1"> {{ $ldp->status_pinjam }}
+                                                    @elseif($ldp->status_pinjam == 'diajukan')
+                                                        <span class="badge bg-label-warning me-1">
+                                                            {{ $ldp->status_pinjam }}
+                                                        @elseif($ldp->status_pinjam == 'ditolak')
+                                                            <span class="badge bg-label-danger me-1">
+                                                                {{ $ldp->status_pinjam }}
+                                                @endif
+                                                </span>
+                                            </td>
+                                            <td>{{ $ldp->created_at }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Mahasiswa</th>
+                                        <th>Barang Yang Di Pinjam</th>
+                                        <th>Tanggal Pinjam</th>
+                                        <th>Tanggal Pengembalian</th>
+                                        <th>Status Pinjam</th>
+                                        <th>Tanggal Pengajuan Pinjam</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

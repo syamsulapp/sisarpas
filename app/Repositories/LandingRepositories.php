@@ -27,6 +27,7 @@ class LandingRepositories extends FormRequest implements LandingInterface
                 'barangs_id' => 'required|string',
                 'users_id' => 'required|integer',
                 'tanggal_pinjam' => 'required|date',
+                'tanggal_pengembalian' => 'required|date',
                 'kategori_pinjam' => 'required|string',
                 'tujuan_pinjam' => 'required|string',
                 'keterangan_pinjam' => 'required|string',
@@ -123,12 +124,14 @@ class LandingRepositories extends FormRequest implements LandingInterface
     /**
      * begin::transaction pinjam
      */
+    protected function listDaftarPeminjamRepositories($id)
+    {
+        return Barangpinjam::with(['users', 'barangs'])->where('barangs_id', $id)->orderByDesc('barangs_id')->get();
+    }
+
     protected function checkIDBarangRepositories($id): bool
     {
-        if (Barang::where('id', $id)->first()) {
-            return true;
-        }
-        return false;
+        return Barang::where('id', $id)->first() ? true : false;
     }
 
     protected function getBarangBYIDRepositories($id)
