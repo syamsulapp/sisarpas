@@ -160,72 +160,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- <div class="card">
-                        <div class="dataTables_wrapper dt-bootstrap5 no-footer">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">Daftar Peminjaman SARPRAS</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive text-nowrap">
-                            <table id="example" class="table" style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Mahasiswa</th>
-                                        <th>Barang Yang Di Pinjam</th>
-                                        <th>Tanggal Pinjam</th>
-                                        <th>Tanggal Pengembalian</th>
-                                        <th>Status Pinjam</th>
-                                        <th>Tanggal Pengajuan Pinjam</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($listDaftarPeminjam as $ldp)
-                                        <tr>
-                                            <td>
-                                                <button type="button" data-item="{{ $ldp->id }}"
-                                                    class="btn rounded-pill btn-icon btn-secondary" data-bs-toggle="modal"
-                                                    data-bs-target="#detailModalBarang--{{ $ldp->id }}">
-                                                    <i class='bx bx-info-circle' style='color:#8f0d04'></i>
-                                                </button>
-                                                {{ $ldp->id }}
-                                            </td>
-                                            <td>{{ $ldp->users->name }}</td>
-                                            <td>{{ $ldp->barangs->nama_barang }}</td>
-                                            <td>{{ $ldp->tanggal_pinjam }}</td>
-                                            <td>{{ $ldp->tanggal_pengembalian }}</td>
-                                            <td>
-                                                @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
-                                                    <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
-                                                    @elseif($ldp->status_pinjam == 'diajukan')
-                                                        <span class="badge text-bg-warning">
-                                                            {{ $ldp->status_pinjam }}
-                                                        @elseif($ldp->status_pinjam == 'ditolak')
-                                                            <span class="badge text-bg-danger">
-                                                                {{ $ldp->status_pinjam }}
-                                                @endif
-                                                </span>
-                                            </td>
-                                            <td>{{ $ldp->created_at }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Mahasiswa</th>
-                                        <th>Barang Yang Di Pinjam</th>
-                                        <th>Tanggal Pinjam</th>
-                                        <th>Tanggal Pengembalian</th>
-                                        <th>Status Pinjam</th>
-                                        <th>Tanggal Pengajuan Pinjam</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div> --}}
                     <table id="exampleDataTable" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -234,6 +168,8 @@
                                 <th>Barang Yang Di Pinjam</th>
                                 <th>Tanggal Pinjam</th>
                                 <th>Tanggal Pengembalian</th>
+                                <th>Tujuan Pinjam</th>
+                                <th>Keterangan Pinjam</th>
                                 <th>Status Pinjam</th>
                                 <th>Tanggal Pengajuan Pinjam</th>
                             </tr>
@@ -248,6 +184,8 @@
                                     <td>{{ $ldp->barangs->nama_barang }}</td>
                                     <td>{{ $ldp->tanggal_pinjam }}</td>
                                     <td>{{ $ldp->tanggal_pengembalian }}</td>
+                                    <td>{{ $ldp->tujuan_pinjam }}</td>
+                                    <td>{{ $ldp->keterangan_pinjam }}</td>
                                     <td>
                                         @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
                                             <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
@@ -271,6 +209,8 @@
                                 <th>Barang Yang Di Pinjam</th>
                                 <th>Tanggal Pinjam</th>
                                 <th>Tanggal Pengembalian</th>
+                                <th>Tujuan Pinjam</th>
+                                <th>Keterangan Pinjam</th>
                                 <th>Status Pinjam</th>
                                 <th>Tanggal Pengajuan Pinjam</th>
                             </tr>
