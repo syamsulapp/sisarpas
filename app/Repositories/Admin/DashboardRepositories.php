@@ -445,6 +445,16 @@ class DashboardRepositories extends FormRequest implements DashboardInterface
     {
         Barangpinjam::whereId($id)->firstOrFail()->update($request);
     }
+
+    protected function checkIfApproveThenNotChangeStatusTolakRepositories($id): bool
+    {
+        return Barangpinjam::where('id', $id)->first()->status_pinjam != 'dipinjam' ? true : false;
+    }
+
+    protected function checkIfNotApproveThenNotChangeStatusDiajukanRepositories($id): bool
+    {
+        return Barangpinjam::where('id', $id)->first()->status_pinjam != 'ditolak' ? true : false;
+    }
     /**
      * end::transaction(verif peminjaman users)
      */
