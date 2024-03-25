@@ -23,6 +23,11 @@
             </div>
         </header>
     @endpush
+
+    @push('css')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    @endpush
     <!-- End Header -->
     <main id="main" data-aos="fade-up">
         <section id="contact" class="contact">
@@ -155,7 +160,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="card">
+                    {{-- <div class="card">
                         <div class="dataTables_wrapper dt-bootstrap5 no-footer">
                             <div class="card-header flex-column flex-md-row">
                                 <div class="head-label text-center">
@@ -193,12 +198,12 @@
                                             <td>{{ $ldp->tanggal_pengembalian }}</td>
                                             <td>
                                                 @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
-                                                    <span class="badge bg-label-success me-1"> {{ $ldp->status_pinjam }}
+                                                    <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
                                                     @elseif($ldp->status_pinjam == 'diajukan')
-                                                        <span class="badge bg-label-warning me-1">
+                                                        <span class="badge text-bg-warning">
                                                             {{ $ldp->status_pinjam }}
                                                         @elseif($ldp->status_pinjam == 'ditolak')
-                                                            <span class="badge bg-label-danger me-1">
+                                                            <span class="badge text-bg-danger">
                                                                 {{ $ldp->status_pinjam }}
                                                 @endif
                                                 </span>
@@ -220,9 +225,69 @@
                                 </tfoot>
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
+                    <table id="exampleDataTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Transaction Pinjam</th>
+                                <th>Mahasiswa</th>
+                                <th>Barang Yang Di Pinjam</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Pengembalian</th>
+                                <th>Status Pinjam</th>
+                                <th>Tanggal Pengajuan Pinjam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($listDaftarPeminjam as $ldp)
+                                <tr>
+                                    <td>
+                                        {{ $ldp->id }}
+                                    </td>
+                                    <td>{{ $ldp->users->name }}</td>
+                                    <td>{{ $ldp->barangs->nama_barang }}</td>
+                                    <td>{{ $ldp->tanggal_pinjam }}</td>
+                                    <td>{{ $ldp->tanggal_pengembalian }}</td>
+                                    <td>
+                                        @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
+                                            <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
+                                            @elseif($ldp->status_pinjam == 'diajukan')
+                                                <span class="badge text-bg-warning">
+                                                    {{ $ldp->status_pinjam }}
+                                                @elseif($ldp->status_pinjam == 'ditolak')
+                                                    <span class="badge text-bg-danger">
+                                                        {{ $ldp->status_pinjam }}
+                                        @endif
+                                        </span>
+                                    </td>
+                                    <td>{{ $ldp->created_at }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ID Transaction Pinjam</th>
+                                <th>Mahasiswa</th>
+                                <th>Barang Yang Di Pinjam</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Pengembalian</th>
+                                <th>Status Pinjam</th>
+                                <th>Tanggal Pengajuan Pinjam</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#exampleDataTable');
+    </script>
+@endpush

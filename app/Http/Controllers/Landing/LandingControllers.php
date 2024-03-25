@@ -258,7 +258,7 @@ class LandingControllers extends LandingRepositories
 
     private function requestTransactionPinjam($request)
     {
-        return $request->only('id', 'barangs_id', 'users_id', 'tanggal_pinjam', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
+        return $request->only('id', 'barangs_id', 'users_id', 'tanggal_pinjam', 'tanggal_pengembalian', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
     }
 
     private function requestSubmitTransactionPinjam($request)
