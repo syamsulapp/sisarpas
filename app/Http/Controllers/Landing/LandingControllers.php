@@ -202,7 +202,7 @@ class LandingControllers extends LandingRepositories
                 }
 
                 if ($this->getBarangBYID($id)['status_barang'] != 'not-ready' &&  $this->getBarangBYID($id)['status_barang'] != 'maintenance') {
-                    return $this->viewTransactionPinjamBYID($this->getBarangBYID($id));
+                    return $this->viewTransactionPinjamBYID($this->getBarangBYID($id), $this->listDaftarPeminjam($id));
                 }
             }
         } catch (\Exception $errors) {
@@ -227,6 +227,11 @@ class LandingControllers extends LandingRepositories
     }
 
 
+    private function listDaftarPeminjam($id)
+    {
+        return $this->listDaftarPeminjamRepositories($id);
+    }
+
     private function checkIDBarang($id): bool
     {
         return $this->checkIDBarangRepositories($id);
@@ -237,9 +242,9 @@ class LandingControllers extends LandingRepositories
         return $this->getBarangBYIDRepositories($id);
     }
 
-    private function viewTransactionPinjamBYID($id): View
+    private function viewTransactionPinjamBYID($id, $listDaftarPeminjam): View
     {
-        return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', compact('id'));
+        return view('sisarpas.landing.peminjaman.transaction.pinjam_barang', compact('id', 'listDaftarPeminjam'));
     }
 
     private function requestTransactionFilePendukung($request)
@@ -253,7 +258,7 @@ class LandingControllers extends LandingRepositories
 
     private function requestTransactionPinjam($request)
     {
-        return $request->only('id', 'barangs_id', 'users_id', 'tanggal_pinjam', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
+        return $request->only('id', 'barangs_id', 'users_id', 'tanggal_pinjam', 'tanggal_pengembalian', 'kategori_pinjam', 'tujuan_pinjam', 'keterangan_pinjam', 'dokumen_pendukung', 'status_pinjam');
     }
 
     private function requestSubmitTransactionPinjam($request)

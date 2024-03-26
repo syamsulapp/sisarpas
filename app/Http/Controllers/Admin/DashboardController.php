@@ -918,20 +918,46 @@ class DashboardController extends DashboardRepositories
                 return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
             }
 
-            if (!$this->checkEventNotApproveButFieldTanggal($request)) {
-                return $this->redirectError('admin.dashboard_peminjaman', 'Anda tidak bisa melakukan transaction jika memasukan tanggal pengembalikan akan tetapi tidak di approve, sistem hanya mengizinkan memasukan tanggal pengembalian jika statusnya approve');
-            } else {
-                if ($this->checkVerificationBYID($request->id)) {
-                    $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
-                    DB::commit();
-                    $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
-                    return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
-                }
+            if (!$this->checkIfApproveThenNotChangeStatusTolak($request->id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Anda tidak bisa mengubah status menjadi ditolak karena anda sudah menyetujui peminjaman untuk mahasiswa');
+            }
+
+            if (!$this->checkIfNotApproveThenNotChangeStatusDiajukan($request->id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Anda tidak bisa mengubah status menjadi disetujui karena anda sudah menolak peminjaman untuk mahasiswa');
+            }
+
+            if ($this->checkVerificationBYID($request->id)) {
+                $this->submitRequestVerificationBYID($request->id, $this->requestVerificationPeminjaman($request));
+                DB::commit();
+                $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($request->id), 'Berhasil Melakukan Verifikasi Transaction Peminjaman Dengan'));
+                return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Transaction Verifikasi Peminjaman');
             }
         } catch (\Exception $errors) {
             $this->logError($this->dataLogError($errors->getMessage()));
             DB::rollBack();
             return $this->redirectError('admin.dashboard_peminjaman', 'Mohon maaf ada kesalahan dibagian melakukan verifikasi peminjaman users');
+        }
+    }
+
+    public function doKembalikanBarangAtauAula($id, $status): RedirectResponse
+    {
+        try {
+
+            if (!$this->checkVerificationBYID($id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
+            }
+
+            if (!$this->statusChangeToDikembalikanForUsersPinjam($id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf status tolak tidak dapat di ubah menjadi dikembalikan');
+            } else {
+                $this->submitStatusChangePeminjaman($id, $status);
+                $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($id), 'Berhasil Melakukan Pengembalian Barang Yang Di Pinjam'));
+                return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Pengembalian Barang Yang Di Pinjam');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            DB::rollBack();
+            return $this->redirectError('admin.dashboard_peminjaman', 'Mohon maaf ada kesalahan dibagian melakukan pengembalian peminjaman users');
         }
     }
 
@@ -965,10 +991,25 @@ class DashboardController extends DashboardRepositories
         return $this->submitRequestVerificationBYIDRepositories($id, $request);
     }
 
-    private function checkEventNotApproveButFieldTanggal($request): bool
+    private function statusChangeToDikembalikanForUsersPinjam($id): bool
+    {
+        return $this->statusChangeToDikembalikanForUsersPinjamRepositories($id);
+    }
+
+    private function submitStatusChangePeminjaman($id, $status)
+    {
+        return $this->submitStatusChangePeminjamanRepositories($id, $status);
+    }
+
+    private function checkIfApproveThenNotChangeStatusTolak($id): bool
     {
         // memasukan tanggal pengembalian pada saat status pinjam usernya di approve
-        return isset($request->tanggal_pengembalian) && $request->status_pinjam == 'dipinjam' ? true : false;
+        return $this->checkIfApproveThenNotChangeStatusTolakRepositories($id);
+    }
+
+    private function checkIfNotApproveThenNotChangeStatusDiajukan($id): bool
+    {
+        return $this->checkIfNotApproveThenNotChangeStatusDiajukanRepositories($id);
     }
 
     /**

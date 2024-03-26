@@ -23,6 +23,11 @@
             </div>
         </header>
     @endpush
+
+    @push('css')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
+    @endpush
     <!-- End Header -->
     <main id="main" data-aos="fade-up">
         <section id="contact" class="contact">
@@ -38,9 +43,10 @@
                                 @endforeach
                             </div>
                         @endif
-                        <div class="warna">
-                            <b>Form Peminjaman</b>
-                        </div>
+                        <button class="warna" type="button" data-item="{{ $listDaftarPeminjam }}"
+                            data-bs-target="#daftarPeminjaman" data-bs-toggle="modal" data-bs-dismiss="modal">Daftar
+                            Peminjam</button>
+
                         <form method="POST" action="{{ route('transaction.submit.pinjam.barang') }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -76,11 +82,19 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-5 col-form-label"
+                                    <label for="tanggal_pinjam" class="col-sm-5 col-form-label"
                                         style="font-weight: 600">Tanggal Peminjaman</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" name="tanggal_pinjam" id="inputPassword3"
+                                        <input type="date" class="form-control" name="tanggal_pinjam" id="tanggal_pinjam"
                                             value="{{ old('tanggal_pinjam') }}" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="tanggal_pengembalian" class="col-sm-5 col-form-label"
+                                        style="font-weight: 600">Tanggal Pengembalian</label>
+                                    <div class="col-sm-7">
+                                        <input type="date" class="form-control" name="tanggal_pengembalian"
+                                            id="tanggal_pengembalian" value="{{ old('tanggal_pengembalian') }}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -138,4 +152,84 @@
         </section>
     </main>
     <!-- End #main -->
+    <div class="modal fade" id="daftarPeminjaman" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Daftar Peminjaman</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="exampleDataTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Transaction Pinjam</th>
+                                <th>Mahasiswa</th>
+                                <th>Barang Yang Di Pinjam</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Pengembalian</th>
+                                <th>Tujuan Pinjam</th>
+                                <th>Keterangan Pinjam</th>
+                                <th>Status Pinjam</th>
+                                <th>Tanggal Pengajuan Pinjam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($listDaftarPeminjam as $ldp)
+                                <tr>
+                                    <td>
+                                        {{ $ldp->id }}
+                                    </td>
+                                    <td>{{ $ldp->users->name }}</td>
+                                    <td>{{ $ldp->barangs->nama_barang }}</td>
+                                    <td>{{ $ldp->tanggal_pinjam }}</td>
+                                    <td>{{ $ldp->tanggal_pengembalian }}</td>
+                                    <td>{{ $ldp->tujuan_pinjam }}</td>
+                                    <td>{{ $ldp->keterangan_pinjam }}</td>
+                                    <td>
+                                        @if ($ldp->status_pinjam == 'dipinjam')
+                                            <span class="badge text-bg-info"> {{ $ldp->status_pinjam }}
+                                            @elseif($ldp->status_pinjam == 'dikembalikan')
+                                                <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
+                                                @elseif($ldp->status_pinjam == 'diajukan')
+                                                    <span class="badge text-bg-warning">
+                                                        {{ $ldp->status_pinjam }}
+                                                    @elseif($ldp->status_pinjam == 'ditolak')
+                                                        <span class="badge text-bg-danger">
+                                                            {{ $ldp->status_pinjam }}
+                                        @endif
+                                        </span>
+                                    </td>
+                                    <td>{{ $ldp->created_at }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ID Transaction Pinjam</th>
+                                <th>Mahasiswa</th>
+                                <th>Barang Yang Di Pinjam</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Pengembalian</th>
+                                <th>Tujuan Pinjam</th>
+                                <th>Keterangan Pinjam</th>
+                                <th>Status Pinjam</th>
+                                <th>Tanggal Pengajuan Pinjam</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#exampleDataTable');
+    </script>
+@endpush

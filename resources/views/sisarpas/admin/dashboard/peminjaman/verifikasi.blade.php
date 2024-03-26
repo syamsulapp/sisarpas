@@ -28,6 +28,8 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Peminjam</th>
+                            <th>Barang Yang Di Pinjam</th>
+                            <th>Kategori Pinjam</th>
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status</th>
@@ -46,15 +48,19 @@
                                     {{ $p->id }}
                                 </td>
                                 <td>{{ $p->users->name }}</td>
+                                <td>{{ $p->barangs->nama_barang }}</td>
+                                <td>{{ $p->kategori_pinjam }}</td>
                                 <td>{{ $p->tanggal_pinjam }}</td>
                                 <td>{{ $p->tanggal_pengembalian }}</td>
                                 <td>
-                                    @if ($p->status_pinjam == 'dipinjam' || $p->status_pinjam == 'dikembalikan')
-                                        <span class="badge bg-label-success me-1"> {{ $p->status_pinjam }}
-                                        @elseif($p->status_pinjam == 'diajukan')
-                                            <span class="badge bg-label-warning me-1"> {{ $p->status_pinjam }}
-                                            @elseif($p->status_pinjam == 'ditolak')
-                                                <span class="badge bg-label-danger me-1"> {{ $p->status_pinjam }}
+                                    @if ($p->status_pinjam == 'dipinjam')
+                                        <span class="badge bg-label-info me-1"> {{ $p->status_pinjam }}
+                                        @elseif($p->status_pinjam == 'dikembalikan')
+                                            <span class="badge bg-label-success me-1"> {{ $p->status_pinjam }}
+                                            @elseif($p->status_pinjam == 'diajukan')
+                                                <span class="badge bg-label-warning me-1"> {{ $p->status_pinjam }}
+                                                @elseif($p->status_pinjam == 'ditolak')
+                                                    <span class="badge bg-label-danger me-1"> {{ $p->status_pinjam }}
                                     @endif
                                     </span>
                                 </td>
@@ -66,10 +72,12 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Peminjam</th>
+                            <th>Barang Yang Di Pinjam</th>
+                            <th>Kategori Pinjam</th>
                             <th>Tanggal Pinjam</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status</th>
-                            <th>Tanggal Dibuat</th>
+                            <th>Tanggal Diajukan</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -148,9 +156,19 @@
                                             <button type="button" class="btn btn-warning"
                                                 data-bs-target="#modalVerifikasiPeminjamanUser--{{ $p->id }}"
                                                 data-bs-toggle="modal" data-bs-dismiss="modal">
-                                                <i class="bx bx-edit-alt" style="margin-right: 5px"></i>
+                                                <i class="bx bxs-file" style="margin-right: 5px"></i>
                                                 Verifikasi
                                             </button>
+                                        </td>
+                                    </tr>
+                                    <tr data-dt-row="99" data-dt-column="8">
+                                        <td>Barang Sudah Di Kembalikan?:</td>
+                                        <td>
+                                            <a href="{{ route('admin.dashboard_peminjaman_dikembalikan', ['id' => $p->id, 'status' => 'dikembalikan']) }}"
+                                                class="btn btn-success">
+                                                <i class="bx bx-redo" style="margin-right: 5px"></i>
+                                                Dikembalikan
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>

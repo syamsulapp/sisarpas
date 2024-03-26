@@ -27,6 +27,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('sisarpas/assets/css/style.css') }}" rel="stylesheet" />
+    @stack('css')
 </head>
 
 <body>
@@ -53,7 +54,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-
     <!-- Vendor JS Files -->
     <script src="{{ asset('sisarpas/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('sisarpas/assets/vendor/aos/aos.js') }}"></script>
@@ -79,6 +79,7 @@
             button.classList.add("active");
         }
     </script>
+    @stack('js')
 </body>
 
 </html>
