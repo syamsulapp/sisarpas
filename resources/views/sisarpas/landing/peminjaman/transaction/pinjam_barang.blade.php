@@ -187,14 +187,16 @@
                                     <td>{{ $ldp->tujuan_pinjam }}</td>
                                     <td>{{ $ldp->keterangan_pinjam }}</td>
                                     <td>
-                                        @if ($ldp->status_pinjam == 'dipinjam' || $ldp->status_pinjam == 'dikembalikan')
-                                            <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
-                                            @elseif($ldp->status_pinjam == 'diajukan')
-                                                <span class="badge text-bg-warning">
-                                                    {{ $ldp->status_pinjam }}
-                                                @elseif($ldp->status_pinjam == 'ditolak')
-                                                    <span class="badge text-bg-danger">
+                                        @if ($ldp->status_pinjam == 'dipinjam')
+                                            <span class="badge text-bg-info"> {{ $ldp->status_pinjam }}
+                                            @elseif($ldp->status_pinjam == 'dikembalikan')
+                                                <span class="badge text-bg-success"> {{ $ldp->status_pinjam }}
+                                                @elseif($ldp->status_pinjam == 'diajukan')
+                                                    <span class="badge text-bg-warning">
                                                         {{ $ldp->status_pinjam }}
+                                                    @elseif($ldp->status_pinjam == 'ditolak')
+                                                        <span class="badge text-bg-danger">
+                                                            {{ $ldp->status_pinjam }}
                                         @endif
                                         </span>
                                     </td>
