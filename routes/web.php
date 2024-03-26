@@ -155,6 +155,7 @@ Route::prefix('admin')->group(function () {
             Route::prefix('peminjaman')->group(function () {
                 Route::get('/', [AdminDashboardController::class, 'verifikasiPeminjaman'])->name('admin.dashboard_peminjaman');
                 Route::post('verifikasi', [AdminDashboardController::class, 'doverifikasiPeminjaman'])->name('admin.dashboard_verifikasi_peminjaman');
+                Route::get('{id}/{status}', [AdminDashboardController::class, 'doKembalikanBarangAtauAula'])->name('admin.dashboard_peminjaman_dikembalikan');
             });
             /**
              * rekap peminjaman barang dan aula

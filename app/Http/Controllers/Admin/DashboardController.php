@@ -939,6 +939,28 @@ class DashboardController extends DashboardRepositories
         }
     }
 
+    public function doKembalikanBarangAtauAula($id, $status): RedirectResponse
+    {
+        try {
+
+            if (!$this->checkVerificationBYID($id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf ID Transaction Verifikasi Salah');
+            }
+
+            if (!$this->statusChangeToDikembalikanForUsersPinjam($id)) {
+                return $this->redirectError('admin.dashboard_peminjaman', 'Maaf status tolak tidak dapat di ubah menjadi dikembalikan');
+            } else {
+                $this->submitStatusChangePeminjaman($id, $status);
+                $this->logSuccess($this->dataLogSuccessByID($this->getVerificationBYID($id), 'Berhasil Melakukan Pengembalian Barang Yang Di Pinjam'));
+                return $this->redirectSuccess('admin.dashboard_peminjaman', 'Berhasil Melakukan Pengembalian Barang Yang Di Pinjam');
+            }
+        } catch (\Exception $errors) {
+            $this->logError($this->dataLogError($errors->getMessage()));
+            DB::rollBack();
+            return $this->redirectError('admin.dashboard_peminjaman', 'Mohon maaf ada kesalahan dibagian melakukan pengembalian peminjaman users');
+        }
+    }
+
     private function viewVerifikasiPeminjaman($peminjaman): View
     {
         return view('sisarpas.admin.dashboard.peminjaman.verifikasi', compact('peminjaman'));
@@ -967,6 +989,16 @@ class DashboardController extends DashboardRepositories
     private function submitRequestVerificationBYID($id, $request)
     {
         return $this->submitRequestVerificationBYIDRepositories($id, $request);
+    }
+
+    private function statusChangeToDikembalikanForUsersPinjam($id): bool
+    {
+        return $this->statusChangeToDikembalikanForUsersPinjamRepositories($id);
+    }
+
+    private function submitStatusChangePeminjaman($id, $status)
+    {
+        return $this->submitStatusChangePeminjamanRepositories($id, $status);
     }
 
     private function checkIfApproveThenNotChangeStatusTolak($id): bool
